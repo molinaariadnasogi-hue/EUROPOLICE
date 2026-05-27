@@ -1,0 +1,129 @@
+/* --- REGISTRY ARCHITECTURE COLOR CONFIGURATION RULES --- */
+:root {
+    --europol-navy: #0e1238;       
+    --europol-blue: #0053ff;       
+    --europol-gold: #ffd200;       
+}
+
+.top-utility-bar {
+    background-color: var(--europol-navy);
+    padding: 8px 6%;
+    color: white;
+}
+
+.top-utility-bar span {
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.lang-text {
+    color: var(--europol-gold);
+}
+
+.brand-logo-block {
+    background-color: var(--europol-blue);
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: 2px;
+    padding: 12px 25px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.nav-item-btn {
+    background: none;
+    border: none;
+    color: var(--europol-blue);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 10px 15px;
+}
+
+.nav-item-btn:hover, .nav-item-btn.active {
+    color: #ff5500;
+}
+
+.nav-item-btn.active {
+    border-bottom: 4px solid var(--europol-blue);
+}
+
+.hero-banner-frame {
+    background-color: var(--europol-navy);
+    color: #ffffff;
+    padding: 50px 20px;
+}
+
+.section-heading {
+    color: var(--europol-navy);
+    font-weight: 700;
+    border-bottom: 2px solid var(--europol-gold);
+    padding-bottom: 5px;
+}
+
+.side-callout-panel {
+    background-color: var(--europol-gold);
+    color: var(--europol-navy);
+    padding: 24px;
+    border-radius: 4px;
+    font-weight: 700;
+    height: fit-content;
+}
+
+/* --- REGISTRY DASHBOARD FRAME CONTENT LAYOUTS --- */
+.registry-dashboard-box {
+    display: none; 
+    background: white; 
+    border: 1px solid #e5e7eb; 
+    border-radius: 8px; 
+    padding: 35px; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.registry-dashboard-box h2 {
+    color: var(--europol-navy);
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.suspect-case-profile-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    overflow: hidden;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    height: 100%;
+}
+
+.warrant-alert-badge {
+    background-color: #d32f2f;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.case-file-tag {
+    color: #d32f2f;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+#noRecordsMsg {
+    display: none;
+}
+
+footer {
+    background-color: var(--europol-navy);
+    color: #94a3b8;
+    text-align: center;
+    padding: 25px 20px;
+    font-size: 13px;
+    border-top: 4px solid var(--europol-gold);
+}
