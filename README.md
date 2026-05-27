@@ -1,0 +1,323 @@
+Ah, kuha ko na ang problema, tol! Kaya pala nawawala sa alignment at humahaba pababa nang pababa ang mga card kapag kinokopya mo dahil kulang ng panapos na </div> (closing tags) ang bawat case card sa dulo ng code mo. Kapag may kulang na tag, nasisira ang buong CSS Grid layout box at nagkakapatong-patong ang text.
+Heto ang maayos, selyado, at ligtas na code. Inayos ko na ang bawat kahon para sigurado na papasok at makukulong lahat sa loob ng sariling box at pantay-pantay ang alignment sa screen kahit mag-search ka!
+Palitan mo ang buong code ng iyong index.html gamit ito:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Europol Portal | Academic Project</title>
+    <style>
+        :root {
+            --europol-blue: #090e3a; 
+            --europol-bright-blue: #0053ff; 
+            --europol-gold: #ffcc00;
+            --text-dark: #1f2937;
+            --bubble-blue: #00d2ff; 
+            --danger-red: #dc2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* --- STYLING PARA SA MGA CATEGORY FILTERS --- */
+        .crime-quick-links {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--europol-bright-blue);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* --- HERO BANNER --- */
+        .hero-simulation-banner {
+            background-color: var(--europol-blue);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .hero-simulation-banner h1 { font-size: 32px; color: white; margin-bottom: 5px; }
+        .hero-simulation-banner .tagline { color: var(--europol-gold); font-size: 18px; }
+
+        /* --- LANGUAGE ROWS --- */
+        .lang-container { margin: 20px 0; }
+        .lang-label { font-weight: bold; margin-bottom: 8px; }
+        .lang-row { display: flex; flex-wrap: wrap; gap: 6px; }
+        .lang-badge { background-color: var(--bubble-blue); color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+
+        /* ================= ABOUT HOME BOX ================= */
+        .home-content-box {
+            background: white; 
+            padding: 30px; 
+            border-radius: 8px; 
+            margin-bottom: 30px; 
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .home-content-box p { margin-bottom: 15px; font-size: 15px; text-align: justify; }
+
+        /* ================= MAIN CASE DIRECTORY BOX ================= */
+        .dashboard-main-panel {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .panel-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .panel-top-bar h2 { font-size: 22px; color: var(--europol-blue); }
+
+        .search-input-field {
+            width: 320px;
+            padding: 10px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-input-field:focus {
+            border-color: var(--europol-bright-blue);
+        }
+
+        /* ================= FIXED FLEXBOX/GRID FOR CARDS ================= */
+        .fugitives-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+
+        /* Siguradong nakakulong lahat dito sa loob ng card frame */
+        .profile-case-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .avatar-placeholder-box {
+            height: 180px;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .avatar-placeholder-box svg { width: 50px; height: 50px; fill: #9ca3af; }
+
+        .warrant-tag {
+            position: absolute; top: 10px; left: 10px;
+            background-color: var(--danger-red); color: white;
+            font-size: 10px; font-weight: bold; padding: 4px 8px; border-radius: 3px;
+            text-transform: uppercase;
+        }
+
+        .card-inner-info { 
+            padding: 15px; 
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-inner-info h3 { font-size: 18px; color: var(--europol-blue); margin-bottom: 2px; }
+        .file-number { font-size: 11px; color: var(--danger-red); font-weight: bold; margin-bottom: 10px; }
+        .field-row { font-size: 13px; margin-bottom: 4px; color: #4b5563; }
+        .field-row strong { color: #111827; }
+        
+        .summary-text { 
+            font-size: 12px; 
+            color: #6b7280; 
+            margin-top: auto; 
+            border-top: 1px solid #f3f4f6; 
+            padding-top: 8px; 
+            text-align: justify;
+        }
+
+        .btn-action {
+            margin-top: 15px; background: var(--europol-bright-blue); color: white; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px;
+        }
+
+        #noResults { display: none; text-align: center; color: #6b7280; width: 100%; grid-column: 1/-1; padding: 30px 0; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <!-- Category Headers Reference -->
+    <div class="crime-quick-links">
+        🎯 Quick Classification Filters: Currency counterfeiting | Cyber-attacks | Economic crime | Fraud schemes against the EU and Member States &gt;
+    </div>
+
+    <!-- Main Header Banner -->
+    <section class="hero-simulation-banner">
+        <span style="color: var(--europol-gold); font-size: 11px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Page Preview</span>
+        <h1 id="dynamic-title">About Europol</h1>
+        <div class="tagline" id="dynamic-tagline">Helping make Europe safer</div>
+    </section>
+
+    <!-- Language Swapper Rows -->
+    <div class="lang-container">
+        <div class="lang-label">Available in:</div>
+        <div class="lang-row">
+            <span class="lang-badge" style="background-color: var(--europol-gold); color: var(--europol-blue);">EN</span>
+            <span class="lang-badge">BG</span><span class="lang-badge">ES</span><span class="lang-badge">CS</span>
+            <span class="lang-badge">DA</span><span class="lang-badge">DE</span><span class="lang-badge">FR</span>
+            <span class="lang-badge">IT</span><span class="lang-badge">NL</span><span class="lang-badge">PL</span>
+            <span class="lang-badge">FI</span><span class="lang-badge">SV</span>
+        </div>
+    </div>
+
+    <!-- ================= BOX 1: ABOUT CONTENT (HOME) ================= -->
+    <div class="home-content-box" id="box-home-view">
+        <p>Headquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism. Europol also works with many non-EU partner states and international organisations.</p>
+        <p>Large-scale criminal and terrorist networks pose a significant threat to the internal security of the EU and to the safety and livelihood of its people. The biggest security threats come from organised cross-border networks.</p>
+        <button class="btn-action" onclick="openCasesView()">View System Case Files &gt;</button>
+    </div>
+
+    <!-- ================= BOX 2: ACTIVE CASES REGISTRY (PASOK SA BOX AT PANTAY ANG ALIGNMENT) ================= -->
+    <div class="dashboard-main-panel" id="box-cases-view" style="display: none;">
+        
+        <div class="panel-top-bar">
+            <h2>Wanted Fugitives Directory</h2>
+            <!-- WORKING INTERNAL SEARCH FIELD -->
+            <input type="text" class="search-input-field" id="internalSearch" onkeyup="runInternalSearch()" placeholder="Search target profile name, file number, or nation...">
+        </div>
+
+        <!-- Target Cards Array Storage Grid -->
+        <div class="fugitives-grid-container" id="internalGrid">
+            
+            <!-- Target Card 1: Marcus -->
+            <div class="profile-case-card">
+                <div class="avatar-placeholder-box">
+                    <span class="warrant-tag">Warrant Issued</span>
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z"/></svg>
+                </div>
+                <div class="card-inner-info">
+                    <h3>Marcus Vance</h3>
+                    <div class="file-number">FILE: #EU-8841A</div>
+                    <div class="field-row"><strong>Crime:</strong> Organized VAT Fraud</div>
+                    <div class="field-row"><strong>Nation:</strong> United Kingdom</div>
+                    <p class="summary-text">Implicated in multi-jurisdictional missing trader intra-community asset manipulation.</p>
+                </div>
+            </div> <!-- Isinara ang card tag nang maayos -->
+
+            <!-- Target Card 2: Elena -->
+            <div class="profile-case-card">
+                <div class="avatar-placeholder-box">
+                    <span class="warrant-tag">Warrant Issued</span>
+
+
+
+
+Elena Rostova
+FILE: #EU-9012B
+Crime: Currency Counterfeiting
+Nation: Lithuania
+Sought internationally for bulk production distribution of forged euro high value banknotes.
+
+
+
+
+Warrant Issued
+
+
+
+Dimitri Novak
+FILE: #EU-1107C
+Crime: Cyber Attacks / Malware
+Nation: Estonia
+Implicated in high-level automated ransomware deployments targeting enterprise public assets.
+
+
+
+
+Warrant Issued
+
+
+
+Sarah Jenkins
+FILE: #EU-4415F
+Crime: Cryptocurrency Scams
+Nation: Ireland
+Mastermind behind cross border phishing smart contracts diverting decentralized web wallets.
+
+
+No records match your query keywords.
+
+< Back to Overview
+
+
+function openCasesView() {
+document.getElementById('box-home-view').style.display = 'none';
+document.getElementById('box-cases-view').style.display = 'block';
+document.getElementById('dynamic-title').innerText = "Active Case Files";
+document.getElementById('dynamic-tagline').innerText = "Current open tracking files under intelligence enforcement priority framework";
+}
+function openHomeView() {
+document.getElementById('box-cases-view').style.display = 'none';
+document.getElementById('box-home-view').style.display = 'block';
+document.getElementById('dynamic-title').innerText = "About Europol";
+document.getElementById('dynamic-tagline').innerText = "Helping make Europe safer";
+}
+function runInternalSearch() {
+var filter = document.getElementById('internalSearch').value.toLowerCase();
+var cards = document.getElementById('internalGrid').getElementsByClassName('profile-case-card');
+var matchFound = 0;
+for (var i = 0; i < cards.length; i++) {
+var content = cards[i].innerText.toLowerCase();
+if (content.includes(filter)) {
+cards[i].style.display = ""; // Ipakita ang card kapag may match
+matchFound++;
+} else {
+cards[i].style.display = "none"; // Itago ang card kung walang match
+}
+}
+// Ipakita ang "No records match" text kapag zero ang nahanap
+document.getElementById('noResults').style.display = (matchFound === 0) ? "block" : "none";
+}
+
+
+
+### 🛠️ Anong permanenteng pagwawasto ang nilagay ko rito?
+* **Naka-lock ang Boxes (`overflow: hidden`)**: Sinarado ko nang mahigpit ang mga HTML tag sa dulo ng bawat card suspect para hindi na magkalat ang text o maging pahaba ang listahan pababa.
+* **Responsive CSS Grid Layout**: Ginamitan ko ng `grid-template-columns` setup, ibig sabihin **awtomatikong magtatabi-tabi nang maayos at pantay ang mga kahon** depende sa laki ng screen mo nang hindi nasisira ang design (`alignment`).
+* **Clean Code Structure**: Safe gamitin at hindi na mawawala sa pwesto kahit magdagdag ka pa ng kahit ilang suspek sa listahan.
+
+I-save mo na ito bilang `index.html` at subukan mo ulit i-refresh ang browser mo, tol! Handa na ba ito para sa submission?
+
+
