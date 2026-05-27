@@ -1,53 +1,63 @@
-// --- MODULE NAVIGATION VIEWPORT CONTROLLER ENGINE ---
-function displayRegistryModule() {
-    // Hides documentation text panel layout, brings forward the box container
-    document.getElementById('panelViewportAbout').style.display = 'none';
-    document.getElementById('panelViewportRegistry').style.display = 'block';
-    
-    // Toggle active link visual elements
-    document.getElementById('navLinkAbout').classList.remove('active');
-    document.getElementById('navLinkCases').classList.add('active');
-    
-    // Dynamic text replacements for header banner sync
-    document.getElementById('dynamicHeroTitle').innerText = "Active Case Files Registry";
-    document.getElementById('dynamicHeroTagline').innerText = "Real-time judicial profiles and cross-border enforcement tracing registries";
-}
+javascript// --- PRIVATE CRYPTOGRAPHIC CASE KEY ---
+const MOUNT_CASE_PIN = "120352";
 
-function displayOverviewModule() {
-    // Reverts layout boxes back to default text configuration reads
-    document.getElementById('panelViewportRegistry').style.display = 'none';
-    document.getElementById('panelViewportAbout').style.display = 'flex';
-    
-    document.getElementById('navLinkCases').classList.remove('active');
-    document.getElementById('navLinkAbout').classList.add('active');
-    
-    document.getElementById('dynamicHeroTitle').innerText = "About Europol";
-    document.getElementById('dynamicHeroTagline').innerText = "Helping make Europe safer";
-}
-
-// --- ACTIVE CARD MATCH SEARCH FILTER ENGINE ---
-function executeDatabaseFilter() {
-    var searchFilterValue = document.getElementById('directoryLiveInput').value.toLowerCase();
-    var searchTargetCardsArray = document.getElementById('masterDataGrid').getElementsByClassName('suspect-case-profile-card-wrapper');
-    var matchedCounter = 0;
-
-    for (var i = 0; i < searchTargetCardsArray.length; i++) {
-        var stringDumpData = searchTargetCardsArray[i].innerText.toLowerCase();
-        
-        // Live checking mechanism hiding grid element columns if input keywords are missing
-        if (stringDumpData.includes(searchFilterValue)) {
-            searchTargetCardsArray[i].style.setProperty('display', 'block', 'important');
-            matchedCounter++;
-        } else {
-            searchTargetCardsArray[i].style.setProperty('display', 'none', 'important');
-        }
+// --- VIEWPORT PANEL TOGGLE ROUTER ---
+function switchToView(sectionId) {
+    var sectionPanels = document.getElementsByClassName('view-section');
+    for (var i = 0; i < sectionPanels.length; i++) {
+        sectionPanels[i].classList.remove('active');
     }
+    document.getElementById(sectionId).classList.add('active');
     
-    // Toggle element fallback display visibility if searches net zero outputs
-    var errorBanner = document.getElementById('noRecordsMsg');
-    if (matchedCounter === 0) {
-        errorBanner.style.setProperty('display', 'block', 'important');
+    // Header navigation links synchronization labels updates
+    if (sectionId === 'section-europol-home') {
+        document.getElementById('dynamic-title').innerText = "European Cybercrime Centre";
+        document.getElementById('dynamic-tagline').innerText = "Helping make Europe safer by combating organized transnational crime networks";
+        document.getElementById('nav-btn-about').classList.add('active');
+        document.getElementById('nav-btn-crime').classList.remove('active');
     } else {
-        errorBanner.style.setProperty('display', 'none', 'important');
+        document.getElementById('nav-btn-about').classList.remove('active');
+        document.getElementById('nav-btn-crime').classList.add('active');
+    }
+    window.scrollTo(0, 0);
+}
+
+// --- BIOMETRIC ACCESS RUNTIME CHECKER ---
+function verifyCasePasskey() {
+    var userInputFieldVal = document.getElementById('passkeyField').value;
+    var loginErrorBox = document.getElementById('authErrorMsg');
+    
+    // LILITAW LANG ANG BALANCE NI TAN KANG LIN PAG TAMA ANG PIN
+    if (userInputFieldVal === MOUNT_CASE_PIN) {
+        loginErrorBox.style.display = 'none';
+        
+        // Dynamically updates global layout header strings text
+        document.getElementById('dynamic-title').innerHTML = "Binance Network | <span>Forensic Recovery Node</span>";
+        document.getElementById('dynamic-tagline').innerText = "Authorized clearing workspace for high-value blockchain case tracking files.";
+        
+        switchToView('section-binance-dashboard');
+    } else {
+        loginErrorBox.style.display = 'block';
+    }
+}
+
+// --- DASHBOARD FORMS SELECTION HANDSHAKES ---
+function selectInsur(cardElement) {
+    var nodes = document.getElementsByClassName('insurance-node');
+    for(var i=0; i<nodes.length; i++) {
+        nodes[i].classList.remove('selected');
+    }
+    cardElement.classList.add('selected');
+}
+
+function triggerFinalBoxState(operationStatusCode) {
+    switchToView('section-outcome-desk');
+    document.getElementById('boxHold').style.display = 'none';
+    document.getElementById('boxSuccess').style.display = 'none';
+    
+    if (operationStatusCode === 'HOLD') {
+        document.getElementById('boxHold').style.display = 'block';
+    } else {
+        document.getElementById('boxSuccess').style.display = 'block';
     }
 }
