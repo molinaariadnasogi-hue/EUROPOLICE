@@ -1,0 +1,3939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Europol Portal | Academic Project</title>
+    <style>
+        :root {
+            --europol-blue: #090e3a; 
+            --europol-bright-blue: #0053ff; 
+            --europol-gold: #ffcc00;
+            --text-dark: #1f2937;
+            --bubble-blue: #00d2ff; 
+            --danger-red: #dc2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* --- STYLING PARA SA MGA CATEGORY FILTERS --- */
+        .crime-quick-links {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--europol-bright-blue);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* --- HERO BANNER --- */
+        .hero-simulation-banner {
+            background-color: var(--europol-blue);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .hero-simulation-banner h1 { font-size: 32px; color: white; margin-bottom: 5px; }
+        .hero-simulation-banner .tagline { color: var(--europol-gold); font-size: 18px; }
+
+        /* --- LANGUAGE ROWS --- */
+        .lang-container { margin: 20px 0; }
+        .lang-label { font-weight: bold; margin-bottom: 8px; }
+        .lang-row { display: flex; flex-wrap: wrap; gap: 6px; }
+        .lang-badge { background-color: var(--bubble-blue); color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+
+        /* ================= ABOUT HOME BOX ================= */
+        .home-content-box {
+            background: white; 
+            padding: 30px; 
+            border-radius: 8px; 
+            margin-bottom: 30px; 
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .home-content-box p { margin-bottom: 15px; font-size: 15px; text-align: justify; }
+
+        /* ================= MAIN CASE DIRECTORY BOX ================= */
+        .dashboard-main-panel {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .panel-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .panel-top-bar h2 { font-size: 22px; color: var(--europol-blue); }
+
+        .search-input-field {
+            width: 320px;
+            padding: 10px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-input-field:focus {
+            border-color: var(--europol-bright-blue);
+        }
+
+        /* ================= FIXED FLEXBOX/GRID FOR CARDS ================= */
+        .fugitives-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+
+        /* Siguradong nakakulong lahat dito sa loob ng card frame */
+        .profile-case-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .avatar-placeholder-box {
+            height: 180px;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .avatar-placeholder-box svg { width: 50px; height: 50px; fill: #9ca3af; }
+
+        .warrant-tag {
+            position: absolute; top: 10px; left: 10px;
+            background-color: var(--danger-red); color: white;
+            font-size: 10px; font-weight: bold; padding: 4px 8px; border-radius: 3px;
+            text-transform: uppercase;
+        }
+
+        .card-inner-info { 
+            padding: 15px; 
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-inner-info h3 { font-size: 18px; color: var(--europol-blue); margin-bottom: 2px; }
+        .file-number { font-size: 11px; color: var(--danger-red); font-weight: bold; margin-bottom: 10px; }
+        .field-row { font-size: 13px; margin-bottom: 4px; color: #4b5563; }
+        .field-row strong { color: #111827; }
+        
+        .summary-text { 
+            font-size: 12px; 
+            color: #6b7280; 
+            margin-top: auto; 
+            border-top: 1px solid #f3f4f6; 
+            padding-top: 8px; 
+            text-align: justify;
+        }
+
+        .btn-action {
+            margin-top: 15px; background: var(--europol-bright-blue); color: white; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px;
+        }
+
+        #noResults { display: none; text-align: center; color: #6b7280; width: 100%; grid-column: 1/-1; padding: 30px 0; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <!-- Category Headers Reference -->
+    <div class="crime-quick-links">
+        🎯 Quick Classification Filters: Currency counterfeiting | Cyber-attacks | Economic crime | Fraud schemes against the EU and Member States &gt;
+    </div>
+
+    <!-- Main Header Banner -->
+    <section class="hero-simulation-banner">
+        <span style="color: var(--europol-gold); font-size: 11px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Page Preview</span>
+        <h1 id="dynamic-title">About Europol</h1>
+        <div class="tagline" id="dynamic-tagline">Helping make Europe safer</div>
+    </section>
+
+    <!-- Language Swapper Rows -->
+    <div class="lang-container">
+        <div class="lang-label">Available in:</div>
+        <div class="lang-row">
+            <span class="lang-badge" style="background-color: var(--europol-gold); color: var(--europol-blue);">EN</span>
+            <span class="lang-badge">BG</span><span class="lang-badge">ES</span><span class="lang-badge">CS</span>
+            <span class="lang-badge">DA</span><span class="lang-badge">DE</span><span class="lang-badge">FR</span>
+            <span class="lang-badge">IT</span><span class="lang-badge">NL</span><span class="lang-badge">PL</span>
+            <span class="lang-badge">FI</span><span class="lang-badge">SV</span>
+        </div>
+    </div>
+
+    <!-- ================= BOX 1: ABOUT CONTENT (HOME) ================= -->
+    <div class="home-content-box" id="box-home-view">
+        <p>Headquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism. Europol also works with many non-EU partner states and international organisations.</p>
+        <p>Large-scale criminal and terrorist networks pose a significant threat to the internal security of the EU and to the safety and livelihood of its people. The biggest security threats come from organised cross-border networks.</p>
+        <button class="btn-action" onclick="openCasesView()">View System Case Files &gt;</button>
+    </div>
+
+    <!-- ================= BOX 2: ACTIVE CASES REGISTRY (PASOK SA BOX AT PANTAY ANG ALIGNMENT) ================= -->
+    <div class="dashboard-main-panel" id="box-cases-view" style="display: none;">
+        
+        <div class="panel-top-bar">
+            <h2>Wanted Fugitives Directory</h2>
+            <!-- WORKING INTERNAL SEARCH FIELD -->
+            <input type="text" class="search-input-field" id="internalSearch" onkeyup="runInternalSearch()" placeholder="Search target profile name, file number, or nation...">
+        </div>
+
+        <!-- Target Cards Array Storage Grid -->
+        <div class="fugitives-grid-container" id="internalGrid">
+            
+            <!-- Target Card 1: Marcus -->
+            <div class="profile-case-card">
+                <div class="avatar-placeholder-box">
+                    <span class="warrant-tag">Warrant Issued</span>
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z"/></svg>
+                </div>
+                <div class="card-inner-info">
+                    <h3>Marcus Vance</h3>
+                    <div class="file-number">FILE: #EU-8841A</div>
+                    <div class="field-row"><strong>Crime:</strong> Organized VAT Fraud</div>
+                    <div class="field-row"><strong>Nation:</strong> United Kingdom</div>
+                    <p class="summary-text">Implicated in multi-jurisdictional missing trader intra-community asset manipulation.</p>
+                </div>
+            </div> <!-- Isinara ang card tag nang maayos -->
+
+            <!-- Target Card 2: Elena -->
+            <div class="profile-case-card">
+                <div class="avatar-placeholder-box">
+                    <span class="warrant-tag">Warrant Issued</span>
+Elena RostovaFILE: #EU-9012BCrime: Currency CounterfeitingNation: LithuaniaSought internationally for bulk production distribution of forged euro high value banknotes.
+Warrant IssuedDimitri NovakFILE: #EU-1107CCrime: Cyber Attacks / MalwareNation: EstoniaImplicated in high-level automated ransomware deployments targeting enterprise public assets.
+TOL"Tol" is a popular Filipino slang word that means "bro," "buddy," or "friend." It is a shortened version of the Tagalog word utol, which translates directly to "sibling".Since you opened with a friendly local greeting, how can I help you today? If you are looking for a specific meaning of "TOL", it could also refer to one of the following concepts:Common Definitions of TOLFilipino Slang: A casual, friendly term of endearment used primarily among male friends, similar to "dude" or "pre".Business & Finance: An acronym for Total Outside Liabilities (used in leverage ratios like TOL/TNW) or Total Outstanding Liability.Workplace: Short for Time Off in Lieu, which means getting compensatory time off instead of overtime pay.Medical: Stands for Trial of Labor, a clinical attempt at a vaginal birth after a previous Cesarean section.Local Apps: TOL (The One Library), a Philippine-built digital platform for local business menus and services.Please let me know if you want to translate a phrase, solve a specific problem, or discuss a particular topic!AI can make mistakes, so double-check responses 8 sitesTOL - The One LibraryItem added to your cart. View cart Check out Continue shopping. TOL — The One Library. Everything you need. One platform. TOL is a...tol.com.phWhat is 'Tol' (Filipino) in English? - QuoraThe term 'Tol' is an urban slang, which is derived from the word 'Utol' which translates to 'Sibling. ' A synonym of it in Filipin...QuoraThe Tagalog dictionary defines “Tol” as bro, buddy, or a ... - FacebookThe Tagalog dictionary defines “Tol” as bro, buddy, or a colloquial/informal term for one's brother or sister. 🤝 Today, let us no...FacebookShow allYou said: may priject kameUy, tulungan kita riyan! (Hey, let me help you with that!)I can help you plan, write, or brainstorm for your school or work project. To get started right away, what is the subject or topic of your project?If you want, you can also tell me:The grade level or goal (e.g., High School, College, Business)The required output (e.g., Essay, Research Paper, PowerPoint, Website)Any specific guidelines or instructions your teacher gaveLet me know how you want to start formatting or outlining your project!You said: gagawa ka ng front page lang ng siteSige, gawan natin ng front page (homepage) ang website mo!Para masimulan natin, heto ang mga kailangang ilagay sa disenyo at estruktura ng isang standard na front page:📑 Karaniwang Estruktura ng Front PageHeader / Navigation Bar: Logo, Menu Links (Home, About, Services, Contact), at isang Search Bar o Login button.Hero Section: Ang pinakamahalagang bahagi. May malaking headline, maikling paliwanag kung tungkol saan ang site, at isang malinaw na Call-to-Action (CTA) button (hal. "Learn More" o "Get Started").Features / About Section: 3 hanggang 4 na maiikling puntos o cards na nagpapakita ng pangunahing serbisyo, produkto, o layunin ng site.Footer: Copyright text, links sa Social Media, at Privacy Policy.Para magawa ko ang tamang text content o ang mismong HTML/CSS code para sa project mo, paki-sabi sa akin:Ano ang pangalan ng website o kumpanya?Ano ang pangunahing paksa o industriya nito? (hal. online shop, restaurant, school portal, portfolio, personal blog)Anong vibe o kulay ang gusto mong gamitin natin? (hal. minimalist/professional, makulay/pambata, dark mode/techie)Sabihin mo lang ang mga detalye at isusulat ko na agad ang code o layout para sa iyo!You said: tungkol to sa may mga kaso ng fraudGagawa tayo ng isang propesyonal at seryosong front page para sa isang Fraud Awareness & Reporting Portal. Ang layunin nito ay magbigay-babala, mag-edukar, at magbigay ng mabilis na paraan para mag-report ng mga kaso ng scam o fraud.Heto ang kumpletong HTML at CSS (embedded) code. Pwede mo itong kopyahin, i-save bilang index.html, at buksan sa kahit anong web browser para sa iyong project.html<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LigtasPinoy | Fraud Awareness & Reporting</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: #0b1d33; /* Dark Navy Blue for authority */
+            color: #ffffff;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff4d4d; /* Red accent for alert/safety */
+        }
+
+        .logo span {
+            color: #ffffff;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ff4d4d;
+        }
+
+        .btn-report-nav {
+            background-color: #ff4d4d;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .btn-report-nav:hover {
+            background-color: #cc0000;
+            color: #fff;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(11, 29, 51, 0.9), rgba(11, 29, 51, 0.9)), url('https://unsplash.com') no-repeat center center/cover;
+            color: white;
+            padding: 100px 5%;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #d1d5db;
+        }
+
+        .hero-buttons .btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px;
+            display: inline-block;
+        }
+
+        .btn-danger {
+            background-color: #ff4d4d;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #cc0000;
+        }
+
+        .btn-outline {
+            border: 2px solid #ffffff;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background-color: white;
+            color: #0b1d33;
+        }
+
+        /* Features / Info Section */
+        .features {
+            padding: 60px 5%;
+            text-align: center;
+        }
+
+        .features h2 {
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: #0b1d33;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 280px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid #0b1d33;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card.alert-card {
+            border-top: 5px solid #ff4d4d;
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            color: #0b1d33;
+        }
+
+        .card p {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0b1d33;
+            color: #9ca3af;
+            text-align: center;
+            padding: 30px 5%;
+            margin-top: 40px;
+            font-size: 14px;
+            border-top: 3px solid #ff4d4d;
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">Ligtas<span>Pinoy</span></div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Mga Uri ng Fraud</a>
+            <a href="#">Edukasyon</a>
+            <a href="#" class="btn-report-nav">Mag-Report Dito</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Huwag Magpaloko. Maging Ligtas Laban sa Fraud.</h1>
+        <p>Alamin ang mga pinakabagong modus ng mga scammer. Dito mo rin pwedeng i-report nang ligtas at kompidensyal ang anumang kaso ng panloloko o cybercrime.</p>
+        <div class="hero-buttons">
+            <a href="#" class="btn btn-danger">I-Report ang Scam</a>
+            <a href="#" class="btn btn-outline">Alamin ang mga Modus</a>
+        </div>
+    </section>
+
+    <!-- Information Cards Section -->
+    <section class="features">
+        <h2>Paano Ka Namin Tutulungan?</h2>
+        <div class="card-container">
+            <div class="card alert-card">
+                <h3>🚨 Talamak na Modus</h3>
+                <p>Magbasa ng mga ulat tungkol sa Phishing, Text Scams, Online Selling Fraud, at Investment Scams na aktibo ngayon sa Pilipinas.</p>
+            </div>
+            <div class="card">
+                <h3>🔒 Gabay sa Seguridad</h3>
+                <p>Alamin ang mga simpleng hakbang kung paano poprotektahan ang iyong bank accounts, e-wallets, at personal na impormasyon.</p>
+            </div>
+            <div class="card">
+                <h3>⚖️ Legal na Aksyon</h3>
+                <p>Gabay kung anong mga ahensya ng gobyerno (gaya ng NBI, PNP-ACG, o SEC) ang dapat mong lapitan para sa iyong kaso.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 LigtasPinoy Fraud Awareness Portal. Para sa Akademikong Layunin (School Project).</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Hotlines</a></p>
+    </footer>
+
+</body>
+</html>
+Use code with caution.✨ Bakit maganda ang layout na ito para sa project mo?Kulay at Vibe: Ginamitan ito ng Dark Navy Blue at Red. Ang kombinasyong ito ay nagbibigay ng impresyon ng batas, seguridad, at babala (alert)—perpekto para sa seryosong paksa tulad ng fraud.Clear Action: May malalaking button agad para sa "I-Report ang Scam" para sa mga biktima.Responsive: Maayos itong titingnan kahit buksan sa cellphone o computer.Kung gusto mo pa itong baguhin, sabihin mo lang sa akin kung kailangan natin ng form para sa pag-report, talahanayan (table) ng mga pekeng kumpanya, o kung may partikular na kulay kang gustong ipalit!AI responses may include mistakes. For legal advice, consult a professional. Learn moreYou said: teka tol kung saan makkita mo maraming nameKung ang ibig mong sabihin ay isang listahan kung saan makikita ang maraming pangalan ng mga scammer o pekeng kumpanya, magdadagdag tayo ng "Fraud Database Table" sa iyong front page [site].Heto ang binagong code. Idinagdag ko ang isang Search Bar at isang Table para makita at mahanap ng mga user ang mga iniulat na pangalan, numero, o pekeng account.Palitan mo ang lumang code ng hetong bago:html<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LigtasPinoy | Fraud Awareness & Database</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #212529;
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: #0b1d33;
+            color: #ffffff;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff4d4d;
+        }
+
+        .logo span {
+            color: #ffffff;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ff4d4d;
+        }
+
+        .btn-report-nav {
+            background-color: #ff4d4d;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(11, 29, 51, 0.95), rgba(11, 29, 51, 0.95));
+            color: white;
+            padding: 80px 5%;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 16px;
+            margin-bottom: 25px;
+            color: #d1d5db;
+        }
+
+        /* Search Bar Section */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-container input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-container button {
+            padding: 12px 25px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .search-container button:hover {
+            background-color: #cc0000;
+        }
+
+        /* Database Section */
+        .database-section {
+            padding: 50px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .database-section h2 {
+            font-size: 28px;
+            color: #0b1d33;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .database-section p {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        /* Responsive Table */
+        .table-responsive {
+            overflow-x: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+            background-color: #0b1d33;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f9fafb;
+        }
+
+        /* Badges for Status/Type */
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .badge-scam {
+            background-color: #fee2e2;
+            color: #ef4444;
+        }
+
+        .badge-phishing {
+            background-color: #fef3c7;
+            color: #d97706;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0b1d33;
+            color: #9ca3af;
+            text-align: center;
+            padding: 30px 5%;
+            margin-top: 50px;
+            font-size: 14px;
+            border-top: 3px solid #ff4d4d;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">Ligtas<span>Pinoy</span></div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Database</a>
+            <a href="#">Edukasyon</a>
+            <a href="#" class="btn-report-nav">Mag-Report</a>
+        </nav>
+    </header>
+
+    <!-- Hero with Search -->
+    <section class="hero">
+        <h1>I-verify ang Pangalan o Numero</h1>
+        <p>I-search sa aming database ang pangalan, phone number, o website link para malaman kung ito ay may naunang kaso ng fraud.</p>
+        
+        <div class="search-container">
+            <input type="text" placeholder="I-type ang pangalan, FB page, o numero ng kahina-hinalang kausap...">
+            <button type="button">I-Search</button>
+        </div>
+    </section>
+
+    <!-- Fraud Database Table Section -->
+    <section class="database-section">
+        <h2>Listahan ng mga Iniulat na Kaso</h2>
+        <p>Ang mga pangalan sa ibaba ay base sa mga verified na ulat ng mga biktima at ahensya.</p>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pangalan / Ginamit na Alias</th>
+                        <th>Uri ng Fraud</th>
+                        <th>Platform / Source</th>
+                        <th>Petsa ng Ulat</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Juan Carlos Reyes (Fake Identity)</strong></td>
+                        <td><span class="badge badge-scam">Online Selling Scam</span></td>
+                        <td>Facebook Marketplace</td>
+                        <td>May 25, 2026</td>
+                        <td style="color: #ef4444; font-weight: bold;">Verified Fraud</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BDO Verification Team (Fake Link)</strong></td>
+                        <td><span class="badge badge-phishing">Phishing / Smishing</span></td>
+                        <td>SMS / Text Message</td>
+                        <td>May 22, 2026</td>
+                        <td style="color: #ef4444; font-weight: bold;">Under Investigation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FlexiEarn Investment Group</strong></td>
+                        <td><span class="badge badge-scam">Ponzi / Investment Scheme</span></td>
+                        <td>Telegram / G-Cash</td>
+                        <td>May 18, 2026</td>
+                        <td style="color: #ef4444; font-weight: bold;">SEC Alert Issued</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Maria Althea Santos (Dummy Account)</strong></td>
+                        <td><span class="badge badge-scam">Task Scam (Gcash Pay)</span></td>
+                        <td>WhatsApp / Viber</td>
+                        <td>May 10, 2026</td>
+                        <td style="color: #ef4444; font-weight: bold;">Verified Fraud</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 LigtasPinoy Fraud Awareness Portal. Para sa Akademikong Layunin (School Project).</p>
+    </footer>
+
+</body>
+</html>
+Use code with caution.💡 Paano ito gumagana sa design mo:Search Bar: Nilagay sa gitna ng hero section para mabilis gamitin ng bumibisita sa site.Table Grid: Malinis tingnan, naka-ayos ayon sa Pangalan, Uri ng Scam, at kung saang App o Platform ginawa ang panloloko.Badges: May makukulay na indicator (red at orange) para sa uri ng kaso para madaling basahin ng teacher mo kapag ginrade ang project.Gusto mo bang dagdagan pa natin ng filter dropdown (para mapili kung Facebook, SMS, o Bank scam lang ang makikita) o okay na sa iyo ang simpleng listahan na ito?You said: at  ibat ibang klase ng kaso at mga wantedDahil dinala mo sa usaping wanted at iba't ibang klase ng totoong kaso ng malalaking fraud, kailangan nating gawing mas mukhang Official Enforcement or Agency Portal ang dating ng iyong front page.Heto ang binagong code. Nagdagdag ako ng:"Most Wanted Fraudsters" Grid – May mga lalagyan ng larawan (profile cards) para sa mga pinaghahanap ng batas dahil sa malawakang scam."Crime Types" Grid – Mga modernong kategorya ng fraud gaya ng Identity Theft, Investment Scams, at Cyber Phishing.Kopyahin ang buong code sa ibaba para sa iyong project:html<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PH Cyber-Crime Division | Fraud Alerts & Wanted Bureau</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0f172a; /* Dark theme for a serious cyber-crime look */
+            color: #f8fafc;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: #020617;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ef4444;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+
+        .logo span {
+            color: #ef4444;
+        }
+
+        nav a {
+            color: #94a3b8;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: #ef4444;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            padding: 80px 5%;
+            text-align: center;
+            border-bottom: 1px solid #334155;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            color: #ffffff;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+
+        /* Wanted Section */
+        .section-container {
+            padding: 60px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: #ffffff;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title span {
+            color: #ef4444;
+        }
+
+        .section-desc {
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+
+        /* Wanted Cards Grid */
+        .wanted-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .wanted-card {
+            background-color: #1e293b;
+            border: 2px solid #334155;
+            border-top: 4px solid #ef4444;
+            border-radius: 6px;
+            overflow: hidden;
+            text-align: center;
+            padding-bottom: 20px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .wanted-card:hover {
+            transform: translateY(-5px);
+            border-color: #ef4444;
+        }
+
+        .wanted-photo {
+            width: 100%;
+            height: 220px;
+            background-color: #334155;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-weight: bold;
+            font-size: 14px;
+            border-bottom: 1px solid #334155;
+            position: relative;
+        }
+
+        /* Red "WANTED" stamp */
+        .wanted-stamp {
+            position: absolute;
+            background-color: #ef4444;
+            color: white;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            top: 10px;
+            right: 10px;
+            border-radius: 3px;
+        }
+
+        .wanted-info {
+            padding: 15px;
+        }
+
+        .wanted-info h3 {
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .wanted-info .alias {
+            color: #cbd5e1;
+            font-size: 14px;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .wanted-info .crime-tag {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            padding: 3px 8px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .btn-details {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .btn-details:hover {
+            background-color: #dc2626;
+        }
+
+        /* Classes of Fraud Section */
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .class-card {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            padding: 25px;
+            border-radius: 6px;
+        }
+
+        .class-card h3 {
+            color: #38bdf8; /* Light blue accent for tech categories */
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .class-card p {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #020617;
+            color: #64748b;
+            text-align: center;
+            padding: 30px 5%;
+            margin-top: 60px;
+            border-top: 1px solid #334155;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">CRIME<span>BUREAU</span></div>
+        <nav>
+            <a href="#" class="active">Wanted List</a>
+            <a href="#">Mga Uri ng Kaso</a>
+            <a href="#">Mag-report Anonymous</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Fraud Registry & Fugitive Tracking</h1>
+        <p>Opisyal na listahan ng mga indibidwal na may warrant of arrest dahil sa syndicated estafa, investment scams, at cyber-fraud sa Pilipinas.</p>
+    </section>
+
+    <!-- Wanted Bureau Section -->
+    <section class="section-container">
+        <h2 class="section-title">⚠️ MOST WANTED <span>FRAUDSTERS</span></h2>
+        <p class="section-desc">Huwag makikipag-transaksyon sa mga taong ito. Kung may impormasyon, ipagbigay-alam agad sa mga awtoridad.</p>
+
+        <div class="wanted-grid">
+            <!-- Wanted Person 1 -->
+            <div class="wanted-card">
+                <div class="wanted-photo">
+                    [ NO IMAGE / SUSPECT PHOTO ]
+                    <span class="wanted-stamp">Wanted</span>
+                </div>
+                <div class="wanted-info">
+                    <h3>"CEO" Mark Brandon</h3>
+                    <div class="alias">Alias: Don Marky</div>
+                    <span class="crime-tag">Syndicated Estafa</span>
+                    <p style="color: #94a3b8; font-size: 13px; margin-bottom: 15px;">Modus: Nagpatakbo ng pekeng Crypto & Forex Trading platform.</p>
+                    <button class="btn-details">Tingnan ang Kaso</button>
+                </div>
+            </div>
+
+            <!-- Wanted Person 2 -->
+            <div class="wanted-card">
+                <div class="wanted-photo">
+                    [ NO IMAGE / SUSPECT PHOTO ]
+                    <span class="wanted-stamp">Wanted</span>
+                </div>
+                <div class="wanted-info">
+                    <h3>Elena "Ate Girl" Cruz</h3>
+                    <div class="alias">Alias: Lanie Santos</div>
+                    <span class="crime-tag">Identity Theft / Loan Scam</span>
+                    <p style="color: #94a3b8; font-size: 13px; margin-bottom: 15px;">Modus: Nagnanakaw ng mga valid IDs para mag-loan sa mga bangko online.</p>
+                    <button class="btn-details">Tingnan ang Kaso</button>
+                </div>
+            </div>
+
+            <!-- Wanted Person 3 -->
+            <div class="wanted-card">
+                <div class="wanted-photo">
+                    [ NO IMAGE / SUSPECT PHOTO ]
+                    <span class="wanted-stamp">Wanted</span>
+                </div>
+                <div class="wanted-info">
+                    <h3>Arthur Pendelton</h3>
+                    <div class="alias">Alias: Art Kasilag</div>
+                    <span class="crime-tag">Real Estate Fraud</span>
+                    <p style="color: #94a3b8; font-size: 13px; margin-bottom: 15px;">Modus: Nagbebenta ng mga lupang hindi sa kanya gamit ang pekeng titulo.</p>
+                    <button class="btn-details">Tingnan ang Kaso</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Different Classes of Fraud Section -->
+        <h2 class="section-title">🔍 MGA URI NG <span>CYBER-FRAUD</span></h2>
+        <p class="section-desc">Iba't ibang mukha ng panloloko na laganap sa digital space ngayon.</p>
+
+        <div class="classes-grid">
+            <div class="class-card">
+                <h3>1. Investment Fraud (Ponzi Scheme)</h3>
+                <p>Pangangako ng napakataas na balik ng pera o "interest" sa maikling panahon. Ang pera ng mga bagong miyembro ay ginagamit lang pambayad sa mga naunang sumali.</p>
+            </div>
+            <div class="class-card">
+                <h3>2. Phishing & Smishing</h3>
+                <p>Pagsend ng mga pekeng email o text na nagkukunwaring galing sa kilalang bangko para manakaw ang OTP (One-Time Password) at password ng biktima.</p>
+            </div>
+Use code with caution.3. Love Scam / Romance FraudPakikipag-kaibigan o pakikipag-relasyon online gamit ang dummy account, na kalaunan ay hihingi ng malaking halaga ng pera dahil sa isang "emergency".© 2026 Academic Cyber-Crime Mock Project Portal. All details shown are for educational framework demonstration purposes only.
+### 🎨 Ano ang pinagkaiba nito?
+* **Dark Mode interface**: Mukhang secured at pang-cybersecurity system ang dating.
+* **Wanted Cards**: May nakalaang block para sa mukha at pangalan ng mga wanted suspects na may kasong *Syndicated Estafa* at *Identity Theft*.
+* **Educational Grid**: Nagpapaliwanag kung paano gumagana ang Ponzi, Phishing, at Love Scams.
+
+Gusto mo bang dagdagan natin ng **"Submit a Tip" form** (kung saan pwedeng mag-type ang user kung nakita nila ang wanted person) o pasok na ito sa requirements mo?
+You said: EUROPOL VERSION NAPUTNA SKENAy, pang-Europol na pala ang level natin, tol! Sosyal! Kung international cybercrime, Interpol, o Europol style ang kailangan para sa project mo, ibahin natin ang anyo.Gagawin nating European/Global Authority ang disenyo nito gamit ang opisyal na kulay ng Europol: Deep European Blue (#002d62) at Gold/Yellow Accents (#ffcc00), kasama ang mga totoong seryosong kaso gaya ng Money Laundering, Phishing Networks, at Crypto-Malware.Heto ang bagong code. I-save mo ulit bilang index.html:html<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EUROPOL Cybercrime Bureau | Economic Fraud Division</title>
+    <style>
+        /* Global & Europol Theme */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        /* Top Bar & Header */
+        .top-banner {
+            background-color: #ffcc00; /* Europol Gold */
+            color: #002d62;
+            text-align: center;
+            padding: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        header {
+            background-color: #002d62; /* Europol Deep Blue */
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid #ffcc00;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 1.5px;
+        }
+
+        .logo span {
+            color: #ffcc00;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        nav a:hover {
+            color: #ffcc00;
+        }
+
+        /* Hero / Notice Section */
+        .hero {
+            background: linear-gradient(rgba(0, 45, 98, 0.9), rgba(0, 45, 98, 0.95)), url('https://unsplash.com') no-repeat center center/cover;
+            color: white;
+            padding: 60px 5%;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 26px;
+            color: #002d62;
+            border-left: 5px solid #ffcc00;
+            padding-left: 15px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* Europol Wanted Grid */
+        .wanted-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .wanted-card {
+            background: white;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        /* Red Red Notice Banner */
+        .red-notice {
+            background-color: #dc2626;
+            color: white;
+            text-align: center;
+            padding: 6px;
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .suspect-photo {
+            height: 200px;
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #94a3b8;
+            font-size: 13px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .suspect-details {
+            padding: 20px;
+        }
+
+        .suspect-details h3 {
+            color: #002d62;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .suspect-details .meta {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 15px;
+        }
+
+        .suspect-details p {
+            font-size: 14px;
+            color: #334155;
+            margin-bottom: 15px;
+        }
+
+        /* Europol Fraud Categories */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .category-card {
+            background: #ffffff;
+            border-top: 4px solid #002d62;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .category-card h4 {
+            color: #002d62;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .category-card p {
+            font-size: 14px;
+            color: #475569;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #002d62;
+            color: #94a3b8;
+            text-align: center;
+            padding: 30px 5%;
+            font-size: 13px;
+            margin-top: 60px;
+            border-top: 4px solid #ffcc00;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Security Banner -->
+    <div class="top-banner">EUROPOL OFFICIAL ACADEMIC SIMULATION PORTAL</div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">EURO<span>POL</span></div>
+        <nav>
+            <a href="#">Most Wanted</a>
+            <a href="#">Crime Areas</a>
+            <a href="#">Submit Information</a>
+        </nav>
+    </header>
+
+    <!-- Hero Announcement -->
+    <section class="hero">
+        <h1>ECONOMIC & FINANCIAL CRIME CENTRE</h1>
+        <p>Targeting cross-border organized fraud networks, high-level money laundering schemes, and major cryptocurrency scams operating across Europe.</p>
+    </section>
+
+    <div class="container">
+        
+        <!-- Wanted Section -->
+        <h2 class="section-title">Europe's Most Wanted Fraudsters</h2>
+        <div class="wanted-grid">
+            
+            <!-- Suspect 1 -->
+            <div class="wanted-card">
+                <div class="red-notice">High Risk / Fraud</div>
+                <div class="suspect-photo">[ SUSPECT PHOTO BLOCK ]</div>
+                <div class="suspect-details">
+                    <h3>Alexei Volkov</h3>
+                    <div class="meta">Nationality: Russian / Cypriot</div>
+                    <p><strong>Offence:</strong> Large-scale CEO Fraud and Whaling scam netting over €45 Million from European tech firms.</p>
+                </div>
+            </div>
+
+            <!-- Suspect 2 -->
+            <div class="red-notice" style="background-color: #d97706;">Medium Risk / Crypto</div>
+            <div class="wanted-card">
+                <div class="suspect-photo">[ SUSPECT PHOTO BLOCK ]</div>
+                <div class="suspect-details">
+                    <h3>Sarah Jenkins</h3>
+                    <div class="meta">Nationality: British</div>
+                    <p><strong>Offence:</strong> Head of a multi-national fake cryptocurrency exchange network targeting elderly citizens across the EU.</p>
+                </div>
+            </div>
+
+            <!-- Suspect 3 -->
+            <div class="wanted-card">
+                <div class="red-notice">High Risk / Money Laundering</div>
+                <div class="suspect-photo">[ SUSPECT PHOTO BLOCK ]</div>
+                <div class="suspect-details">
+                    <h3>Mateo Silva</h3>
+                    <div class="meta">Nationality: Portuguese</div>
+                    <p><strong>Offence:</strong> Smuggling and laundering illicit cash using shell corporations and real estate investments.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Fraud Classes Section -->
+        <h2 class="section-title">Major Cross-Border Fraud Classifications</h2>
+        <div class="category-grid">
+            <div class="category-card">
+                <h4>1. Business Email Compromise (BEC)</h4>
+                <p>Hackers compromise legitimate business email accounts to conduct unauthorized transfers of funds, usually targeting corporate accounting departments.</p>
+            </div>
+            <div class="category-card">
+                <h4>2. Cryptocurrency & Investment Scams</h4>
+                <p>Syndicates creating high-tech investment applications that show fake profit graphics to convince users to deposit large amounts of Bitcoin/USDT.</p>
+            </div>
+            <div class="category-card">
+                <h4>3. Identity and Documents Fraud</h4>
+                <p>The manufacturing and distribution of sophisticated fake European passports and corporate papers used to bypass banking KYC procedures.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 European Cyber Crime Mock Platform. Designed purely for school project/academic structure demonstration.</p>
+    </footer>
+
+</body>
+</html>
+Use code with caution.🇪🇺 Europol Features Added:Europol Brand Palette: Pure deep blue and bright yellow na ginagamit sa mga ahensya sa Europa.Red Notice Tags: May label na "High Risk / Fraud" para magmukhang legit na law enforcement tracking portal.Global Cases: Ginawa nating English at ginamit ang mga kasong pang-internasyonal tulad ng Business Email Compromise at Shell Corporations.Ayos ba itong Europol template para sa presentation mo? Kung gusto mo, pwede nating lagyan ng "ANONYMOUS TIP FORM" sa ilalim para may interactive feature kung saan pwedeng mag-submit ng report ang user.AI can make mistakes, so double-check responses You said: TOL GANTO ANG FLATFORM  first page eto muna Headquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism. Europol also works with many non-EU partner states and international organisations.
+
+Large-scale criminal and terrorist networks pose a significant threat to the internal security of the EU and to the safety and livelihood of its people. The biggest security threats come from:
+
+terrorism;
+international drug trafficking and money laundering;
+organised fraud;
+the counterfeiting of euros;
+trafficking in human beings.
+
+Mandate
+Europol listens to what EU Member States need and analyses crime trends in the EU. The Agency supports investigations initiated by Member States, though Europol officers never arrest citizens or instigate investigations. Europol’s work usually consists of dealing with crimes that require an international approach and cooperation between several countries, inside and outside the EU. The decision on which crimes to prioritise is shaped by EMPACT.  
+
+Facts and figures on Europol
+More than 1400 staff
+264 Europol Liaison Officers
+Thousands of international investigations supported each year
+Became an official EU agency on 1 January 2010
+EMPACT is a structured multidisciplinary cooperation to fight organised and serious international crime. It is driven by the Member States and supported by EU institutions, bodies and agencies in line with their respective mandates.
+
+Over the years Europol has built up substantial experience in fighting drug trafficking, illicit immigration networks and trafficking in human beings, illicit vehicle trafficking, cybercrime, money laundering and currency forgery. Europol is also the central European office for combatting euro counterfeiting.
+
+Europol enjoys excellent cooperative arrangements with law enforcement partners in Europe and beyond. It also values its accountability arrangements which are among the most robust and transparent in the world.
+
+Europol’s operational activities focus on:
+
+illicit drugs
+trafficking in human beings
+facilitated illegal immigration
+cybercrime
+euro counterfeiting
+VAT fraud
+money laundering and asset tracing
+mobile organised-crime groups
+intellectual property crime
+cigarette smuggling
+outlawing motorcycle gangs
+terrorism
+Unique services
+Our position at the heart of the European security architecture allows us to offer a unique range of services. Europol is a high-security operational centre that operates non-stop: 24 hours a day, seven days a week.
+
+Analysis is at the core of our activities. Our criminal analysts are among the best trained in Europe. They use state-of-the-art tools to support investigations by law enforcement in Member States on a daily basis.
+
+To give our partners deeper insights into the crimes they are tackling, we produce regular assessments that offer comprehensive, forward-looking analyses of crime and terrorism in the EU.
+ 
+Europol also utilises specialised systems, which offer fast and secure capabilities for storing, searching, visualising and linking information, thus comprise a sophisticated crime-fighting toolbox.
+
+Management and control
+Europol is accountable at the EU level to the Council of Ministers for Justice and Home Affairs.
+
+The Council is responsible for the main control and guidance of Europol. It appoints the Executive Director and the Deputy Directors, and approves Europol’s budget (which is part of the general budget of the EU), together with the European Parliament. It can also adopt, along with the European Parliament, regulations related to Europol’s work. Each year, the Council forwards a special report to the European Parliament on the work of Europol.
+
+Europol currently operates under the Europol Regulation. This regulation was adopted on 11 May 2016, when the European Parliament voted on updated powers to enable Europol to step up efforts to fight terrorism, cybercrime and other serious and organised forms of crime. The regulation strengthens Europol’s role in supporting cooperation among law enforcement authorities in the EU.
+
+Organisational structure
+Europol is headed by an Executive Director, who is Europol’s legal representative and is appointed by the Council of the European Union. The regular term of office of Catherine De Bolle as Executive Director ended on 1 May 2026. In view of the ongoing recruitment procedure, Deputy Executive Director of Governance Jürgen Ebner became the Acting Executive Director on 2 May 2026, performing the functions and duties of Executive Director.
+
+Next to the Executive Director (recruitment currently ongoing), there are three Deputy Executive Directors:
+
+Jean-Philippe Lecouffe, Operations Directorate
+Jürgen Ebner, Governance Directorate
+Andrei Linta, Capabilities Directorate
+Europol Organisational Chart
+
+Tags
+KeywordsLaw EnforcementLegal RegulationLegislationManagement & Control
+Links
+Europol regulation - Regulation (EU) 2022/991Europol regulation - Regulation (EU) 2016/794
+Related contentHeadquartered in The Hague, Europol serves as the European Union's law enforcement agency, supporting member states in combating serious international crime, cybercrime, and terrorism. The agency, which operates under the 2016 Europol Regulation, focuses on operational intelligence and analysis, facilitating cooperation across Europe and with external partners.For detailed information on Europol's mandate and structure, visit the official European Union agency website.You said: yan ang first page tapos may mga button sya syempre like search or palit ng languatge About Europol
+Open submenu
+
+How we work
+Open submenu
+
+Crime areas
+Open submenu
+
+Partners & collaboration
+Open submenu
+
+Work with us
+Open submenu
+
+Media & press
+Open submenu
+
+Publications & events
+Open submenu
+
+Search
+Contact
+Language yan mga buttonAyt, kuha ko na, tol! Gagawin nating eksaktong kopya ng Opisyal na Europol Portal ang iyong front page gamit ang ibinigay mong totoong text content, data, at ang mismong navigation menu structure (may mga submenu handles, language switcher, at search bar).Heto ang kumpleto, malinis, at napaka-propesyonal na HTML/CSS code. Kopyahin mo lang ito, i-save bilang index.html, at handang-handa na itong i-present sa project mo.html<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Europol | European Union's Law Enforcement Agency</title>
+    <style>
+        /* CSS Root Variables for Europol Branding */
+        :root {
+            --europol-blue: #002d62;
+            --europol-gold: #ffcc00;
+            --dark-blue: #001f42;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --border-color: #cbd5e1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Top Utility Bar */
+        .utility-bar {
+            background-color: var(--dark-blue);
+            color: #ffffff;
+            padding: 8px 5%;
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .utility-bar a, .utility-bar span {
+            color: #ffffff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .utility-bar a:hover {
+            color: var(--europol-gold);
+        }
+
+        /* Main Header Navigation */
+        header {
+            background-color: var(--europol-blue);
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 5px solid var(--europol-gold);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--europol-gold);
+        }
+
+        /* Nav Menu Buttons with Submenu Indicators */
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--europol-gold);
+        }
+
+        .submenu-icon {
+            font-size: 10px;
+            color: var(--europol-gold);
+        }
+
+        /* Hero / Platform Introduction Banner */
+        .hero {
+            background: linear-gradient(rgba(0, 45, 98, 0.85), rgba(0, 31, 66, 0.95)), url('https://unsplash.com') no-repeat center center/cover;
+            color: #ffffff;
+            padding: 60px 10%;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            max-width: 850px;
+            margin: 0 auto;
+            color: #e2e8f0;
+            line-height: 1.7;
+        }
+
+        /* Main Content Layout Grid */
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        /* Left Column Text Content */
+        .content-body h2 {
+            font-size: 24px;
+            color: var(--europol-blue);
+            margin: 25px 0 15px 0;
+            border-bottom: 2px solid var(--europol-gold);
+            padding-bottom: 5px;
+        }
+
+        .content-body h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .content-body p {
+            margin-bottom: 15px;
+            color: var(--text-dark);
+            text-align: justify;
+        }
+
+        .content-body ul {
+            margin: 15px 0 25px 25px;
+        }
+
+        .content-body li {
+            margin-bottom: 8px;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        /* Right Column Side Panel (Facts & Figures + Management) */
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .panel-box {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--europol-blue);
+            padding: 25px;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .panel-box h3 {
+            color: var(--europol-blue);
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-item {
+            margin-bottom: 15px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .stat-item:last-child {
+            border: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--europol-blue);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* Footer Metadata Tags and Links */
+        .meta-footer {
+            background-color: #ffffff;
+            border-top: 1px solid var(--border-color);
+            padding: 20px 5%;
+            margin-top: 50px;
+        }
+
+        .meta-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .tags span {
+            background-color: #e2e8f0;
+            color: var(--text-dark);
+            padding: 5px 12px;
+            font-size: 12px;
+            border-radius: 4px;
+            margin-right: 8px;
+            font-weight: 600;
+        }
+
+        .links-section a {
+            color: var(--europol-blue);
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+
+        .links-section a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: var(--dark-blue);
+            color: #94a3b8;
+            text-align: center;
+            padding: 20px 5%;
+            font-size: 13px;
+            border-top: 4px solid var(--europol-gold);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Utility Bar (Search, Contact, Language) -->
+    <div class="utility-bar">
+        <span>🔍 Search</span>
+        <span>📞 Contact</span>
+        <span>🌐 Language (EN)</span>
+    </div>
+
+    <!-- Header Navigation Section -->
+    <header>
+        <a href="#" class="logo">EURO<span>POL</span></a>
+        <nav>
+            <button class="nav-btn">About Europol <span class="submenu-icon">▼</span></button>
+            <button class="nav-btn">How we work <span class="submenu-icon">▼</span></button>
+            <button class="nav-btn">Crime areas <span class="submenu-icon">▼</span></button>
+            <button class="nav-btn">Partners & collaboration <span class="submenu-icon">▼</span></button>
+            <button class="nav-btn">Work with us <span class="submenu-icon">▼</span></button>
+            <button class="nav-btn">Media & press <span class="submenu-icon">▼</span></button>
+            <button class="nav-btn">Publications & events <span class="submenu-icon">▼</span></button>
+        </nav>
+    </header>
+
+    <!-- Platform Core Mission Banner -->
+    <section class="hero">
+        <h1>EUROPEAN UNION'S LAW ENFORCEMENT AGENCY</h1>
+        <p>Headquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism. Europol also works with many non-EU partner states and international organisations.</p>
+    </section>
+
+    <!-- Main Content Layout Section -->
+    <div class="main-container">
+        
+        <!-- Left Content Area -->
+        <main class="content-body">
+            <h2>Security Threats in the EU</h2>
+            <p>Large-scale criminal and terrorist networks pose a significant threat to the internal security of the EU and to the safety and livelihood of its people. The biggest security threats come from:</p>
+            <ul>
+                <li>Terrorism</li>
+                <li>International drug trafficking and money laundering</li>
+                <li>Organised fraud</li>
+                <li>The counterfeiting of euros</li>
+                <li>Trafficking in human beings</li>
+            </ul>
+
+            <h2>Mandate & Operations</h2>
+            <p>Europol listens to what EU Member States need and analyses crime trends in the EU. The Agency supports investigations initiated by Member States, though Europol officers never arrest citizens or instigate investigations. Europol’s work usually consists of dealing with crimes that require an international approach and cooperation between several countries, inside and outside the EU. The decision on which crimes to prioritise is shaped by EMPACT.</p>
+Use code with caution.Over the years Europol has built up substantial experience in fighting drug trafficking, illicit immigration networks and trafficking in human beings, illicit vehicle trafficking, cybercrime, money laundering and currency forgery. Europol is also the central European office for combatting euro counterfeiting.Unique Operational ServicesOur position at the heart of the European security architecture allows us to offer a unique range of services. Europol is a high-security operational centre that operates non-stop: 24 hours a day, seven days a week.Analysis is at the core of our activities. Our criminal analysts are among the best trained in Europe. They use state-of-the-art tools to support investigations by law enforcement in Member States on a daily basis. To give our partners deeper insights into the crimes they are tackling, we produce regular assessments that offer comprehensive, forward-looking analyses of crime and terrorism in the EU.Facts and Figures1,400+Total Professional Staff264Europol Liaison OfficersThousandsInternational Investigations Supported Annually1 Jan 2010Became Official EU AgencyManagement & ControlActing Executive Director: Jürgen Ebner (Effective 2 May 2026, following the regular term end of Catherine De Bolle).Deputy Executive Directors:Jean-Philippe Lecouffe (Operations)Jürgen Ebner (Governance)Andrei Linta (Capabilities)Tags:Law EnforcementLegal RegulationLegislationManagement & ControlOfficial Content Links:Regulation (EU) 2022/991Regulation (EU) 2016/794© 2026 Europol Academic Web Layout Framework. Developed for Educational Project Simulation Purposes Only.
+### 💎 Highlights ng Europol Code na ito:
+1. **Official Look Menu Bar**: Ang mga hinihingi mong button gaya ng *About Europol*, *How we work*, *Crime areas*, etc. ay may kasamang maliliit na sub-menu indicator arrow (`▼`).
+2. **Top Utility Control**: Nakapwesto sa kanang itaas ang **Search**, **Contact**, at **Language Switcher** para gayang-gaya ang totoong system.
+3. **Structured Sidebar Grid**: Ang *Facts & Figures* (1400+ staff, 264 officers) at ang pamamahala ng *Acting Executive Director Jürgen Ebner* ay inayos ko sa isang eleganteng side column box para mukhang malinis at madaling basahin ng propesor mo. 
+
+Subukan mo itong i-run, tol! Kung kailangan mo pa ng **interactive dynamic function** (gaya ng gumagalaw na alert box kapag pinindot ang search) o okay na okay na ba sa iyo ang kumpletong layout na ito?
+AI can make mistakes, so double-check responses You said: tapos tol gantoI'm ready, tol! Ano ang susunod nating idadagdag o babaguhin sa Europol page mo?I-type mo lang kung anong karagdagang text, bagong section, o interactive feature ang gusto mong ilagay natin para makumpleto na natin ang project mo!You said: may button na mga wanted once na click un lalabas ung mga wanted at may mga active file caseAyt, got it, tol! Gagawin nating interactive ang page gamit ang kaunting JavaScript.Kapag kinlik ng teacher mo ang "Crime areas" o "Most Wanted" button sa navigation menu, magpapalit ang view ng website: mawawala ang main text at lalabas ang Europol Most Wanted Database na may active case files.Heto ang updated na code. Kopyahin ang buong code na ito at i-save sa iyong index.html:html<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Europol | European Union's Law Enforcement Agency</title>
+    <style>
+        :root {
+            --europol-blue: #002d62;
+            --europol-gold: #ffcc00;
+            --dark-blue: #001f42;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f1f5f9;
+            --border-color: #cbd5e1;
+            --danger-red: #dc2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Top Utility Bar */
+        .utility-bar {
+            background-color: var(--dark-blue);
+            color: #ffffff;
+            padding: 8px 5%;
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .utility-bar span {
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .utility-bar span:hover {
+            color: var(--europol-gold);
+        }
+
+        /* Main Header Navigation */
+        header {
+            background-color: var(--europol-blue);
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 5px solid var(--europol-gold);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: var(--europol-gold);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--europol-gold);
+        }
+
+        .submenu-icon {
+            font-size: 10px;
+            color: var(--europol-gold);
+        }
+
+        /* Hero Banner */
+        .hero {
+            background: linear-gradient(rgba(0, 45, 98, 0.85), rgba(0, 31, 66, 0.95)), url('https://unsplash.com') no-repeat center center/cover;
+            color: #ffffff;
+            padding: 50px 10%;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 15px;
+            max-width: 850px;
+            margin: 0 auto;
+            color: #e2e8f0;
+        }
+
+        /* Content Sections */
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Default Home Layout Grid */
+        .home-view {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .content-body h2 {
+            font-size: 24px;
+            color: var(--europol-blue);
+            margin: 25px 0 15px 0;
+            border-bottom: 2px solid var(--europol-gold);
+            padding-bottom: 5px;
+        }
+
+        .content-body h2:first-of-type { margin-top: 0; }
+        .content-body p { margin-bottom: 15px; text-align: justify; }
+        .content-body ul { margin: 15px 0 25px 25px; }
+        .content-body li { margin-bottom: 8px; font-weight: 500; }
+
+        .side-panel { display: flex; flex-direction: column; gap: 25px; }
+        .panel-box {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--europol-blue);
+            padding: 25px;
+            border-radius: 4px;
+        }
+
+        .panel-box h3 {
+            color: var(--europol-blue);
+            font-size: 17px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .stat-item {
+            margin-bottom: 15px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .stat-number { font-size: 24px; font-weight: 800; color: var(--europol-blue); }
+        .stat-label { font-size: 13px; color: var(--text-light); }
+
+        /* DYNAMIC WANTED VIEW (Hidden by Default) */
+        .wanted-view {
+            display: none;
+        }
+
+        .section-header {
+            border-left: 5px solid var(--danger-red);
+            padding-left: 15px;
+            margin-bottom: 30px;
+        }
+
+        .section-header h2 { color: var(--dark-blue); font-size: 28px; text-transform: uppercase; }
+
+        .wanted-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .wanted-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .red-notice-bar {
+            background-color: var(--danger-red);
+            color: white;
+            text-align: center;
+            padding: 6px;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .case-header {
+            padding: 20px 20px 10px 20px;
+            background-color: #fff5f5;
+            border-bottom: 1px solid #fee2e2;
+        }
+
+        .case-header h3 { color: var(--dark-blue); font-size: 22px; }
+        .case-id { font-size: 12px; color: var(--danger-red); font-weight: bold; margin-top: 2px; }
+
+        .case-details { padding: 20px; }
+        .case-field { margin-bottom: 12px; font-size: 14px; }
+        .case-field strong { color: var(--europol-blue); display: inline-block; width: 110px; }
+        
+        .status-badge {
+            background-color: #fee2e2;
+            color: var(--danger-red);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .case-summary {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+            font-size: 13px;
+            color: #475569;
+            text-align: justify;
+        }
+
+        /* Footer Tags */
+        .meta-footer { background-color: #ffffff; border-top: 1px solid var(--border-color); padding: 20px 5%; margin-top: 50px; }
+        .meta-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .tags span { background-color: #e2e8f0; color: var(--text-dark); padding: 5px 12px; font-size: 12px; border-radius: 4px; margin-right: 8px; font-weight: 600; }
+        .links-section a { color: var(--europol-blue); font-weight: 600; text-decoration: none; margin-left: 20px; font-size: 14px; }
+
+        footer { background-color: var(--dark-blue); color: #94a3b8; text-align: center; padding: 20px 5%; font-size: 13px; border-top: 4px solid var(--europol-gold); }
+    </style>
+</head>
+<body>
+
+    <!-- Top Utility Bar -->
+    <div class="utility-bar">
+        <span>🔍 Search</span>
+        <span>📞 Contact</span>
+        <span>🌐 Language (EN)</span>
+    </div>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo" onclick="showHome()">EURO<span>POL</span></div>
+        <nav>
+            <button class="nav-btn active" id="btn-home" onclick="showHome()">About Europol <span class="submenu-icon">▼</span></button>
+            <button class="nav-btn">How we work <span class="submenu-icon">▼</span></button>
+            <button class="nav-btn" id="btn-wanted" onclick="showWanted()">Crime areas (Most Wanted) <span class="submenu-icon">▼</span></button>
+            <button class="nav-btn">Partners & collaboration <span class="submenu-icon">▼</span></button>
+            <button class="nav-btn">Work with us <span class="submenu-icon">▼</span></button>
+            <button class="nav-btn">Media & press <span class="submenu-icon">▼</span></button>
+            <button class="nav-btn">Publications & events <span class="submenu-icon">▼</span></button>
+        </nav>
+    </header>
+
+    <!-- Hero Mission Banner -->
+    <section class="hero">
+        <h1 id="hero-title">EUROPEAN UNION'S LAW ENFORCEMENT AGENCY</h1>
+        <p id="hero-desc">Headquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism.</p>
+    </section>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        
+        <!-- VIEW 1: HOME VIEW (Default Text Content) -->
+        <div class="home-view" id="view-home">
+            <main class="content-body">
+                <h2>Security Threats in the EU</h2>
+                <p>Large-scale criminal and terrorist networks pose a significant threat to the internal security of the EU and to the safety and livelihood of its people. The biggest security threats come from:</p>
+                <ul>
+                    <li>terrorism;</li>
+Use code with caution.international drug trafficking and money laundering;organised fraud;the counterfeiting of euros;trafficking in human beings.MandateEuropol listens to what EU Member States need and analyses crime trends in the EU. The Agency supports investigations initiated by Member States, though Europol officers never arrest citizens or instigate investigations. Europol’s work usually consists of dealing with crimes that require an international approach and cooperation between several countries, inside and outside the EU. The decision on which crimes to prioritise is shaped by EMPACT.Over the years Europol has built up substantial experience in fighting drug trafficking, illicit immigration networks and trafficking in human beings, illicit vehicle trafficking, cybercrime, money laundering and currency forgery. Europol is also the central European office for combatting euro counterfeiting.Unique servicesOur position at the heart of the European security architecture allows us to offer a unique range of services. Europol is a high-security operational centre that operates non-stop: 24 hours a day, seven days a week.Analysis is at the core of our activities. Our criminal analysts are among the best trained in Europe. They use state-of-the-art tools to support investigations by law enforcement in Member States on a daily basis.Facts and figures on EuropolMore than 1400Professional Staff264Europol Liaison OfficersThousandsInternational investigations supported each year1 Jan 2010Became an official EU agencyManagement and controlActing Executive Director: Jürgen Ebner (Effective 2 May 2026, following Catherine De Bolle).Deputy Executive Directors:Jean-Philippe Lecouffe (Operations)Jürgen Ebner (Governance)Andrei Linta (Capabilities)Europe's Most Wanted Fugitives - Active Case FilesBelow are verified high-profile targets with international warrants processed under current EU security mandates.🔴 Europol Red NoticeMarcus VanceCASE FILE: #EU-2026-8841AAlias: "The Architect"Crime Type: Organized Fraud & TechTarget Area: VAT Fraud & Shell Co.Status: Active WarrantSummary: Lead operator of an intricate missing trader intra-community (MTIC) VAT fraud network. Responsible for laundering over €32 Million across five EU Member States using cryptocurrency routing.🔴 Europol Red NoticeElena RostovaCASE FILE: #EU-2026-9012BAlias: "Althea Kings"Crime Type: Money LaunderingTarget Area: Euro CounterfeitingStatus: Active WarrantSummary: Wanted for financing large-scale distribution syndicates involved in the counterfeiting of Euro banknotes and currency forgery operations based in Eastern Europe.🔴 Europol Red NoticeDimitri NovakCASE FILE: #EU-2026-1107CAlias: "Novacoin"Crime Type: Cybercrime / MalwareTarget Area: Organized FraudStatus: Active WarrantSummary: Mastermind behind cross-border high-level banking malware systems targeting European financial institutions. Instigated heavy identity and asset tracing operations.Keywords: Law Enforcement Legal Regulation Legislation Management & ControlLinks: Europol regulation - 2022/991 Europol regulation - 2016/794© 2026 Europol Academic Simulation Hub. Built for Framework Project Presentation.function showWanted() {// Hide Home, Show Wanted Sectiondocument.getElementById('view-home').style.display = 'none';document.getElementById('view-wanted').style.display = 'block';// Adjust Navigation Classesdocument.getElementById('btn-home').classList.remove('active');document.getElementById('btn-wanted').classList.add('active');// Dynamic Hero update for contextdocument.getElementById('hero-title').innerText = "ECONOMIC & FINANCIAL CRIME FUGITIVE DATABASE";document.getElementById('hero-desc').innerText = "Europol monitors active international case files in cooperation with Member States to track profiles flagged under EMPACT crime priorities.";}function showHome() {// Hide Wanted, Show Home Sectiondocument.getElementById('view-wanted').style.display = 'none';document.getElementById('view-home').style.display = 'grid';// Adjust Navigation Classesdocument.getElementById('btn-wanted').classList.remove('active');document.getElementById('btn-home').classList.add('active');// Reset Herodocument.getElementById('hero-title').innerText = "EUROPEAN UNION'S LAW ENFORCEMENT AGENCY";document.getElementById('hero-desc').innerText = "Headquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism.";}
+### ⚙️ Paano ito i-test, tol:
+1. I-save at buksan ang file sa web browser mo.
+2. Sa unahan, makikita mo ang default page na may kopya ng mahabang text na binigay mo.
+3. Kapag kinlik mo ang button na **"Crime areas (Most Wanted)"**, biglang magpapalit ang buong view: lalabas ang **Active Case Files** ng mga wanted at magbabago rin ang text ng malaking banner sa taas!
+4. Kapag kinlik mo ang **"About Europol"** o ang malaking logo na **"EUROPOL"**, babalik ito sa simula.
+
+Sigurado akong bibilib ang teacher mo rito dahil gumagana ang dynamic buttons. Handa na ba ito o may gusto ka pang **itama sa mga case data**?
+AI responses may include mistakes. For legal advice, consult a professional. Learn moreYou said: kumbaga tol may mga pagesAyt, kuha ko na, tol! Ang ibig mong sabihin, imbes na itago lang gamit ang JavaScript, gusto mo ay magkakahiwalay na HTML pages para kapag kinlik ang mga button sa menu, lilipat talaga sa ibang page (halimbawa: index.html, wanted.html, at cases.html).Para sa project mo, hatiin natin ito sa tatlong magkakahiwalay na files. Gumawa ka ng isang folder at i-save ang bawat code sa ibaba gamit ang kanilang eksaktong file name:1️⃣ I-save bilang: index.html (Ang Main Homepage)Ito ang unang bubukas na naglalaman ng mahabang text at impormasyon na ibinigay mo.html<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Europol | About Us</title>
+    <style>
+        :root { --europol-blue: #002d62; --europol-gold: #ffcc00; --dark-blue: #001f42; --text-dark: #1e293b; --text-light: #64748b; --bg-light: #f1f5f9; --border-color: #cbd5e1; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-dark); line-height: 1.6; }
+        .utility-bar { background-color: var(--dark-blue); color: #ffffff; padding: 8px 5%; display: flex; justify-content: flex-end; gap: 20px; font-size: 13px; }
+        header { background-color: var(--europol-blue); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 5px solid var(--europol-gold); }
+        .logo { font-size: 26px; font-weight: 800; color: #ffffff; text-decoration: none; }
+        .logo span { color: var(--europol-gold); }
+        nav { display: flex; gap: 10px; }
+        .nav-link { color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; padding: 8px 12px; border-radius: 4px; display: flex; align-items: center; gap: 5px; }
+        .nav-link:hover, .nav-link.active { background-color: rgba(255, 255, 255, 0.1); color: var(--europol-gold); }
+        .hero { background: linear-gradient(rgba(0, 45, 98, 0.85), rgba(0, 31, 66, 0.95)), url('https://unsplash.com') no-repeat center center/cover; color: #ffffff; padding: 50px 10%; text-align: center; }
+        .hero h1 { font-size: 32px; margin-bottom: 10px; }
+        .main-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+        .content-body h2 { font-size: 24px; color: var(--europol-blue); margin: 25px 0 15px 0; border-bottom: 2px solid var(--europol-gold); padding-bottom: 5px; }
+        .content-body h2:first-of-type { margin-top: 0; }
+        .content-body p { margin-bottom: 15px; text-align: justify; }
+        .content-body ul { margin: 15px 0 25px 25px; }
+        .content-body li { margin-bottom: 8px; }
+        .panel-box { background-color: #ffffff; border: 1px solid var(--border-color); border-top: 4px solid var(--europol-blue); padding: 25px; border-radius: 4px; margin-bottom: 20px; }
+        .stat-item { margin-bottom: 15px; border-bottom: 1px dashed var(--border-color); padding-bottom: 10px; }
+        .stat-number { font-size: 24px; font-weight: 800; color: var(--europol-blue); }
+        .meta-footer { background-color: #ffffff; border-top: 1px solid var(--border-color); padding: 20px 5%; margin-top: 50px; }
+        .tags span { background-color: #e2e8f0; padding: 5px 12px; font-size: 12px; border-radius: 4px; margin-right: 8px; font-weight: 600; }
+        footer { background-color: var(--dark-blue); color: #94a3b8; text-align: center; padding: 20px 5%; font-size: 13px; border-top: 4px solid var(--europol-gold); }
+    </style>
+</head>
+<body>
+    <div class="utility-bar"><span>Search</span><span>Contact</span><span>Language (EN)</span></div>
+    <header>
+        <a href="index.html" class="logo">EURO<span>POL</span></a>
+        <nav>
+            <a href="index.html" class="nav-link active">About Europol ▼</a>
+            <a href="wanted.html" class="nav-link">Most Wanted ▼</a>
+            <a href="cases.html" class="nav-link">Active Case Files ▼</a>
+            <a href="#" class="nav-link">Partners & Collaboration ▼</a>
+        </nav>
+    </header>
+    <section class="hero">
+        <h1>EUROPEAN UNION'S LAW ENFORCEMENT AGENCY</h1>
+        <p>Headquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States.</p>
+    </section>
+    <div class="main-container">
+        <main class="content-body">
+            <h2>Our Mission & Vision</h2>
+            <p>Headquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism. Europol also works with many non-EU partner states and international organisations.</p>
+            <h2>Security Threats</h2>
+            <ul>
+                <li>terrorism;</li>
+                <li>international drug trafficking and money laundering;</li>
+                <li>organised fraud;</li>
+                <li>the counterfeiting of euros;</li>
+                <li>trafficking in human beings.</li>
+            </ul>
+        </main>
+        <aside>
+            <div class="panel-box">
+                <h3>Facts and Figures</h3>
+                <div class="stat-item"><div class="stat-number">More than 1400</div><div>Staff Members</div></div>
+                <div class="stat-item"><div class="stat-number">264</div><div>Liaison Officers</div></div>
+            </div>
+        </aside>
+    </div>
+    <div class="meta-footer"><div class="tags"><strong>Keywords:</strong> <span>Law Enforcement</span> <span>Management & Control</span></div></div>
+    <footer><p>&copy; 2026 Europol Academic Simulation Hub.</p></footer>
+</body>
+</html>
+Use code with caution.2️⃣ I-save bilang: wanted.html (Ang Most Wanted Page)Dito mapupunta ang user kapag pinindot ang Most Wanted sa menu.html<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Europol | Most Wanted</title>
+    <style>
+        :root { --europol-blue: #002d62; --europol-gold: #ffcc00; --dark-blue: #001f42; --text-dark: #1e293b; --border-color: #cbd5e1; --danger-red: #dc2626; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background-color: #f1f5f9; color: var(--text-dark); line-height: 1.6; }
+        .utility-bar { background-color: var(--dark-blue); color: #ffffff; padding: 8px 5%; display: flex; justify-content: flex-end; gap: 20px; font-size: 13px; }
+        header { background-color: var(--europol-blue); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 5px solid var(--europol-gold); }
+        .logo { font-size: 26px; font-weight: 800; color: #ffffff; text-decoration: none; }
+        .logo span { color: var(--europol-gold); }
+        nav { display: flex; gap: 10px; }
+        .nav-link { color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; padding: 8px 12px; border-radius: 4px; }
+        .nav-link:hover, .nav-link.active { background-color: rgba(255, 255, 255, 0.1); color: var(--europol-gold); }
+        .hero { background: linear-gradient(rgba(185, 28, 28, 0.9), rgba(0, 31, 66, 0.95)); color: #ffffff; padding: 40px 10%; text-align: center; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .wanted-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .wanted-card { background: white; border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .red-notice { background-color: var(--danger-red); color: white; padding: 6px; font-weight: bold; font-size: 12px; text-transform: uppercase; }
+        .photo-placeholder { height: 200px; background-color: #e2e8f0; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: bold; }
+        .details { padding: 20px; }
+        .details h3 { color: var(--europol-blue); margin-bottom: 5px; }
+        .details p { font-size: 14px; color: #475569; margin-top: 10px; }
+        footer { background-color: var(--dark-blue); color: #94a3b8; text-align: center; padding: 20px 5%; font-size: 13px; border-top: 4px solid var(--europol-gold); margin-top: 50px; }
+    </style>
+</head>
+<body>
+    <div class="utility-bar"><span>Search</span><span>Contact</span><span>Language (EN)</span></div>
+    <header>
+        <a href="index.html" class="logo">EURO<span>POL</span></a>
+        <nav>
+            <a href="index.html" class="nav-link">About Europol ▼</a>
+            <a href="wanted.html" class="nav-link active">Most Wanted ▼</a>
+            <a href="cases.html" class="nav-link">Active Case Files ▼</a>
+            <a href="#" class="nav-link">Partners & Collaboration ▼</a>
+        </nav>
+    </header>
+    <section class="hero">
+        <h1>EUROPE'S MOST WANTED FUGITIVES</h1>
+        <p>Help us find these high-profile individuals flagged for international organized fraud.</p>
+    </section>
+    <div class="container">
+        <div class="wanted-grid">
+            <div class="wanted-card">
+                <div class="red-notice">High Risk Notice</div>
+                <div class="photo-placeholder">[ SUSPECT IMAGE ]</div>
+                <div class="details">
+                    <h3>Alexei Volkov</h3>
+                    <p>Wanted for Cross-border Business Email Compromise networks yielding over €45 Million.</p>
+                </div>
+            </div>
+            <div class="wanted-card">
+                <div class="red-notice">High Risk Notice</div>
+                <div class="photo-placeholder">[ SUSPECT IMAGE ]</div>
+                <div class="details">
+                    <h3>Sarah Jenkins</h3>
+                    <p>Wanted for setting up fraudulent shell corporations and multi-national fake crypto trading platforms.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer><p>&copy; 2026 Europol Academic Simulation Hub.</p></footer>
+</body>
+</html>
+Use code with caution.3️⃣ I-save bilang: cases.html (Ang Active Case Files Page)Dito naman lilipat kapag pinindot ang Active Case Files.html<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Europol | Active Case Files</title>
+    <style>
+        :root { --europol-blue: #002d62; --europol-gold: #ffcc00; --dark-blue: #001f42; --text-dark: #1e293b; --border-color: #cbd5e1; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background-color: #f1f5f9; color: var(--text-dark); line-height: 1.6; }
+        .utility-bar { background-color: var(--dark-blue); color: #ffffff; padding: 8px 5%; display: flex; justify-content: flex-end; gap: 20px; font-size: 13px; }
+        header { background-color: var(--europol-blue); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 5px solid var(--europol-gold); }
+        .logo { font-size: 26px; font-weight: 800; color: #ffffff; text-decoration: none; }
+        .logo span { color: var(--europol-gold); }
+        nav { display: flex; gap: 10px; }
+        .nav-link { color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; padding: 8px 12px; border-radius: 4px; }
+        .nav-link:hover, .nav-link.active { background-color: rgba(255, 255, 255, 0.1); color: var(--europol-gold); }
+        .hero { background: linear-gradient(rgba(0, 45, 98, 0.9), rgba(0, 31, 66, 0.95)); color: #ffffff; padding: 40px 10%; text-align: center; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 6px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: var(--europol-blue); color: white; }
+        tr:hover { background-color: #f8fafc; }
+        .status { color: #dc2626; font-weight: bold; }
+        footer { background-color: var(--dark-blue); color: #94a3b8; text-align: center; padding: 20px 5%; font-size: 13px; border-top: 4px solid var(--europol-gold); margin-top: 50px; }
+    </style>
+</head>
+<body>
+    <div class="utility-bar"><span>Search</span><span>Contact</span><span>Language (EN)</span></div>
+    <header>
+        <a href="index.html" class="logo">EURO<span>POL</span></a>
+        <nav>
+            <a href="index.html" class="nav-link">About Europol ▼</a>
+            <a href="wanted.html" class="nav-link">Most Wanted ▼</a>
+            <a href="cases.html" class="nav-link active">Active Case Files ▼</a>
+            <a href="#" class="nav-link">Partners & Collaboration ▼</a>
+        </nav>
+    </header>
+    <section class="hero">
+        <h1>ACTIVE INTELLIGENCE CASE FILES</h1>
+        <p>Current operational frameworks targeting organized financial syndicates across Europe.</p>
+    </section>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Case Reference</th>
+                    <th>Crime Target Classification</th>
+                    <th>Lead Priority</th>
+                    <th>Investigation Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>#EU-2026-8841A</strong></td>
+                    <td>Organised Fraud / VAT Carousels</td>
+                    <td>EMPACT Priority</td>
+                    <td><span class="status">ONGOING TRACING</span></td>
+                </tr>
+                <tr>
+                    <td><strong>#EU-2026-9012B</strong></td>
+                    <td>Euro Counterfeiting Networks</td>
+                    <td>Central Currency Office</td>
+                    <td><span class="status">ONGOING TRACING</span></td>
+                </tr>
+                <tr>
+                    <td><strong>#EU-2026-1107C</strong></td>
+                    <td>High-level Crypto Laundering</td>
+                    <td>Cybercrime Centre (EC3)</td>
+                    <td><span class="status">WARRANT ISSUED</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer><p>&copy; 2026 Europol Academic Simulation Hub.</p></footer>
+</body>
+</html>
+Use code with caution.💡 Paano ito patakbuhin, tol?Siguraduhing magkakasama ang tatlong files na iyan sa isang folder.Buksan ang index.html sa iyong internet browser.Subukan mong i-click ang Most Wanted o Active Case Files sa menu grid—lilipat na talaga siya sa ibang web page na parang totoong website live deployment!May kailangan pa ba tayong dagdagang page (gaya ng Contact Form page) o solid na ba ito para sa presentation mo?You said: tol kaya mo naman gayahin to dba eto ung frontAyt, kuha ko na ang exact look ng live site, tol! Kakasya lahat ng layout features na 'yan sa ginagawa nating framework.Gayahin natin ang mismong actual modern design ng Europol portal na nasa screenshot mo:Wave Curve Bottom Effect: Yung kulay dark blue banner sa taas na may pa-alon o pakurbang hugis pambura sa ibaba.Language Bubble Switcher Row: Yung hilera ng mga bilog na asul at dilaw na language badges (EN, BG, ES, CS, atbp.) sa tapat ng "Available in:".Clean Text Font Selection: Gagamit tayo ng modernong sans-serif font na may tamang spacing para malinis basahin.I-update natin ang iyong pangunahing file (index.html) para maging kaparehong-kapareho ng itsura sa screenshot:📄 I-save bilang: index.html (Updated Master Version)html<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Europol | Helping make Europe safer</title>
+    <style>
+        :root {
+            --europol-blue: #090e3a; /* Dark navy color from screenshot */
+            --europol-bright-blue: #0053ff; /* Brand left accent blue */
+            --europol-gold: #ffcc00;
+            --text-dark: #1f2937;
+            --bubble-blue: #00d2ff; /* Sky blue language buttons */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Top Header Area Grid Layout */
+        header {
+            background-color: #ffffff;
+            padding: 15px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Side Logo Accent Block */
+        .logo-block {
+            background-color: var(--europol-bright-blue);
+            color: #ffffff;
+            font-weight: 900;
+            font-size: 20px;
+            letter-spacing: 2px;
+            padding: 12px 25px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        /* Main Navigation Links Layout */
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--europol-bright-blue);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            color: #ff5500; /* Subtle hover color change */
+        }
+
+        /* Right Utility Icons (Search, Contact, Sign-in placeholders) */
+        .right-utilities {
+            display: flex;
+            gap: 15px;
+            color: var(--europol-bright-blue);
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .utility-item {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Hero Banner with Bottom Wave Curve SVG Graphic */
+        .hero-banner {
+            background-color: var(--europol-blue);
+            color: #ffffff;
+            text-align: center;
+            padding: 50px 20px 0px 20px;
+            position: relative;
+        }
+
+        .share-icon-badge {
+            background-color: #00bcd4;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .page-badge-label {
+            color: var(--europol-gold);
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .hero-banner h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .hero-banner .tagline {
+            font-size: 20px;
+            color: #e5e7eb;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+
+        .update-date-text {
+            color: var(--europol-gold);
+            font-size: 13px;
+            margin-bottom: 30px;
+        }
+
+        /* Curved Wave Background Edge Effect */
+        .wave-container {
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+
+        .wave-container svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 60px;
+        }
+
+        .wave-container .shape-fill {
+            fill: #ffffff;
+        }
+
+        /* Lower Content Section Padding Layout */
+        .main-content-layout {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 25px;
+        }
+
+        /* Languages Switcher Area Component */
+        .lang-switcher-section {
+            margin-bottom: 40px;
+        }
+
+        .lang-label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #111827;
+            margin-bottom: 12px;
+        }
+
+        .lang-bubbles-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .lang-bubble {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background-color: var(--bubble-blue);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .lang-bubble:hover {
+            opacity: 0.8;
+        }
+
+        /* Active Selected Language Accent Color */
+        .lang-bubble.active-lang {
+            background-color: var(--europol-gold);
+            color: var(--europol-blue);
+        }
+
+        /* Main Editorial Content Typography blocks */
+        .body-text-block p {
+            font-size: 16px;
+            color: #374151;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Upper Main Interface Header Layout -->
+    <header>
+        <div class="brand-container">
+            <a href="index.html" class="logo-block">Europol</a>
+        </div>
+        <nav>
+            <a href="index.html" class="active">About Europol</a>
+            <a href="how-we-work.html">How we work</a>
+            <a href="wanted.html">Crime Areas</a>
+            <a href="#">Partners & Collaboration</a>
+            <a href="#">Work with us</a>
+            <a href="#">Media & Press</a>
+            <a href="#">Publications & Events</a>
+        </nav>
+        <div class="right-utilities">
+            <div class="utility-item">🔍<span>Search</span></div>
+            <div class="utility-item">📞<span>Contact</span></div>
+            <div class="utility-item">👤<span>Sign in</span></div>
+        </div>
+    </header>
+
+    <!-- Top Dark Navy Curved Panel Content Area -->
+    <section class="hero-banner">
+        <div class="share-icon-badge">🔗</div>
+        <span class="page-badge-label">Page</span>
+        <h1>About Europol</h1>
+        <div class="tagline">Helping make Europe safer</div>
+        <div class="update-date-text">Update date: 04 May 2026</div>
+
+        <!-- Custom Wave Curve Vector Path Generation Block -->
+        <div class="wave-container">
+            <svg data-name="Layer 1" xmlns="http://w3.org" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0 C300,90 900,90 1200,0 L1200,120 L0,120 Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Center Section Page Layout -->
+    <main class="main-content-layout">
+        
+        <!-- Language Interface Section Component Wrapper -->
+        <section class="lang-switcher-section">
+            <div class="lang-label">Available in:</div>
+            <div class="lang-bubbles-row">
+                <div class="lang-bubble active-lang">EN</div>
+                <div class="lang-bubble">BG</div>
+                <div class="lang-bubble">ES</div>
+                <div class="lang-bubble">CS</div>
+                <div class="lang-bubble">DA</div>
+                <div class="lang-bubble">DE</div>
+                <div class="lang-bubble">ET</div>
+                <div class="lang-bubble">EL</div>
+                <div class="lang-bubble">FR</div>
+                <div class="lang-bubble">GA</div>
+                <div class="lang-bubble">IT</div>
+                <div class="lang-bubble">LV</div>
+                <div class="lang-bubble">LT</div>
+                <div class="lang-bubble">HU</div>
+                <div class="lang-bubble">MT</div>
+                <div class="lang-bubble">NL</div>
+                <div class="lang-bubble">PL</div>
+                <div class="lang-bubble">PT</div>
+                <div class="lang-bubble">RO</div>
+                <div class="lang-bubble">SK</div>
+                <div class="lang-bubble">SL</div>
+                <div class="lang-bubble">FI</div>
+                <div class="lang-bubble">SV</div>
+                <div class="lang-bubble">HR</div>
+            </div>
+        </section>
+
+        <!-- Paragraph Content Sections Text Area Elements -->
+        <article class="body-text-block">
+            <p>Headquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism. Europol also works with many non-EU partner states and international organisations.</p>
+            
+            <p>Large-scale criminal and terrorist networks pose a significant threat to the internal security of the EU and to the safety and livelihood of its people. The biggest security threats come from:</p>
+        </article>
+        
+    </main>
+
+</body>
+</html>
+Use code with caution.🛠️ Ano ang ginawa nating upgrade?SVG Smooth Wave Path: Ginamitan ko ng custom inline vector curve (<svg>) sa ilalim ng asul na banner para makuha yung eksaktong pagka-kurba na katulad ng nasa screenshot mo.Exact Color Scheme Matching: Ginamit natin ang madilim na blue (#090e3a) para sa banner, neon brand blue (#0053ff) para sa logos/links, at sky blue (#00d2ff) para sa bilog na language bubbles.Flexbox Badges Alignment: Naka-ayos na lahat ng language choices (EN, BG, ES, atbp.) sa isang malinis na automatic wrap-around row grid panel.Maaari mo nang kopyahin at i-refresh ang browser mo para makita ang pagbabago, tol! Handa ka na bang i-link ito sa iba pang sub-pages?You said: search button working din tol ah tapos etong crime areas lang ang aayusin ntenAyt, kuha ko na ang visual flow, tol! Bale gagawin nating fully interactive ang Crime Areas tab at ang Search button sa loob mismo ng iisang master file para napakabilis i-present at hindi magkakahiwalay ng mga file.Heto ang mga in-upgrade natin base sa bagong screenshot mo:Crime Areas Mega Menu Dropdown: Kapag kinlik ang "Crime Areas", bababa ang isang malaking dark navy window na naglalaman ng listahan ng mga krimen (gaya ng Corruption, Cyber-attacks, Economic crime, atbp.) na may scrolling bar sa gilid.Working Search Bar Overlay: Kapag kinlik ang "Search" icon sa kanang itaas, may lilitaw na functional text box para makapag-type ka ng keyword.Heto ang kumpleto at updated na single-file code. I-save mo lang ito bilang index.html at i-refresh ang iyong browser:html<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Europol | Helping make Europe safer</title>
+    <style>
+        :root {
+            --europol-blue: #090e3a; 
+            --europol-bright-blue: #0053ff; 
+            --europol-gold: #ffcc00;
+            --text-dark: #1f2937;
+            --bubble-blue: #00d2ff; 
+            --menu-bg: #090e3a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: var(--text-dark);
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* --- NAVIGATION HEADER --- */
+        header {
+            background-color: #ffffff;
+            padding: 15px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+        }
+
+        .brand-container { display: flex; align-items: center; }
+
+        .logo-block {
+            background-color: var(--europol-bright-blue);
+            color: #ffffff;
+            font-weight: 900;
+            font-size: 20px;
+            letter-spacing: 2px;
+            padding: 12px 25px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        nav { display: flex; gap: 20px; }
+
+        /* Navigation menu controls as interactive buttons */
+        .menu-btn {
+            background: none;
+            border: none;
+            color: var(--europol-bright-blue);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            padding-bottom: 5px;
+        }
+
+        .menu-btn:hover, .menu-btn.active {
+            color: #ff5500;
+        }
+
+        .right-utilities {
+            display: flex;
+            gap: 25px;
+            color: var(--europol-bright-blue);
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .utility-item {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            user-select: none;
+        }
+
+        .utility-item span { font-size: 16px; margin-bottom: 2px; }
+
+        /* --- DYNAMIC INTERACTIVE SEARCH BAR POPUP --- */
+        .search-overlay-bar {
+            display: none;
+            background-color: #f3f4f6;
+            padding: 15px 4%;
+            border-bottom: 2px solid var(--europol-bright-blue);
+            position: sticky;
+            top: 73px;
+            z-index: 1500;
+            animation: slideDown 0.2s ease-out;
+        }
+
+        .search-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-wrapper input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search-wrapper button {
+            background-color: var(--europol-bright-blue);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* --- DYNAMIC DROPDOWN MEGA MENU (CRIME AREAS) --- */
+        .crime-dropdown-menu {
+            display: none;
+            background-color: var(--menu-bg);
+            color: #ffffff;
+            position: fixed;
+            top: 74px;
+            left: 0;
+            width: 100%;
+            height: 480px;
+            z-index: 1800;
+            padding: 40px 8%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        .dropdown-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            height: 100%;
+        }
+
+        .dropdown-left-intro h2 {
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .dropdown-left-intro p {
+            font-size: 15px;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        /* Scrolling Crime Registry List column container matches screenshot layout */
+        .crime-scroll-panel {
+            overflow-y: auto;
+            padding-right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Elegant gold tracking border scroll bar match */
+        .crime-scroll-panel::-webkit-scrollbar { width: 5px; }
+        .crime-scroll-panel::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
+        .crime-scroll-panel::-webkit-scrollbar-thumb { background: var(--europol-gold); border-radius: 2px; }
+
+        .crime-item-link {
+            color: #00d2ff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: color 0.2s;
+        }
+
+        .crime-item-link:hover { color: #ffffff; }
+        .crime-arrow-marker { color: var(--europol-gold); font-weight: bold; }
+
+        /* --- HERO BANNER LAYOUT --- */
+        .hero-banner {
+            background-color: var(--europol-blue);
+            color: #ffffff;
+            text-align: center;
+            padding: 50px 20px 0px 20px;
+            position: relative;
+        }
+
+        .share-icon-badge {
+            background-color: #00bcd4; width: 32px; height: 32px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center; margin-bottom: 10px; color: white;
+        }
+
+        .page-badge-label { color: var(--europol-gold); font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; display: block; }
+        .hero-banner h1 { font-size: 42px; font-weight: 700; margin-bottom: 10px; }
+        .hero-banner .tagline { font-size: 20px; color: #e5e7eb; margin-bottom: 15px; }
+        .update-date-text { color: var(--europol-gold); font-size: 13px; margin-bottom: 30px; }
+
+        .wave-container { width: 100%; overflow: hidden; line-height: 0; }
+        .wave-container svg { position: relative; display: block; width: calc(100% + 1.3px); height: 60px; }
+        .wave-container .shape-fill { fill: #ffffff; }
+
+        /* --- LOWER CONTENT --- */
+        .main-content-layout { max-width: 850px; margin: 40px auto; padding: 0 25px; }
+        .lang-switcher-section { margin-bottom: 40px; }
+        .lang-label { font-size: 16px; font-weight: bold; color: #111827; margin-bottom: 12px; }
+        .lang-bubbles-row { display: flex; flex-wrap: wrap; gap: 8px; }
+        .lang-bubble {
+            width: 34px; height: 34px; border-radius: 50%; background-color: var(--bubble-blue); color: #ffffff;
+            display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; cursor: pointer;
+        }
+        .lang-bubble.active-lang { background-color: var(--europol-gold); color: var(--europol-blue); }
+        .body-text-block p { font-size: 16px; color: #374151; margin-bottom: 25px; text-align: justify; }
+
+        /* --- ANIMATION KEYFRAMES --- */
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Upper Main Interface Header Layout -->
+    <header>
+        <div class="brand-container">
+            <div class="logo-block" style="cursor:pointer;" onclick="closeAllOverlays()">Europol</div>
+        </div>
+        <nav>
+            <button class="menu-btn active" onclick="closeAllOverlays()">About Europol</button>
+            <button class="menu-btn">How we work</button>
+            
+            <!-- Crime Areas toggle action selector activation point -->
+            <button class="menu-btn" id="crime-menu-trigger" onclick="toggleCrimeMenu()">Crime Areas</button>
+            
+            <button class="menu-btn">Partners & Collaboration</button>
+            <button class="menu-btn">Work with us</button>
+            <button class="menu-btn">Media & Press</button>
+            <button class="menu-btn">Publications & Events</button>
+        </nav>
+        <div class="right-utilities">
+            <div class="utility-item" onclick="toggleSearchBar()"><span>🔍</span>Search</div>
+            <div class="utility-item"><span>📞</span>Contact</div>
+            <div class="utility-item"><span>👤</span>Sign in</div>
+        </div>
+    </header>
+
+    <!-- Interactive Dropdown Active Search Bar Section Component -->
+    <div class="search-overlay-bar" id="searchBarBox">
+        <div class="search-wrapper">
+            <input type="text" placeholder="Type your security database query keywords here...">
+            <button type="button" onclick="alert('Searching query database...')">Search</button>
+        </div>
+    </div>
+
+    <!-- Active Dropdown Menu Block Layout Panel Interface -->
+    <div class="crime-dropdown-menu" id="crimeMegaMenu">
+        <div class="dropdown-grid">
+            <div class="dropdown-left-intro">
+                <h2>Crime areas</h2>
+                <p>Crime areas and key topics we tackle, including EMPACT priorities, and intelligence sharing.</p>
+            </div>
+            
+Use code with caution.Child sexual exploitation Corruption >Criminal finances and money laundering Currency counterfeiting Cyber-attacks Economic crime Environmental crime >Forgery and trafficking of administrative documents Fraud schemes against the EU and Member States >Genocide, crimes against humanity and war crimes The trade in illegal firearms and explosives Illicit tobacco trade Intellectual property crime 🔗PageAbout EuropolHelping make Europe saferUpdate date: 04 May 2026Available in:ENBGESCSDADEETELFRGAITLVLTHUMTNLPLPTROSKSLFISVHRHeadquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism. Europol also works with many non-EU partner states and international organisations.Large-scale criminal and terrorist networks pose a significant threat to the internal security of the EU and to the safety and livelihood of its people. The biggest security threats come from:function toggleCrimeMenu() {var menu = document.getElementById('crimeMegaMenu');var trigger = document.getElementById('crime-menu-trigger');var searchBar = document.getElementById('searchBarBox');// Close search bar if opening menusearchBar.style.display = 'none';if (menu.style.display === 'block') {menu.style.display = 'none';trigger.classList.remove('active');} else {menu.style.display = 'block';trigger.classList.add('active');}}function toggleSearchBar() {var searchBar = document.getElementById('searchBarBox');var menu = document.getElementById('crimeMegaMenu');var trigger = document.getElementById('crime-menu-trigger');// Close menu if opening search barmenu.style.display = 'none';trigger.classList.remove('active');if (searchBar.style.display === 'block') {searchBar.style.display = 'none';} else {searchBar.style.display = 'block';}}function closeAllOverlays() {document.getElementById('crimeMegaMenu').style.display = 'none';document.getElementById('searchBarBox').style.display = 'none';document.getElementById('crime-menu-trigger').classList.remove('active');}function closeAllOverlaysFromContent() {// Closes overlays smoothly when clicking body content text fieldscloseAllOverlays();}
+### 🎮 Paano ito I-present sa Screen, tol:
+1. I-save mo ang code na ito at buksan ang window sa web browser mo.
+2. Pindutin ang **Crime Areas** na tab sa navigation menu—agad na bababa ang asul na panel na nagpapakita ng listahan ng mga kaso eksakto tulad ng nasa screenshot mo!
+3. Subukan mong pindutin ang **🔍 Search** link sa kanang dulo—may mag-is-slide down naman na functional input panel para sa keywords.
+4. Kapag clinick mo kahit saan sa may bandang puting teksto o sa malaking salita na "Europol", kusang magsasara ang mga dropdown windows para malinis ulit ang interface.
+
+Ayos ba ang interaction setup na ito para sa evaluation ng project mo, tol? Kung may iba ka pang gustong idagdag tulad ng filter features o text adjustment, sabihin mo lang!
+You said: tapos lalagay ka jan ng activie case tol once na pinindot un papasok ka sa bagong page kung saan makakakita ka ng maraming picture na naka post na activae file case tapos pwede ka mag search ng name and file caseAyt, solid na plano 'yan, tol! Para mangyari ito nang maayos, gagawa tayo ng dalawang magkahiwalay na files para kapag pinindot ang link, lilipat talaga sa isang bagong page na puno ng mga profile pictures ng active cases na may gumaganang search bar.Gawin natin ang dalawang hakbang na ito sa iyong project folder:1️⃣ Hakbang 1: I-update ang index.html (Idagdag ang "Active Cases" link)Buksan ang iyong lumang index.html code, hanapin ang bahagi ng <nav> sa taas, at isama o palitan ang isa sa mga link gamit ang bagong lipatan na cases.html.Gawing ganito ang itsura ng iyong navigation menu sa index.html:html<nav>
+    <button class="menu-btn active" onclick="closeAllOverlays()">About Europol</button>
+    <button class="menu-btn">How we work</button>
+    <button class="menu-btn" id="crime-menu-trigger" onclick="toggleCrimeMenu()">Crime Areas</button>
+    <!-- HETO ANG BAGONG LINK PA-PUNTA SA PICTURES PAGE -->
+    <a href="cases.html" style="text-decoration:none; color: var(--europol-bright-blue); font-size: 13px; font-weight: 700; text-transform: uppercase; margin-top:5px;">Active Case Files</a>
+    <button class="menu-btn">Partners & Collaboration</button>
+</nav>
+Use code with caution.2️⃣ Hakbang 2: Gumawa ng Bagong File na cases.htmlGumawa ng bagong blangkong file sa Notepad o VS Code, i-paste ang code sa ibaba, at i-save ito bilang cases.html sa parehong folder.Naglalaman ito ng Search Filter function (JavaScript) para kapag nag-type ang teacher mo ng pangalan o uri ng kaso, awtomatikong magtatago ang ibang pictures at maiiwan ang hinahanap niya!html<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Europol | Active Case Files Registry</title>
+    <style>
+        :root {
+            --europol-blue: #090e3a; 
+            --europol-bright-blue: #0053ff; 
+            --europol-gold: #ffcc00;
+            --text-dark: #1f2937;
+            --danger-red: #dc2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER NAVIGATION --- */
+        header {
+            background-color: #ffffff;
+            padding: 15px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo-block {
+            background-color: var(--europol-bright-blue);
+            color: #ffffff;
+            font-weight: 900;
+            font-size: 20px;
+            letter-spacing: 2px;
+            padding: 12px 25px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--europol-bright-blue);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-left: 20px;
+        }
+
+        nav a.active { color: #ff5500; }
+
+        /* --- SEARCH FILTER SECTION --- */
+        .search-section {
+            background-color: var(--europol-blue);
+            color: white;
+            padding: 40px 4%;
+            text-align: center;
+        }
+
+        .search-section h1 { font-size: 32px; margin-bottom: 10px; }
+        .search-section p { color: #cbd5e1; margin-bottom: 20px; font-size: 15px; }
+
+        .filter-container {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-container input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* --- CASES GRID DISPLAY WITH IMAGES --- */
+        .cases-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .grid-title {
+            font-size: 22px;
+            color: var(--europol-blue);
+            margin-bottom: 25px;
+            border-left: 5px solid var(--europol-gold);
+            padding-left: 10px;
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        /* Profile Cards Setup */
+        .case-card {
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+            transition: transform 0.2s;
+        }
+
+        .case-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .case-image-box {
+            width: 100%;
+            height: 240px;
+            background-color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        /* Dummy Identification Silhouette Graphics */
+        .case-image-box svg {
+            width: 80px;
+            height: 80px;
+            fill: #9ca3af;
+        }
+
+        .case-status-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background-color: var(--danger-red);
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .case-info {
+            padding: 20px;
+        }
+
+        .case-info h3 {
+            font-size: 18px;
+            color: var(--europol-blue);
+            margin-bottom: 5px;
+        }
+
+        .case-id-tag {
+            font-size: 12px;
+            color: var(--danger-red);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .case-meta {
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #4b5563;
+        }
+
+        .case-meta strong {
+            color: #111827;
+        }
+
+        .case-desc {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #6b7280;
+            border-top: 1px solid #f3f4f6;
+            padding-top: 10px;
+            text-align: justify;
+        }
+
+        /* No results indicator text */
+        #noResultsMessage {
+            display: none;
+            text-align: center;
+            font-size: 18px;
+            color: #6b7280;
+            grid-column: 1 / -1;
+            padding: 40px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Upper Portal Navigation Header -->
+    <header>
+        <a href="index.html" class="logo-block">Europol</a>
+        <nav>
+            <a href="index.html">About Europol</a>
+            <a href="cases.html" class="active">Active Case Files</a>
+        </nav>
+    </header>
+
+    <!-- Search Engine Banner Wrapper Component -->
+    <section class="search-section">
+        <h1>Active Intelligence Case Files</h1>
+        <p>Search the open verification bureau directory registry database by inputting target profile name or file classifications.</p>
+        
+        <div class="filter-container">
+            <!-- LIVE SEARCH ALIVE INPUT KEY UP TRIGGER ENGINE -->
+            <input type="text" id="caseSearchInput" onkeyup="filterActiveCases()" placeholder="Search by suspect name, case number, or crime classification...">
+        </div>
+    </section>
+
+    <!-- Central Photo Showcase Grid Panel Layout -->
+    <main class="cases-container">
+        <h2 class="grid-title">Wanted Suspect Targets & Active Open Files</h2>
+        
+        <div class="cases-grid" id="casesDisplayGrid">
+            
+            <!-- CASE 1 DATA CARD BLOCK ELEMENT -->
+            <div class="case-card">
+                <div class="case-image-box">
+                    <span class="case-status-badge">Active File</span>
+                    <!-- Anonymous Person vector outline placeholder matches professional dashboard style -->
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z"/></svg>
+                </div>
+                <div class="case-info">
+                    <h3>Marcus Vance</h3>
+                    <div class="case-id-tag">FILE: #EU-2026-8841A</div>
+                    <div class="case-meta"><strong>Classification:</strong> Organized VAT Fraud</div>
+                    <div class="case-meta"><strong>Nationality:</strong> British / German</div>
+                    <p class="case-desc">Suspected operator of multi-jurisdictional carousel corporate missing trader schemes netting over €32 Million in dynamic tax liabilities.</p>
+                </div>
+            </div>
+
+            <!-- CASE 2 DATA CARD BLOCK ELEMENT -->
+            <div class="case-card">
+                <div class="case-image-box">
+                    <span class="case-status-badge">Active File</span>
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z"/></svg>
+                </div>
+                <div class="case-info">
+                    <h3>Elena Rostova</h3>
+                    <div class="case-id-tag">FILE: #EU-2026-9012B</div>
+                    <div class="case-meta"><strong>Classification:</strong> Currency Counterfeiting</div>
+                    <div class="case-meta"><strong>Nationality:</strong> Lithuanian</div>
+                    <p class="case-desc">Sought internationally by central law units for bulk manufacturing distribution schemes containing forged euro high denomination notes.</p>
+                </div>
+            </div>
+
+            <!-- CASE 3 DATA CARD BLOCK ELEMENT -->
+            <div class="case-card">
+                <div class="case-image-box">
+                    <span class="case-status-badge">Active File</span>
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z"/></svg>
+                </div>
+                <div class="case-info">
+                    <h3>Dimitri Novak</h3>
+                    <div class="case-id-tag">FILE: #EU-2026-1107C</div>
+                    <div class="case-meta"><strong>Classification:</strong> Cyber Attacks & Malware</div>
+                    <div class="case-meta"><strong>Nationality:</strong> Estonian / Russian</div>
+                    <p class="case-desc">Implicated in high-level ransomware development deployments targeting public cross border European enterprise health banking systems.</p>
+                </div>
+            </div>
+
+            <!-- CASE 4 DATA CARD BLOCK ELEMENT -->
+            <div class="case-card">
+                <div class="case-image-box">
+                    <span class="case-status-badge">Active File</span>
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z"/></svg>
+                </div>
+                <div class="case-info">
+                    <h3>Sarah Jenkins</h3>
+                    <div class="case-id-tag">FILE: #EU-2026-4415F</div>
+Use code with caution.Classification: Cryptocurrency ScamsNationality: IrishMastermind behind a ring of fraudulent decentralized application projects stealing user wallet assets via phishing smart contracts.No active case files matching your search query parameter data were found.function filterActiveCases() {var input = document.getElementById('caseSearchInput');var filter = input.value.toLowerCase();var grid = document.getElementById('casesDisplayGrid');var cards = grid.getElementsByClassName('case-card');var visibleCount = 0;for (var i = 0; i < cards.length; i++) {// Pinagsasama ang pangalan at case description para doon maghanap ang algorithmvar textContent = cards[i].innerText.toLowerCase();if (textContent.indexOf(filter) > -1) {cards[i].style.display = "";visibleCount++;} else {cards[i].style.display = "none";}}// Pagpapakita ng default alert warning kapag walang nakitang matchvar errorMsg = document.getElementById('noResultsMessage');if (visibleCount === 0) {errorMsg.style.display = "block";} else {errorMsg.style.display = "none";}}
+### 🎯 Ano ang magiging flow nito sa screen, tol?
+1. Sa **`index.html`**, kapag clinick mo ang bagong link na **Active Case Files** sa menu bar, lilipat ang browser at maglo-load ang **`cases.html`** page.
+2. Sa **`cases.html`**, makikita mo ang malinis na grid layout na may mga kahon ng larawan (silhouette avatars), kumpletong kaso, at mga tracking reference number ng mga suspect.
+3. Subukan mong mag-type sa search bar sa taas (halimbawa, i-type mo ang *"Marcus"* o *"Malware"*), makikita mo na kusang magtatago ang ibang mga case box at maiiwan lang agad ang hinahanap mo sa screen **nang hindi nagre-refresh ang page!**
+
+I-save mo na ito, tol! May iba pa ba tayong gustong ikabit na functionality bago mo ipasa?
+AI can make mistakes, so double-check responses You said: ISAHANBG CODE MO NALKAG YAN TOL ING NAKAPASOK SA BOXAyt, kuha ko na ang ibig mong sabihin, tol! Gusto mo ng isang file na lang (index.html) kung saan kapag pinindot ang button, magpapalit ang view at papasok sa loob ng isang malinis na box o dashboard panel na naglalaman ng mga picture (avatars), active case files, at may sarili nitong working search bar.Heto ang kumpleto at pinagsamang Single-File Dynamic Code. I-save mo lang ito bilang index.html at handang-handa na itong i-present:html<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Europol | Dynamic Security Portal</title>
+    <style>
+        :root {
+            --europol-blue: #090e3a; 
+            --europol-bright-blue: #0053ff; 
+            --europol-gold: #ffcc00;
+            --text-dark: #1f2937;
+            --bubble-blue: #00d2ff; 
+            --menu-bg: #090e3a;
+            --danger-red: #dc2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* --- NAVIGATION HEADER --- */
+        header {
+            background-color: #ffffff;
+            padding: 15px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+        }
+
+        .logo-block {
+            background-color: var(--europol-bright-blue);
+            color: #ffffff;
+            font-weight: 900;
+            font-size: 20px;
+            letter-spacing: 2px;
+            padding: 12px 25px;
+            text-decoration: none;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        nav { display: flex; gap: 15px; }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            color: var(--europol-bright-blue);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+
+        .menu-btn:hover, .menu-btn.active {
+            background-color: rgba(0, 83, 255, 0.05);
+            color: #ff5500;
+        }
+
+        .right-utilities {
+            display: flex;
+            gap: 20px;
+            color: var(--europol-bright-blue);
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .utility-item { cursor: pointer; display: flex; flex-direction: column; align-items: center; }
+
+        /* --- HERO BANNER --- */
+        .hero-banner {
+            background-color: var(--europol-blue);
+            color: #ffffff;
+            text-align: center;
+            padding: 40px 20px 0px 20px;
+            position: relative;
+        }
+
+        .page-badge-label { color: var(--europol-gold); font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .hero-banner h1 { font-size: 38px; font-weight: 700; margin-bottom: 5px; }
+        .hero-banner .tagline { font-size: 18px; color: #e5e7eb; margin-bottom: 25px; }
+
+        .wave-container { width: 100%; overflow: hidden; line-height: 0; }
+        .wave-container svg { position: relative; display: block; width: calc(100% + 1.3px); height: 50px; }
+        .wave-container .shape-fill { fill: #f3f4f6; } /* Matches body background for clean cutout */
+
+        /* --- CRIME AREAS DROPDOWN MENU --- */
+        .crime-dropdown-menu {
+            display: none;
+            background-color: var(--menu-bg);
+            color: #ffffff;
+            position: fixed;
+            top: 74px; left: 0; width: 100%; height: 420px;
+            z-index: 1800; padding: 40px 8%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .dropdown-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; height: 100%; }
+        .dropdown-left-intro h2 { font-size: 30px; margin-bottom: 15px; color: white; }
+        .dropdown-left-intro p { font-size: 14px; color: #cbd5e1; }
+        .crime-scroll-panel { overflow-y: auto; padding-right: 20px; display: flex; flex-direction: column; gap: 12px; }
+        .crime-scroll-panel::-webkit-scrollbar { width: 4px; }
+        .crime-scroll-panel::-webkit-scrollbar-thumb { background: var(--europol-gold); border-radius: 2px; }
+        .crime-item-link { color: #00d2ff; text-decoration: none; font-size: 15px; padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        /* --- DYNAMIC VIEWS CONTAINER --- */
+        .view-wrapper {
+            max-width: 1100px;
+            margin: -10px auto 50px auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 100;
+        }
+
+        /* 1. HOME VIEW STYLE */
+        .view-box {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .lang-label { font-size: 15px; font-weight: bold; margin-bottom: 12px; }
+        .lang-bubbles-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 35px; }
+        .lang-bubble { width: 32px; height: 32px; border-radius: 50%; background-color: var(--bubble-blue); color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; }
+        .lang-bubble.active-lang { background-color: var(--europol-gold); color: var(--europol-blue); }
+        .body-text-block p { font-size: 16px; color: #374151; margin-bottom: 20px; text-align: justify; }
+
+        /* 2. ACTIVE CASES VIEW STYLE (PASOK SA LOOB NG ISANG BOX NA MAY INTERNAL SEARCH) */
+        .cases-view-box {
+            display: none; /* Hidden on load */
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .box-internal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .box-internal-header h2 {
+            font-size: 24px;
+            color: var(--europol-blue);
+            border-left: 5px solid var(--europol-gold);
+            padding-left: 10px;
+        }
+
+        /* Internal Search Input Field Inside The Main Box */
+        .box-search-input {
+            width: 350px;
+            padding: 10px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .box-search-input:focus {
+            border-color: var(--europol-bright-blue);
+        }
+
+        /* Cases Photo Grid Layout */
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .case-card {
+            background: #ffffff;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .case-image-box {
+            width: 100%;
+            height: 200px;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .case-image-box svg { width: 60px; height: 60px; fill: #9ca3af; }
+        
+        .status-tag {
+            position: absolute; top: 10px; left: 10px;
+            background-color: var(--danger-red); color: white;
+            font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 3px;
+        }
+
+        .case-info { padding: 15px; }
+        .case-info h3 { font-size: 16px; color: var(--europol-blue); margin-bottom: 3px; }
+        .case-id { font-size: 11px; color: var(--danger-red); font-weight: bold; margin-bottom: 8px; }
+        .case-meta { font-size: 12px; margin-bottom: 4px; color: #4b5563; }
+        .case-desc { font-size: 12px; color: #6b7280; border-top: 1px solid #f3f4f6; padding-top: 8px; margin-top: 10px; }
+
+        #noResults { display: none; text-align: center; color: #6b7280; width: 100%; grid-column: 1/-1; padding: 30px 0; }
+    </style>
+</head>
+<body>
+
+    <!-- --- NAVIGATION HEADER --- -->
+    <header>
+        <div class="brand-container">
+            <div class="logo-block" onclick="openHomeView()">Europol</div>
+        </div>
+        <nav>
+            <button class="menu-btn active" id="nav-home" onclick="openHomeView()">About Europol</button>
+            <button class="menu-btn" id="crime-trigger" onclick="toggleCrimeMenu()">Crime Areas</button>
+            
+            <!-- BUTTON PARA Pumasok sa Active Cases Box View -->
+            <button class="menu-btn" id="nav-cases" onclick="openCasesView()">Active Case Files</button>
+            
+            <button class="menu-btn">Partners & Collaboration</button>
+            <button class="menu-btn">Work with us</button>
+        </nav>
+        <div class="right-utilities">
+            <div class="utility-item">🔍<span>Search</span></div>
+            <div class="utility-item">📞<span>Contact</span></div>
+        </div>
+    </header>
+
+    <!-- --- CRIME AREAS DROPDOWN WINDOW --- -->
+    <div class="crime-dropdown-menu" id="crimeMegaMenu">
+        <div class="dropdown-grid">
+            <div class="dropdown-left-intro">
+                <h2>Crime areas</h2>
+                <p>Crime areas and key topics we tackle, including EMPACT priorities, and intelligence sharing.</p>
+            </div>
+            <div class="crime-scroll-panel">
+                <a href="#" class="crime-item-link">Child sexual exploitation</a>
+                <a href="#" class="crime-item-link">Corruption &gt;</a>
+                <a href="#" class="crime-item-link">Criminal finances and money laundering</a>
+Use code with caution.Currency counterfeitingCyber-attacksEconomic crimeFraud schemes against the EU and Member States >PageAbout EuropolHelping make Europe saferAvailable in:ENBGESCSDADEFRITNLPLFISVHeadquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism. Europol also works with many non-EU partner states and international organisations.Large-scale criminal and terrorist networks pose a significant threat to the internal security of the EU and to the safety and livelihood of its people. The biggest security threats come from:Wanted Fugitives DirectoryWarrant IssuedMarcus VanceFILE: #EU-8841ACrime: Organized VAT FraudNation: United KingdomImplicated in multi-jurisdictional missing trader intra-community asset manipulation.Warrant IssuedElena RostovaFILE: #EU-9012BCrime: Currency CounterfeitingNation: LithuaniaSought internationally for bulk production distribution of forged euro high value banknotes.Warrant IssuedDimitri NovakFILE: #EU-1107CCrime: Cyber Attacks / MalwareNation: EstoniaImplicated in high-level automated ransomware deployments targeting enterprise public assets.Warrant IssuedSarah JenkinsFILE: #EU-4415FCrime: Cryptocurrency ScamsNation: IrelandMastermind behind cross border phishing smart contracts diverting decentralized web wallets.No records match your query keywords.function openCasesView() {// Hide standard content box, open the Active Cases panel boxdocument.getElementById('box-home-view').style.display = 'none';document.getElementById('box-cases-view').style.display = 'block';// Menu button state active class switcherdocument.getElementById('nav-home').classList.remove('active');document.getElementById('nav-cases').classList.add('active');// Header title context adjustments dynamicallydocument.getElementById('dynamic-title').innerText = "Active Case Files";document.getElementById('dynamic-tagline').innerText = "Current open tracking files under intelligence enforcement priority framework";closeDropdownOnly();}function openHomeView() {// Hide cases box, turn on default text data overview boxdocument.getElementById('box-cases-view').style.display = 'none';document.getElementById('box-home-view').style.display = 'block';document.getElementById('nav-cases').classList.remove('active');document.getElementById('nav-home').classList.add('active');// Reset banner values back to start configurationdocument.getElementById('dynamic-title').innerText = "About Europol";document.getElementById('dynamic-tagline').innerText = "Helping make Europe safer";closeDropdownOnly();}function toggleCrimeMenu() {var menu = document.getElementById('crimeMegaMenu');var trigger = document.getElementById('crime-trigger');if (menu.style.display === 'block') {menu.style.display = 'none';trigger.classList.remove('active');} else {menu.style.display = 'block';trigger.classList.add('active');}}function closeDropdownOnly() {document.getElementById('crimeMegaMenu').style.display = 'none';document.getElementById('crime-trigger').classList.remove('active');}/* --- INTERNAL INSTANT SEARCH ENGINE --- */function runInternalSearch() {var filter = document.getElementById('internalSearch').value.toLowerCase();var cards = document.getElementById('internalGrid').getElementsByClassName('case-card');var matchFound = 0;for (var i = 0; i < cards.length; i++) {var content = cards[i].innerText.toLowerCase();if (content.includes(filter)) {cards[i].style.display = "";matchFound++;} else {cards[i].style.display = "none";}}document.getElementById('noResults').style.display = (matchFound === 0) ? "block" : "none";}
+### 💎 Bakit ito mas pinadali para sa iyo, tol?
+1. **Isang Single File Lang**: Hindi mo na kailangan ng maramihang HTML file. Isang `index.html` na lang ang gagamitin at patatakbuhin mo.
+2. **Pasok sa Box View**: Ang listahan ng mga pictures at ang search bar ay nakakulong sa loob ng isang eleganteng white panel card block (`.cases-view-box`).
+3. **Instant Filter Engine**: Pagkatapos mong pindutin ang **Active Case Files** sa menu bar, mag-type ka agad sa box sa loob—mararanasan mo ang automatic search filtering nang real-time na walang lag.
+
+I-save mo na ito sa iyong file, tol! May huling tweaks ka pa bang gustong ipagawa bago mo i-submit ang project?
+You said: Currency counterfeitingCyber-attacksEconomic crimeFraud schemes against the EU and Member States >PageAbout EuropolHelping make Europe saferAvailable in:ENBGESCSDADEFRITNLPLFISVHeadquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism. Europol also works with many non-EU partner states and international organisations.Large-scale criminal and terrorist networks pose a significant threat to the internal security of the EU and to the safety and livelihood of its people. The biggest security threats come from:Wanted Fugitives DirectoryWarrant IssuedMarcus VanceFILE: #EU-8841ACrime: Organized VAT FraudNation: United KingdomImplicated in multi-jurisdictional missing trader intra-community asset manipulation.Warrant IssuedElena RostovaFILE: #EU-9012BCrime: Currency CounterfeitingNation: LithuaniaSought internationally for bulk production distribution of forged euro high value banknotes.Warrant IssuedDimitri NovakFILE: #EU-1107CCrime: Cyber Attacks / MalwareNation: EstoniaImplicated in high-level automated ransomware deployments targeting enterprise public assets.Warrant IssuedSarah JenkinsFILE: #EU-4415FCrime: Cryptocurrency ScamsNation: IrelandMastermind behind cross border phishing smart contracts diverting decentralized web wallets.No records match your query keywords.function openCasesView() {// Hide standard content box, open the Active Cases panel boxdocument.getElementById('box-home-view').style.display = 'none';document.getElementById('box-cases-view').style.display = 'block';// Menu button state active class switcherdocument.getElementById('nav-home').classList.remove('active');document.getElementById('nav-cases').classList.add('active');// Header title context adjustments dynamicallydocument.getElementById('dynamic-title').innerText = "Active Case Files";document.getElementById('dynamic-tagline').innerText = "Current open tracking files under intelligence enforcement priority framework";closeDropdownOnly();}function openHomeView() {// Hide cases box, turn on default text data overview boxdocument.getElementById('box-cases-view').style.display = 'none';document.getElementById('box-home-view').style.display = 'block';document.getElementById('nav-cases').classList.remove('active');document.getElementById('nav-home').classList.add('active');// Reset banner values back to start configurationdocument.getElementById('dynamic-title').innerText = "About Europol";document.getElementById('dynamic-tagline').innerText = "Helping make Europe safer";closeDropdownOnly();}function toggleCrimeMenu() {var menu = document.getElementById('crimeMegaMenu');var trigger = document.getElementById('crime-trigger');if (menu.style.display === 'block') {menu.style.display = 'none';trigger.classList.remove('active');} else {menu.style.display = 'block';trigger.classList.add('active');}}function closeDropdownOnly() {document.getElementById('crimeMegaMenu').style.display = 'none';document.getElementById('crime-trigger').classList.remove('active');}/* --- INTERNAL INSTANT SEARCH ENGINE --- */function runInternalSearch() {var filter = document.getElementById('internalSearch').value.toLowerCase();var cards = document.getElementById('internalGrid').getElementsByClassName('case-card');var matchFound = 0;for (var i = 0; i < cards.length; i++) {var content = cards[i].innerText.toLowerCase();if (content.includes(filter)) {cards[i].style.display = "";matchFound++;} else {cards[i].style.display = "none";}}document.getElementById('noResults').style.display = (matchFound === 0) ? "block" : "none";} TOL PAAYOS NETO ETO LANG MISMO AHAyt, kuha ko na, tol! Gusto mong ayusin natin at panatilihin ang malinis na estruktura ng JavaScript engine mo nang walang nababawas na logic habang sinisiguro nating maayos ang pagkakasulat ng bawat element.Heto ang selyado at mas pinagandang bersyon ng code base mo. Inayos ko ang formatting ng JavaScript block, idinagdag ko ang tamang indentation para madaling basahin ng professor mo, at nilagyan ko ng malinis na HTML wrappers para hindi magkalat ang plain text sa screen.Kopyahin mo itong buong block para sa single-file script mo, tol:html<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Europol Portal | Academic Project</title>
+    <style>
+        :root {
+            --europol-blue: #090e3a; 
+            --europol-bright-blue: #0053ff; 
+            --europol-gold: #ffcc00;
+            --text-dark: #1f2937;
+            --bubble-blue: #00d2ff; 
+            --danger-red: #dc2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* --- STYLING PARA SA MGA STRIPPED TEXT ELEMENTS MO --- */
+        .crime-quick-links {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--europol-bright-blue);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .hero-simulation-banner {
+            background-color: var(--europol-blue);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .hero-simulation-banner h1 { font-size: 32px; color: white; margin-bottom: 5px; }
+        .hero-simulation-banner .tagline { color: var(--europol-gold); font-size: 18px; }
+
+        .lang-container { margin: 20px 0; }
+        .lang-label { font-weight: bold; margin-bottom: 8px; }
+        .lang-row { display: flex; flex-wrap: wrap; gap: 6px; }
+        .lang-badge { background-color: var(--bubble-blue); color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+
+        /* --- REGISTRY DASHBOARD WRAPPER PANEL --- */
+        .dashboard-main-panel {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .panel-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .panel-top-bar h2 { font-size: 22px; color: var(--europol-blue); }
+
+        .search-input-field {
+            width: 300px;
+            padding: 8px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        /* --- FUGITIVES PICTURE SHOWCASE GRID --- */
+        .fugitives-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .profile-case-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .avatar-placeholder-box {
+            height: 180px;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .avatar-placeholder-box svg { width: 50px; height: 50px; fill: #9ca3af; }
+
+        .warrant-tag {
+            position: absolute; top: 10px; left: 10px;
+            background-color: var(--danger-red); color: white;
+            font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 3px;
+        }
+
+        .card-inner-info { padding: 15px; }
+        .card-inner-info h3 { font-size: 17px; color: var(--europol-blue); margin-bottom: 2px; }
+        .file-number { font-size: 11px; color: var(--danger-red); font-weight: bold; margin-bottom: 8px; }
+        .field-row { font-size: 12px; margin-bottom: 4px; }
+        .field-row strong { color: #374151; }
+        .summary-text { font-size: 12px; color: #6b7280; margin-top: 10px; border-top: 1px solid #f3f4f6; padding-top: 8px; }
+
+        #noResults { display: none; text-align: center; color: #6b7280; width: 100%; grid-column: 1/-1; padding: 20px 0; }
+    </style>
+</head>
+<body>
+
+    <!-- Category Headers Reference Grid -->
+    <div class="crime-quick-links">
+        🎯 Quick Classification Filters: Currency counterfeiting | Cyber-attacks | Economic crime | Fraud schemes against the EU and Member States &gt;
+    </div>
+
+    <!-- Main Curved Component Frame -->
+    <section class="hero-simulation-banner">
+        <span style="color: var(--europol-gold); font-size: 11px; text-transform: uppercase; font-weight: bold;">Page Preview</span>
+        <h1 id="dynamic-title">About Europol</h1>
+        <div class="tagline" id="dynamic-tagline">Helping make Europe safer</div>
+    </section>
+
+    <!-- Language Swapper Rows -->
+    <div class="lang-container">
+        <div class="lang-label">Available in:</div>
+        <div class="lang-row">
+            <span class="lang-badge" style="background-color: var(--europol-gold); color: var(--europol-blue);">EN</span>
+            <span class="lang-badge">BG</span><span class="lang-badge">ES</span><span class="lang-badge">CS</span>
+            <span class="lang-badge">DA</span><span class="lang-badge">DE</span><span class="lang-badge">FR</span>
+            <span class="lang-badge">IT</span><span class="lang-badge">NL</span><span class="lang-badge">PL</span>
+            <span class="lang-badge">FI</span><span class="lang-badge">SV</span>
+        </div>
+    </div>
+
+    <!-- Editorial Core Info Block -->
+    <div style="background: white; padding: 20px; border-radius: 6px; margin-bottom: 30px; border: 1px solid #e5e7eb;" id="box-home-view">
+        <p style="margin-bottom: 15px; font-size: 15px; text-align: justify;">Headquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism. Europol also works with many non-EU partner states and international organisations.</p>
+        <p style="font-size: 15px;">Large-scale criminal and terrorist networks pose a significant threat to the internal security of the EU and to the safety and livelihood of its people. The biggest security threats come from organised cross-border networks.</p>
+        <button onclick="openCasesView()" style="margin-top: 15px; background: var(--europol-bright-blue); color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold;">View System Case Files &gt;</button>
+    </div>
+
+    <!-- ================= MASTER SYSTEM DIRECTORY BOX CONTAINER ================= -->
+    <div class="dashboard-main-panel" id="box-cases-view" style="display: none;">
+        
+        <div class="panel-top-bar">
+            <h2>Wanted Fugitives Directory</h2>
+            <!-- DYNAMIC INTERACTION ONKEYUP LIVE SEARCH INPUT FIELD -->
+            <input type="text" class="search-input-field" id="internalSearch" onkeyup="runInternalSearch()" placeholder="Type suspect name, file number, or nation...">
+        </div>
+
+        <!-- Target Cards System Array Storage Grid Layout -->
+        <div class="fugitives-grid-container" id="internalGrid">
+            
+            <!-- Target Card 1 Element -->
+            <div class="profile-case-card">
+                <div class="avatar-placeholder-box">
+                    <span class="warrant-tag">Warrant Issued</span>
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z"/></svg>
+                </div>
+                <div class="card-inner-info">
+                    <h3>Marcus Vance</h3>
+                    <div class="file-number">FILE: #EU-8841A</div>
+                    <div class="field-row"><strong>Crime:</strong> Organized VAT Fraud</div>
+                    <div class="field-row"><strong>Nation:</strong> United Kingdom</div>
+                    <p class="summary-text">Implicated in multi-jurisdictional missing trader intra-community asset manipulation.</p>
+                </div>
+            </div>
+
+            <!-- Target Card 2 Element -->
+            <div class="profile-case-card">
+                <div class="avatar-placeholder-box">
+                    <span class="warrant-tag">Warrant Issued</span>
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z"/></svg>
+                </div>
+                <div class="card-inner-info">
+                    <h3>Elena Rostova</h3>
+                    <div class="file-number">FILE: #EU-9012B</div>
+                    <div class="field-row"><strong>Crime:</strong> Currency Counterfeiting</div>
+                    <div class="field-row"><strong>Nation:</strong> Lithuania</div>
+                    <p class="summary-text">Sought internationally for bulk production distribution of forged euro high value banknotes.</p>
+                </div>
+            </div>
+
+            <!-- Target Card 3 Element -->
+            <div class="profile-case-card">
+                <div class="avatar-placeholder-box">
+                    <span class="warrant-tag">Warrant Issued</span>
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z"/></svg>
+                </div>
+                <div class="card-inner-info">
+                    <h3>Dimitri Novak</h3>
+                    <div class="file-number">FILE: #EU-1107C</div>
+                    <div class="field-row"><strong>Crime:</strong> Cyber Attacks / Malware</div>
+                    <div class="field-row"><strong>Nation:</strong> Estonia</div>
+Use code with caution.Implicated in high-level automated ransomware deployments targeting enterprise public assets.Warrant IssuedSarah JenkinsFILE: #EU-4415FCrime: Cryptocurrency ScamsNation: IrelandMastermind behind cross border phishing smart contracts diverting decentralized web wallets.No records match your query keywords.< Back to Overviewfunction openCasesView() {// Hide standard content box, open the Active Cases panel boxdocument.getElementById('box-home-view').style.display = 'none';document.getElementById('box-cases-view').style.display = 'block';// Header title context adjustments dynamicallydocument.getElementById('dynamic-title').innerText = "Active Case Files";document.getElementById('dynamic-tagline').innerText = "Current open tracking files under intelligence enforcement priority framework";}function openHomeView() {// Hide cases box, turn on default text data overview boxdocument.getElementById('box-cases-view').style.display = 'none';document.getElementById('box-home-view').style.display = 'block';// Reset banner values back to start configurationdocument.getElementById('dynamic-title').innerText = "About Europol";document.getElementById('dynamic-tagline').innerText = "Helping make Europe safer";}/* --- INTERNAL INSTANT SEARCH ENGINE --- */function runInternalSearch() {var filter = document.getElementById('internalSearch').value.toLowerCase();var cards = document.getElementById('internalGrid').getElementsByClassName('profile-case-card');var matchFound = 0;for (var i = 0; i < cards.length; i++) {var content = cards[i].innerText.toLowerCase();if (content.includes(filter)) {cards[i].style.display = "";matchFound++;} else {cards[i].style.display = "none";}}document.getElementById('noResults').style.display = (matchFound === 0) ? "block" : "none";}
+### 🛠️ Ano ang ginawa nating pagwawasto rito?
+1. **Clean Code Indentation**: Inayos ko ang tab spacings at bracket alignment ng mga functions (`openCasesView`, `openHomeView`, at `runInternalSearch`) para sumunod sa professional web standards.
+2. **Integrated Target Elements**: Isinaayos ko sa loob ng iisang malinis na dashboard container ang bawat suspect panel block (Marcus, Elena, Dimitri, Sarah) kasama ang case information strings nila.
+3. **Optimized Search Matching**: Ang dynamic engine logic ay awtomatikong nakatali sa input box element (`id="internalSearch"`), kaya kapag sinubukan mong mag-type ng keyword habang ipinapakita ang grid, agad na sasaring kusa ang mga cards.
+
+Maaari mo na itong i-save nang direkta sa master index script mo, tol! Larga na para sa project submission mo!
+You said: UNG UNG IBA KASE WALA SA BOX KAY APGACOPY KO NAGIGING PAHABA NAWAWALA SA ALLIGHJNAh, kuha ko na ang problema, tol! Kaya pala nawawala sa alignment at humahaba pababa nang pababa ang mga card kapag kinokopya mo dahil kulang ng panapos na </div> (closing tags) ang bawat case card sa dulo ng code mo. Kapag may kulang na tag, nasisira ang buong CSS Grid layout box at nagkakapatong-patong ang text.Heto ang maayos, selyado, at ligtas na code. Inayos ko na ang bawat kahon para sigurado na papasok at makukulong lahat sa loob ng sariling box at pantay-pantay ang alignment sa screen kahit mag-search ka!Palitan mo ang buong code ng iyong index.html gamit ito:html<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Europol Portal | Academic Project</title>
+    <style>
+        :root {
+            --europol-blue: #090e3a; 
+            --europol-bright-blue: #0053ff; 
+            --europol-gold: #ffcc00;
+            --text-dark: #1f2937;
+            --bubble-blue: #00d2ff; 
+            --danger-red: #dc2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* --- STYLING PARA SA MGA CATEGORY FILTERS --- */
+        .crime-quick-links {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--europol-bright-blue);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* --- HERO BANNER --- */
+        .hero-simulation-banner {
+            background-color: var(--europol-blue);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .hero-simulation-banner h1 { font-size: 32px; color: white; margin-bottom: 5px; }
+        .hero-simulation-banner .tagline { color: var(--europol-gold); font-size: 18px; }
+
+        /* --- LANGUAGE ROWS --- */
+        .lang-container { margin: 20px 0; }
+        .lang-label { font-weight: bold; margin-bottom: 8px; }
+        .lang-row { display: flex; flex-wrap: wrap; gap: 6px; }
+        .lang-badge { background-color: var(--bubble-blue); color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+
+        /* ================= ABOUT HOME BOX ================= */
+        .home-content-box {
+            background: white; 
+            padding: 30px; 
+            border-radius: 8px; 
+            margin-bottom: 30px; 
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .home-content-box p { margin-bottom: 15px; font-size: 15px; text-align: justify; }
+
+        /* ================= MAIN CASE DIRECTORY BOX ================= */
+        .dashboard-main-panel {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .panel-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .panel-top-bar h2 { font-size: 22px; color: var(--europol-blue); }
+
+        .search-input-field {
+            width: 320px;
+            padding: 10px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-input-field:focus {
+            border-color: var(--europol-bright-blue);
+        }
+
+        /* ================= FIXED FLEXBOX/GRID FOR CARDS ================= */
+        .fugitives-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+
+        /* Siguradong nakakulong lahat dito sa loob ng card frame */
+        .profile-case-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .avatar-placeholder-box {
+            height: 180px;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .avatar-placeholder-box svg { width: 50px; height: 50px; fill: #9ca3af; }
+
+        .warrant-tag {
+            position: absolute; top: 10px; left: 10px;
+            background-color: var(--danger-red); color: white;
+            font-size: 10px; font-weight: bold; padding: 4px 8px; border-radius: 3px;
+            text-transform: uppercase;
+        }
+
+        .card-inner-info { 
+            padding: 15px; 
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-inner-info h3 { font-size: 18px; color: var(--europol-blue); margin-bottom: 2px; }
+        .file-number { font-size: 11px; color: var(--danger-red); font-weight: bold; margin-bottom: 10px; }
+        .field-row { font-size: 13px; margin-bottom: 4px; color: #4b5563; }
+        .field-row strong { color: #111827; }
+        
+        .summary-text { 
+            font-size: 12px; 
+            color: #6b7280; 
+            margin-top: auto; 
+            border-top: 1px solid #f3f4f6; 
+            padding-top: 8px; 
+            text-align: justify;
+        }
+
+        .btn-action {
+            margin-top: 15px; background: var(--europol-bright-blue); color: white; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px;
+        }
+
+        #noResults { display: none; text-align: center; color: #6b7280; width: 100%; grid-column: 1/-1; padding: 30px 0; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <!-- Category Headers Reference -->
+    <div class="crime-quick-links">
+        🎯 Quick Classification Filters: Currency counterfeiting | Cyber-attacks | Economic crime | Fraud schemes against the EU and Member States &gt;
+    </div>
+
+    <!-- Main Header Banner -->
+    <section class="hero-simulation-banner">
+        <span style="color: var(--europol-gold); font-size: 11px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Page Preview</span>
+        <h1 id="dynamic-title">About Europol</h1>
+        <div class="tagline" id="dynamic-tagline">Helping make Europe safer</div>
+    </section>
+
+    <!-- Language Swapper Rows -->
+    <div class="lang-container">
+        <div class="lang-label">Available in:</div>
+        <div class="lang-row">
+            <span class="lang-badge" style="background-color: var(--europol-gold); color: var(--europol-blue);">EN</span>
+            <span class="lang-badge">BG</span><span class="lang-badge">ES</span><span class="lang-badge">CS</span>
+            <span class="lang-badge">DA</span><span class="lang-badge">DE</span><span class="lang-badge">FR</span>
+            <span class="lang-badge">IT</span><span class="lang-badge">NL</span><span class="lang-badge">PL</span>
+            <span class="lang-badge">FI</span><span class="lang-badge">SV</span>
+        </div>
+    </div>
+
+    <!-- ================= BOX 1: ABOUT CONTENT (HOME) ================= -->
+    <div class="home-content-box" id="box-home-view">
+        <p>Headquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism. Europol also works with many non-EU partner states and international organisations.</p>
+        <p>Large-scale criminal and terrorist networks pose a significant threat to the internal security of the EU and to the safety and livelihood of its people. The biggest security threats come from organised cross-border networks.</p>
+        <button class="btn-action" onclick="openCasesView()">View System Case Files &gt;</button>
+    </div>
+
+    <!-- ================= BOX 2: ACTIVE CASES REGISTRY (PASOK SA BOX AT PANTAY ANG ALIGNMENT) ================= -->
+    <div class="dashboard-main-panel" id="box-cases-view" style="display: none;">
+        
+        <div class="panel-top-bar">
+            <h2>Wanted Fugitives Directory</h2>
+            <!-- WORKING INTERNAL SEARCH FIELD -->
+            <input type="text" class="search-input-field" id="internalSearch" onkeyup="runInternalSearch()" placeholder="Search target profile name, file number, or nation...">
+        </div>
+
+        <!-- Target Cards Array Storage Grid -->
+        <div class="fugitives-grid-container" id="internalGrid">
+            
+            <!-- Target Card 1: Marcus -->
+            <div class="profile-case-card">
+                <div class="avatar-placeholder-box">
+                    <span class="warrant-tag">Warrant Issued</span>
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z"/></svg>
+                </div>
+                <div class="card-inner-info">
+                    <h3>Marcus Vance</h3>
+                    <div class="file-number">FILE: #EU-8841A</div>
+                    <div class="field-row"><strong>Crime:</strong> Organized VAT Fraud</div>
+                    <div class="field-row"><strong>Nation:</strong> United Kingdom</div>
+                    <p class="summary-text">Implicated in multi-jurisdictional missing trader intra-community asset manipulation.</p>
+                </div>
+            </div> <!-- Isinara ang card tag nang maayos -->
+
+            <!-- Target Card 2: Elena -->
+            <div class="profile-case-card">
+                <div class="avatar-placeholder-box">
+                    <span class="warrant-tag">Warrant Issued</span>
+Use code with caution.Elena RostovaFILE: #EU-9012BCrime: Currency CounterfeitingNation: LithuaniaSought internationally for bulk production distribution of forged euro high value banknotes. Warrant IssuedDimitri NovakFILE: #EU-1107CCrime: Cyber Attacks / MalwareNation: EstoniaImplicated in high-level automated ransomware deployments targeting enterprise public assets. Warrant IssuedSarah JenkinsFILE: #EU-4415FCrime: Cryptocurrency ScamsNation: IrelandMastermind behind cross border phishing smart contracts diverting decentralized web wallets.
+No records match your query keywords.< Back to Overviewfunction openCasesView() {document.getElementById('box-home-view').style.display = 'none';document.getElementById('box-cases-view').style.display = 'block';document.getElementById('dynamic-title').innerText = "Active Case Files";document.getElementById('dynamic-tagline').innerText = "Current open tracking files under intelligence enforcement priority framework";}function openHomeView() {document.getElementById('box-cases-view').style.display = 'none';document.getElementById('box-home-view').style.display = 'block';document.getElementById('dynamic-title').innerText = "About Europol";document.getElementById('dynamic-tagline').innerText = "Helping make Europe safer";}function runInternalSearch() {var filter = document.getElementById('internalSearch').value.toLowerCase();var cards = document.getElementById('internalGrid').getElementsByClassName('profile-case-card');var matchFound = 0;for (var i = 0; i < cards.length; i++) {var content = cards[i].innerText.toLowerCase();if (content.includes(filter)) {cards[i].style.display = ""; // Ipakita ang card kapag may matchmatchFound++;} else {cards[i].style.display = "none"; // Itago ang card kung walang match}}// Ipakita ang "No records match" text kapag zero ang nahanapdocument.getElementById('noResults').style.display = (matchFound === 0) ? "block" : "none";}
