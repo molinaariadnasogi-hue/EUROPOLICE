@@ -1,468 +1,187 @@
-Ayt, kuha ko na talaga ang ibig mong sabihin, tol! Pasensya na kung lumayo tayo sa disenyo kanina. Ang gusto mo palang gayahin ay ang mismong modern at responsive design architecture ng live Europol website na makikita sa europol.europa.eu gamit ang tamang grid spacing, header layout, at typography—pero ang wika ay purong English (walang Tagalog).
-Heto ang binuo kong 100% accurate, modern, at nakapaloob sa isang file (index.html) na bersyon. Ginamit ko ang eksaktong kulay, navigation hierarchy, grid alignment, at ang interactive functionality kung saan kapag pinindot ang "Active Case Files", magbabago ang content sa loob ng isang malinis na box panel na may sariling live search engine.
-Kopyahin mo itong buong code at i-paste sa GitHub mo, tol:
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Europol | Helping make Europe safer</title>
+    <link href="https://jsdelivr.net" rel="stylesheet">
     <style>
-        /* --- OFFICIAL EUROPOL IDENTITY STYLING SYSTEM --- */
-        :root {
-            --europol-navy: #0e1238;       /* Deep dark navy from the live site header/footer */
-            --europol-blue: #0053ff;       /* Premium brand royal blue for text links and buttons */
-            --europol-gold: #ffd200;       /* Golden accent highlights used across warnings and dates */
-            --bg-canvas: #f4f6fa;          /* Subtle grayish-blue backdrop for dashboard cards */
-            --text-main: #111827;          /* High contrast clean slate color for readability */
-            --text-muted: #6b7280;         /* Soft gray tone for sub-captions and dates */
-            --alert-red: #d32f2f;          /* Official judicial notice dark red color */
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
-        body {
-            background-color: #ffffff;
-            color: var(--text-main);
-            line-height: 1.6;
-        }
-
-        /* --- NAVIGATION UTILITY & MAIN HEADER --- */
-        .top-utility-bar {
-            background-color: var(--europol-navy);
-            color: #ffffff;
-            padding: 6px 6%;
-            display: flex;
-            justify-content: flex-end;
-            gap: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .top-utility-bar span { cursor: pointer; transition: color 0.2s; }
-        .top-utility-bar span:hover { color: var(--europol-gold); }
-
-        header {
-            background-color: #ffffff;
-            padding: 0 6%;
-            height: 80px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #e5e7eb;
-            position: sticky;
-            top: 0;
-            z-index: 2000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-        }
-
-        .brand-logo-block {
-            background-color: var(--europol-blue);
-            color: #ffffff;
-            font-weight: 900;
-            font-size: 22px;
-            letter-spacing: 2px;
-            padding: 14px 28px;
-            text-decoration: none;
-            text-transform: uppercase;
-            cursor: pointer;
-        }
-
+        :root { --europol-navy: #0e1238; --europol-blue: #0053ff; --europol-gold: #ffd200; }
+        body { background-color: #f8fafc; color: #111827; font-family: sans-serif; }
+        .top-utility-bar { background-color: var(--europol-navy); color: #ffffff; padding: 10px 6%; font-size: 13px; font-weight: 600; }
+        .brand-logo-block { background-color: var(--europol-blue); color: #ffffff; font-weight: 900; font-size: 22px; letter-spacing: 2px; padding: 14px 28px; text-transform: uppercase; text-decoration: none; display: inline-block; }
         nav { display: flex; height: 100%; align-items: center; }
-
-        .nav-item-btn {
-            background: none;
-            border: none;
-            color: var(--europol-blue);
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            height: 100%;
-            padding: 0 15px;
-            display: flex;
-            align-items: center;
-            position: relative;
-            transition: color 0.2s;
-        }
-
-        .nav-item-btn:hover, .nav-item-btn.active {
-            color: #ff5500;
-        }
-
-        .nav-item-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; width: 100%; height: 4px;
-            background-color: var(--europol-blue);
-        }
-
-        /* --- HERO HEADER OVERLAY PANEL --- */
-        .hero-banner-frame {
-            background-color: var(--europol-navy);
-            color: #ffffff;
-            text-align: center;
-            padding: 60px 20px;
-            position: relative;
-        }
-
-        .page-indicator-badge {
-            color: var(--europol-gold);
-            font-size: 11px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .hero-banner-frame h1 {
-            font-size: 40px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
-        }
-
-        .hero-banner-frame .tagline {
-            font-size: 20px;
-            color: #e5e7eb;
-            font-weight: 400;
-        }
-
-        /* --- MAIN VIEWPORTS LAYOUT CONFIGURATION --- */
-        .workspace-container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 24px;
-        }
-
-        /* ================= VIEW 1: ABOUT CONTENT ARCHITECTURE ================= */
-        .about-grid-view {
-            display: grid;
-            grid-template-columns: 2.5fr 1fr;
-            gap: 40px;
-        }
-
-        .article-block h2 {
-            font-size: 24px;
-            color: var(--europol-navy);
-            margin: 25px 0 12px 0;
-            font-weight: 700;
-        }
-
-        .article-block h2:first-of-type { margin-top: 0; }
-
-        .article-block p {
-            font-size: 16px;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            text-align: justify;
-        }
-
-        .article-block ul {
-            margin: 15px 0 25px 24px;
-        }
-
-        .article-block li {
-            margin-bottom: 8px;
-            color: #2c3e50;
-            font-size: 15px;
-        }
-
-        /* Golden Highlight Box Component */
-        .side-callout-panel {
-            background-color: var(--europol-gold);
-            color: var(--europol-navy);
-            padding: 24px;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 700;
-            height: fit-content;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        /* ================= VIEW 2: ACTIVE REGISTRY INTEGRATED INTERNAL PANEL ================= */
-        .registry-dashboard-box {
-            display: none; /* Controlled via script interaction */
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 35px;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-        }
-
-        .registry-top-management-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #f3f4f6;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .registry-top-management-row h2 {
-            font-size: 24px;
-            color: var(--europol-navy);
-            font-weight: 700;
-        }
-
-        /* Clean Functional Searching Field Inside Container Box */
-        .internal-directory-search {
-            width: 340px;
-            padding: 12px 18px;
-            border: 1px solid #cbd5e1;
-            border-radius: 4px;
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .internal-directory-search:focus {
-            border-color: var(--europol-blue);
-            box-shadow: 0 0 0 3px rgba(0, 83, 255, 0.1);
-        }
-
-        /* Grid Framework For Tracking Suspect Target Components */
-        .directory-photos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 25px;
-        }
-
-        .suspect-case-profile-card {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-            transition: transform 0.2s;
-        }
-
-        .suspect-case-profile-card:hover {
-            transform: translateY(-3px);
-        }
-
-        .avatar-graphics-frame {
-            height: 180px;
-            background-color: var(--bg-canvas);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .avatar-graphics-frame svg { width: 55px; height: 55px; fill: #a0aec0; }
-
-        .warrant-alert-badge {
-            position: absolute; top: 12px; left: 12px;
-            background-color: var(--alert-red); color: white;
-            font-size: 10px; font-weight: bold; padding: 4px 8px; border-radius: 3px;
-            text-transform: uppercase; letter-spacing: 0.5px;
-        }
-
-        .card-editorial-body {
-            padding: 16px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-editorial-body h3 { font-size: 17px; color: var(--europol-navy); margin-bottom: 2px; font-weight: 700; }
-        .case-file-tag { font-size: 11px; color: var(--alert-red); font-weight: bold; margin-bottom: 10px; }
-        .metadata-line { font-size: 13px; margin-bottom: 4px; color: #4b5563; }
-        .metadata-line strong { color: #111827; }
-        
-        .card-summary-paragraph {
-            font-size: 12px; color: #6b7280; margin-top: 12px;
-            border-top: 1px solid #f3f4f6; padding-top: 8px; text-align: justify;
-        }
-
-        .back-nav-btn {
-            margin-top: 30px; background-color: #6b7280; color: white; border: none;
-            padding: 10px 20px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 14px;
-        }
-
-        #noRecordsMsg { display: none; text-align: center; color: var(--text-muted); width: 100%; grid-column: 1 / -1; padding: 40px 0; font-weight: 600; }
-
-        /* --- FOOTER REGULATION DATA MODULE --- */
-        footer {
-            background-color: var(--europol-navy);
-            color: #94a3b8;
-            text-align: center;
-            padding: 30px 20px;
-            font-size: 13px;
-            margin-top: 80px;
-            border-top: 4px solid var(--europol-gold);
-        }
+        .nav-item-btn { color: var(--europol-blue); text-decoration: none; font-size: 13px; font-weight: 700; text-transform: uppercase; padding: 0 15px; display: flex; align-items: center; height: 100%; }
+        .nav-item-btn.active { color: #ff5500; border-bottom: 4px solid var(--europol-blue); }
+        .hero-banner-frame { background-color: var(--europol-navy); color: #ffffff; padding: 50px 20px; text-center; }
+        .page-indicator-badge { color: var(--europol-gold); font-size: 11px; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .side-callout-panel { background-color: var(--europol-gold); color: var(--europol-navy); padding: 24px; border-radius: 4px; font-weight: 700; height: fit-content; }
+        footer { background-color: var(--europol-navy); color: #94a3b8; text-align: center; padding: 25px 20px; font-size: 13px; margin-top: 80px; border-top: 4px solid var(--europol-gold); }
     </style>
 </head>
 <body>
+    <div class="top-utility-bar text-end">
+        <span class="me-3">Search</span><span class="me-3">Contact</span><span style="color: var(--europol-gold);">Languages (EN)</span>
+    </div>
+    <header class="navbar navbar-expand-lg navbar-light bg-white border-bottom px-5 sticky-top">
+        <a href="index.html" class="brand-logo-block">Europol</a>
+        <div class="ms-auto d-flex h-100 align-items-center">
+            <a href="index.html" class="nav-item-btn active">About Europol</a>
+            <a href="#" class="nav-item-btn">How we work</a>
+            <a href="#" class="nav-item-btn">Crime Areas</a>
+            <a href="cases.html" class="nav-item-btn">Active Case Files</a>
+            <a href="#" class="nav-item-btn">Partners & Collaboration</a>
+        </div>
+    </header>
+    <section class="hero-banner-frame text-center">
+        <span class="page-indicator-badge">Official Document</span>
+        <h1 class="fw-bold display-6">About Europol</h1>
+        <div class="fs-5 text-white-50">Helping make Europe safer</div>
+    </section>
+    <div class="container my-5">
+        <div class="row g-4">
+            <div class="col-md-8">
+                <h2 class="h4 fw-bold mb-3" style="color: var(--europol-navy); border-bottom: 2px solid var(--europol-gold); padding-bottom: 5px;">Our Mission</h2>
+                <p class="text-secondary text-justify">Headquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism. Europol also works with many non-EU partner states and international organisations.</p>
+                <h2 class="h4 fw-bold my-3" style="color: var(--europol-navy); border-bottom: 2px solid var(--europol-gold); padding-bottom: 5px;">Security Threats in the European Union</h2>
+                <ul class="text-secondary ps-4 mb-4">
+                    <li>Terrorism and extremist operational groups</li>
+                    <li>International drug trafficking networks and synchronized money laundering</li>
+                    <li>Organised financial fraud and corporate tax evasion schemes</li>
+                    <li>The counterfeiting and widespread forgery of currency euros</li>
+                    <li>Trafficking in human beings and cross-border exploitation networks</li>
+                </ul>
+                <h2 class="h4 fw-bold my-3" style="color: var(--europol-navy); border-bottom: 2px solid var(--europol-gold); padding-bottom: 5px;">Operational Mandate</h2>
+                <p class="text-secondary">Europol listens to what EU Member States need and analyses crime trends across regional territories. The Agency supports active investigations initiated by Member States, though Europol specialist officers never directly arrest citizens or independently instigate domestic judicial investigations.</p>
+            </div>
+            <div class="col-md-4">
+                <div class="side-callout-panel">
+                    Europol functions as a high-security operational data center processing strategic international security parameters 24 hours a day, seven days a week non-stop.
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer><p class="m-0">&copy; 2026 Europol Academic Simulation Interface Framework.</p></footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Case Files Registry | Europol</title>
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <style>
+        :root { --europol-navy: #0e1238; --europol-blue: #0053ff; --europol-gold: #ffd200; }
+        body { background-color: #f8fafc; color: #111827; font-family: sans-serif; }
+        .top-utility-bar { background-color: var(--europol-navy); color: #ffffff; padding: 10px 6%; font-size: 13px; font-weight: 600; }
+        .brand-logo-block { background-color: var(--europol-blue); color: #ffffff; font-weight: 900; font-size: 22px; letter-spacing: 2px; padding: 14px 28px; text-transform: uppercase; text-decoration: none; display: inline-block; }
+        nav { display: flex; height: 100%; align-items: center; }
+        .nav-item-btn { color: var(--europol-blue); text-decoration: none; font-size: 13px; font-weight: 700; text-transform: uppercase; padding: 0 15px; display: flex; align-items: center; height: 100%; }
+        .nav-item-btn.active { color: #ff5500; border-bottom: 4px solid var(--europol-blue); }
+        .hero-banner-frame { background-color: var(--europol-navy); color: #ffffff; padding: 50px 20px; text-center; }
+        .suspect-case-profile-card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 6px; overflow: hidden; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); height: 100%; }
+        .warrant-alert-badge { background-color: #d32f2f; color: white; font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 3px; text-transform: uppercase; display: inline-block; margin-bottom: 12px; }
+        footer { background-color: var(--europol-navy); color: #94a3b8; text-align: center; padding: 25px 20px; font-size: 13px; margin-top: 80px; border-top: 4px solid var(--europol-gold); }
+    </style>
+</head>
+<body>
+    <div class="top-utility-bar text-end"><span>Search</span><span>Contact</span></div>
+    <header class="navbar navbar-expand-lg navbar-light bg-white border-bottom px-5 sticky-top">
+        <a href="index.html" class="brand-logo-block">Europol</a>
+        <div class="ms-auto d-flex h-100 align-items-center">
+            <a href="index.html" class="nav-item-btn">About Europol</a>
+            <a href="#" class="nav-item-btn">How we work</a>
+            <a href="#" class="nav-item-btn">Crime Areas</a>
+            <a href="cases.html" class="nav-item-btn active">Active Case Files</a>
+            <a href="#" class="nav-item-btn">Partners & Collaboration</a>
+        </div>
+    </header>
+    <section class="hero-banner-frame text-center">
+        <h1 class="fw-bold display-6">Active Case Files Registry</h1>
+        <div class="fs-5 text-white-50">Real-time judicial profiles and cross-border enforcement tracing registries</div>
+    </section>
+    <div class="container my-5">
+        <div class="border bg-white rounded p-4">
+            <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4 flex-wrap">
+                <h2 class="h4 fw-bold" style="color: var(--europol-navy);">Wanted Fugitives & Profile Directories</h2>
+                <input type="text" class="form-control d-inline-block w-auto" id="directoryLiveInput" placeholder="Search profile or nation..." style="width: 320px;">
+            </div>
+            <div class="row g-4" id="masterDataGrid">
+                <!-- Card 1 -->
+                <div class="col-md-3 suspect-case-profile-card-wrapper">
+                    <div class="suspect-case-profile-card">
+                        <span class="warrant-alert-badge">Active Red Notice</span>
+                        <h3>Marcus Vance</h3>
+                        <div class="small text-danger fw-bold">FILE: #EU-8841A</div>
+                        <div class="small mt-2"><strong>Crime Target:</strong> Organized VAT Fraud</div>
+                        <div class="small"><strong>Nationality:</strong> United Kingdom</div>
+                        <p class="small text-muted border-top pt-2 mt-2">Implicated in high-level multi-jurisdictional missing trader intra-community asset carousel manipulation schemes.</p>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="col-md-3 suspect-case-profile-card-wrapper">
+                    <div class="suspect-case-profile-card">
+                        <span class="warrant-alert-badge">Active Red Notice</span>
+                        <h3>Elena Rostova</h3>
+                        <div class="small text-danger fw-bold">FILE: #EU-9012B</div>
+                        <div class="small mt-2"><strong>Crime Target:</strong> Currency Forgery</div>
+                        <div class="small"><strong>Nationality:</strong> Lithuania</div>
+                        <p class="small text-muted border-top pt-2 mt-2">Sought by centralized economic bureaus for bulk manufacturing distribution of counterfeit high denomination banknotes.</p>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="col-md-3 suspect-case-profile-card-wrapper">
+                    <div class="suspect-case-profile-card">
+                        <span class="warrant-alert-badge">Active Red Notice</span>
+                        <h3>Dimitri Novak</h3>
+                        <div class="small text-danger fw-bold">FILE: #EU-1107C</div>
+                        <div class="small mt-2"><strong>Crime Target:</strong> Cyber Networks</div>
+                        <div class="small"><strong>Nationality:</strong> Estonia</div>
+                        <p class="small text-muted border-top pt-2 mt-2">Wanted connection with automated malicious ransomware architecture deployments compromising global banking infrastructures.</p>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="col-md-3 suspect-case-profile-card-wrapper">
+                    <div class="suspect-case-profile-card">
+                        <span class="warrant-alert-badge">Active Red Notice</span>
+                        <h3>Sarah Jenkins</h3>
+                        <div class="small text-danger fw-bold">FILE: #EU-4415F</div>
+                        <div class="small mt-2"><strong>Crime Target:</strong> Crypto Schemes</div>
+                        <div class="small"><strong>Nationality:</strong> Ireland</div>
+                        <p class="small text-muted border-top pt-2 mt-2">Alleged operational lead behind phishing decentralized smart contracts manipulating cross border digital web assets.</p>
+                    </div>
+                </div>
+                <div id="noRecordsMsg" class="text-center py-4 text-muted fw-bold w-100" style="display:none;">No fugitive intelligence records matching your search target criteria were found.</div>
+            </div>
+            <a href="index.html" class="btn btn-secondary btn-sm mt-4 fw-bold">&lt; Return to Documentation Overview</a>
+        </div>
+    </div>
+    <footer><p class="m-0">&copy; 2026 Europol Academic Simulation Interface Framework.</p></footer>
+    <!-- Ikinabit dito ang external script -->
+    <script src="search.js"></script>
+</body>
+</html>
+document.addEventListener("DOMContentLoaded", function () {
+    var searchInput = document.getElementById('directoryLiveInput');
+    if (searchInput) {
+        searchInput.addEventListener('keyup', function () {
+            var searchFilterValue = this.value.toLowerCase();
+            var searchTargetCardsArray = document.getElementById('masterDataGrid').getElementsByClassName('suspect-case-profile-card-wrapper');
+            var matchedCounter = 0;
 
-    <!-- Upper Utility Interface Bar -->
-    <div class="top-utility-bar">
-        <span>Search</span>
-        <span>Contact</span>
-
-Languages (EN)
-
-
-Europol
-
-About Europol
-How we work
-Crime Areas
-Active Case Files
-Partners & Collaboration
-
-
-
-Official Document
-About Europol
-Helping make Europe safer
-
-
-
-
-Our Mission
-Headquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism. Europol also works with many non-EU partner states and international organisations.
-Security Threats in the European Union
-Large-scale criminal and terrorist networks pose a significant threat to the internal security of the EU and to the safety and livelihood of its people. The biggest security threats monitored include:
-
-Terrorism and extremist operational groups
-International drug trafficking networks and synchronized money laundering
-Organised financial fraud and corporate tax evasion schemes
-The counterfeiting and widespread forgery of currency euros
-Trafficking in human beings and cross-border exploitation networks
-Operational Mandate
-Europol listens to what EU Member States need and analyses crime trends across regional territories. The Agency supports active investigations initiated by Member States, though Europol specialist officers never directly arrest citizens or independently instigate domestic judicial investigations.
-
-
-Europol functions as a high-security operational data center processing strategic international security parameters 24 hours a day, seven days a week non-stop.
-
-
-Wanted Fugitives & Profile Directories
-
-
-
-
-
-
-Active Red Notice
-
-
-
-Marcus Vance
-FILE: #EU-8841A
-Crime Target: Organized VAT Fraud
-Nationality: United Kingdom
-Implicated in high-level multi-jurisdictional missing trader intra-community asset carousel manipulation schemes.
-
-
-
-
-Active Red Notice
-
-
-
-Elena Rostova
-FILE: #EU-9012B
-Crime Target: Currency Forgery
-Nationality: Lithuania
-Sought by centralized economic bureaus for bulk manufacturing distribution of counterfeit high denomination banknotes.
-
-
-
-
-Active Red Notice
-
-
-
-Dimitri Novak
-FILE: #EU-1107C
-Crime Target: Cyber Networks
-Nationality: Estonia
-Wanted connection with automated malicious ransomware architecture deployments compromising global banking infrastructures.
-
-
-
-
-Active Red Notice
-
-
-
-Sarah Jenkins
-FILE: #EU-4415F
-Crime Target: Crypto Schemes
-Nationality: Ireland
-Alleged operational lead behind phishing decentralized smart contracts manipulating cross border digital web assets.
-
-
-No fugitive intelligence records matching your search target criteria were found.
-< Return to Documentation Overview
-
-
-© 2026 Europol Academic Simulation Interface Framework. All rights reserved for project demonstration frameworks.
-
-
-function displayRegistryModule() {
-// Hides documentation layout text, brings forward the white dashboard system block box
-document.getElementById('panelViewportAbout').style.display = 'none';
-document.getElementById('panelViewportRegistry').style.display = 'block';
-// Visual link highlight switching class triggers
-document.getElementById('navLinkAbout').classList.remove('active');
-document.getElementById('navLinkCases').classList.add('active');
-// Dynamic header label synchronization
-document.getElementById('dynamicHeroTitle').innerText = "Active Case Files Registry";
-document.getElementById('dynamicHeroTagline').innerText = "Real-time judicial profiles and cross-border enforcement tracing registries";
-}
-function displayOverviewModule() {
-// Reverts back layout structures to standard official reading framework
-document.getElementById('panelViewportRegistry').style.display = 'none';
-document.getElementById('panelViewportAbout').style.display = 'grid';
-document.getElementById('navLinkCases').classList.remove('active');
-document.getElementById('navLinkAbout').classList.add('active');
-document.getElementById('dynamicHeroTitle').innerText = "About Europol";
-document.getElementById('dynamicHeroTagline').innerText = "Helping make Europe safer";
-}
-/* --- INTERNAL REAL-TIME LIVE FILTER ALGORITHM --- */
-function executeDatabaseFilter() {
-var searchFilterValue = document.getElementById('directoryLiveInput').value.toLowerCase();
-var searchTargetCardsArray = document.getElementById('masterDataGrid').getElementsByClassName('suspect-case-profile-card');
-var matchedCounter = 0;
-for (var i = 0; i < searchTargetCardsArray.length; i++) {
-var stringDumpData = searchTargetCardsArray[i].innerText.toLowerCase();
-// Real-time verification mechanism hiding card block if search terms are absent
-if (stringDumpData.includes(searchFilterValue)) {
-searchTargetCardsArray[i].style.display = "";
-matchedCounter++;
-} else {
-searchTargetCardsArray[i].style.display = "none";
-}
-}
-// Fallback visualization controller if query output yields no matches
-document.getElementById('noRecordsMsg').style.display = (matchedCounter === 0) ? "block" : "none";
-}
-
-
-
-### 💎 Pinagkaiba at Katangian ng Final Code na ito:
-1. **100% English Text Font & Content**: Inalis ko na ang lahat ng wikang Tagalog. Ang bawat pangungusap ay naka-English at pormal na katulad ng estilo ng Europol portal upang maging malinis ang presentasyon mo.
-2. **"Pasok sa Loob ng Box" Feature**: Kapag pinindot ang link na **"Active Case Files"**, magbabago ang content at magbubukas ang isang malinis, secured, at nakakahong data registry panel (`.registry-dashboard-box`) na may nakalatag na profiles.
-3. **Working Internal Search Field**: Sa itaas ng profile grid na nasa loob ng box, may search bar (`id="directoryLiveInput"`) na nakatali sa isang instant Javascript algorithm (`executeDatabaseFilter`). Kapag nag-type ka, agad na magsasala ang mga picture card nang real-time na walang lag.
-4. **Official UI Color Scheme**: Ang disenyo ay gumagamit ng mga opisyal na kulay ng live platform: `#0e1238` (Deep Navy), `#0053ff` (Brand Blue), at `#ffd200` (Gold Accent).
-
-I-paste at i-commit mo na ito sa iyong GitHub file (`index.html`), tol! Sigurado akong ito na ang eksaktong disenyo na hinahanap mo para sa project submission mo!
-
-
+            for (var i = 0; i < searchTargetCardsArray.length; i++) {
+                var stringDumpData = searchTargetCardsArray[i].innerText.toLowerCase();
+                if (stringDumpData.includes(searchFilterValue)) {
+                    searchTargetCardsArray[i].style.setProperty('display', 'block', 'important');
+                    matchedCounter++;
+                } else {
+                    searchTargetCardsArray[i].style.setProperty('display', 'none', 'important');
+                }
+            }
+            document.getElementById('noRecordsMsg').style.display = (matchedCounter === 0) ? "block" : "none";
+        });
+    }
+});
+</body>
+</html>
