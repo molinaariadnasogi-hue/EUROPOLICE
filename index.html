@@ -1,20 +1,16 @@
-Ah, kuha ko na ang problema, tol! Kaya pala nawawala sa alignment at humahaba pababa nang pababa ang mga card kapag kinokopya mo dahil kulang ng panapos na </div> (closing tags) ang bawat case card sa dulo ng code mo. Kapag may kulang na tag, nasisira ang buong CSS Grid layout box at nagkakapatong-patong ang text.
-Heto ang maayos, selyado, at ligtas na code. Inayos ko na ang bawat kahon para sigurado na papasok at makukulong lahat sa loob ng sariling box at pantay-pantay ang alignment sa screen kahit mag-search ka!
-Palitan mo ang buong code ng iyong index.html gamit ito:
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Europol Portal | Academic Project</title>
+    <title>Mga Pakana ng Fraud laban sa EU at mga Kasaping Estado | Europol</title>
     <style>
         :root {
             --europol-blue: #090e3a; 
             --europol-bright-blue: #0053ff; 
             --europol-gold: #ffcc00;
             --text-dark: #1f2937;
-            --bubble-blue: #00d2ff; 
+            --bg-light: #f8fafc;
             --danger-red: #dc2626;
         }
 
@@ -26,61 +22,180 @@ Palitan mo ang buong code ng iyong index.html gamit ito:
         }
 
         body {
-            background-color: #f3f4f6;
+            background-color: #ffffff;
             color: var(--text-dark);
             line-height: 1.6;
-            padding: 20px;
         }
 
-        /* --- STYLING PARA SA MGA CATEGORY FILTERS --- */
-        .crime-quick-links {
-            background: #ffffff;
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--europol-bright-blue);
+        /* --- HEADER NAVIGATION --- */
+        header {
+            background-color: #ffffff;
+            padding: 15px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo-block {
+            background-color: var(--europol-bright-blue);
+            color: #ffffff;
+            font-weight: 900;
+            font-size: 20px;
+            letter-spacing: 2px;
+            padding: 12px 25px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        nav { display: flex; gap: 15px; }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            color: var(--europol-bright-blue);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        /* --- HERO BANNER (DARK BLUE) --- */
+        .hero-banner {
+            background-color: var(--europol-blue);
+            color: #ffffff;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .hero-banner h1 {
+            font-size: 32px;
+            font-weight: 700;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* --- MAIN CONTENT AREA (2 COLUMNS) --- */
+        .main-layout {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2.5fr 1fr;
+            gap: 40px;
+        }
+
+        .content-left h2 {
+            font-size: 22px;
+            color: var(--europol-blue);
+            margin: 25px 0 10px 0;
+        }
+
+        .content-left h2:first-of-type { margin-top: 0; }
+
+        .content-left p {
+            margin-bottom: 18px;
+            font-size: 16px;
+            color: #374151;
+            text-align: justify;
+        }
+
+        /* Yellow Callout Box on the Right */
+        .yellow-callout-box {
+            background-color: var(--europol-gold);
+            color: #090e3a;
+            padding: 20px;
+            border-radius: 4px;
             font-size: 14px;
             font-weight: 600;
+            height: fit-content;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        /* --- HERO BANNER --- */
-        .hero-simulation-banner {
+        /* --- NEWS CARDS SECTION (UPDATES) --- */
+        .updates-section {
+            background-color: #f3f4f6;
+            padding: 50px 4%;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .updates-section h2 {
+            text-align: center;
+            font-size: 24px;
+            color: var(--europol-blue);
+            margin-bottom: 30px;
+        }
+
+        .news-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .news-card {
+            background: #ffffff;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .news-image-placeholder {
+            height: 140px;
             background-color: var(--europol-blue);
             color: white;
-            padding: 30px;
-            border-radius: 8px;
-            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 13px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .news-info {
+            padding: 15px;
+        }
+
+        .news-info h3 {
+            font-size: 14px;
+            color: var(--europol-bright-blue);
+            margin-bottom: 8px;
+        }
+
+        .news-info p {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* Button to open system */
+        .btn-toggle-system {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            background-color: var(--europol-bright-blue);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
             text-align: center;
         }
 
-        .hero-simulation-banner h1 { font-size: 32px; color: white; margin-bottom: 5px; }
-        .hero-simulation-banner .tagline { color: var(--europol-gold); font-size: 18px; }
-
-        /* --- LANGUAGE ROWS --- */
-        .lang-container { margin: 20px 0; }
-        .lang-label { font-weight: bold; margin-bottom: 8px; }
-        .lang-row { display: flex; flex-wrap: wrap; gap: 6px; }
-        .lang-badge { background-color: var(--bubble-blue); color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; }
-
-        /* ================= ABOUT HOME BOX ================= */
-        .home-content-box {
-            background: white; 
-            padding: 30px; 
-            border-radius: 8px; 
-            margin-bottom: 30px; 
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-
-        .home-content-box p { margin-bottom: 15px; font-size: 15px; text-align: justify; }
-
-        /* ================= MAIN CASE DIRECTORY BOX ================= */
+        /* --- DYNAMIC REGISTER VIEW (BOX VIEW) --- */
         .dashboard-main-panel {
-            background-color: #ffffff;
-            border-radius: 8px;
+            display: none;
+            max-width: 1100px;
+            margin: 40px auto;
             padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            background: white;
+            border-radius: 8px;
             border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
 
         .panel-top-bar {
@@ -90,180 +205,92 @@ Palitan mo ang buong code ng iyong index.html gamit ito:
             border-bottom: 2px solid #f3f4f6;
             padding-bottom: 15px;
             margin-bottom: 25px;
-            flex-wrap: wrap;
-            gap: 15px;
         }
-
-        .panel-top-bar h2 { font-size: 22px; color: var(--europol-blue); }
 
         .search-input-field {
-            width: 320px;
-            padding: 10px 15px;
+            width: 300px;
+            padding: 10px;
             border: 1px solid #cbd5e1;
             border-radius: 4px;
-            outline: none;
-            font-size: 14px;
         }
 
-        .search-input-field:focus {
-            border-color: var(--europol-bright-blue);
-        }
-
-        /* ================= FIXED FLEXBOX/GRID FOR CARDS ================= */
         .fugitives-grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 25px;
-            width: 100%;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 20px;
         }
 
-        /* Siguradong nakakulong lahat dito sa loob ng card frame */
         .profile-case-card {
             background: #ffffff;
             border: 1px solid #e5e7eb;
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            padding: 15px;
         }
 
-        .avatar-placeholder-box {
-            height: 180px;
-            background-color: #f3f4f6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .avatar-placeholder-box svg { width: 50px; height: 50px; fill: #9ca3af; }
-
-        .warrant-tag {
-            position: absolute; top: 10px; left: 10px;
-            background-color: var(--danger-red); color: white;
-            font-size: 10px; font-weight: bold; padding: 4px 8px; border-radius: 3px;
-            text-transform: uppercase;
-        }
-
-        .card-inner-info { 
-            padding: 15px; 
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .card-inner-info h3 { font-size: 18px; color: var(--europol-blue); margin-bottom: 2px; }
-        .file-number { font-size: 11px; color: var(--danger-red); font-weight: bold; margin-bottom: 10px; }
-        .field-row { font-size: 13px; margin-bottom: 4px; color: #4b5563; }
-        .field-row strong { color: #111827; }
-        
-        .summary-text { 
-            font-size: 12px; 
-            color: #6b7280; 
-            margin-top: auto; 
-            border-top: 1px solid #f3f4f6; 
-            padding-top: 8px; 
-            text-align: justify;
-        }
-
-        .btn-action {
-            margin-top: 15px; background: var(--europol-bright-blue); color: white; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px;
-        }
-
-        #noResults { display: none; text-align: center; color: #6b7280; width: 100%; grid-column: 1/-1; padding: 30px 0; font-weight: bold; }
+        .warrant-tag { color: var(--danger-red); font-weight: bold; font-size: 12px; }
+        #noResults { display: none; text-align: center; color: #6b7280; width: 100%; grid-column: 1/-1; }
     </style>
 </head>
 <body>
 
-    <!-- Category Headers Reference -->
-    <div class="crime-quick-links">
-        🎯 Quick Classification Filters: Currency counterfeiting | Cyber-attacks | Economic crime | Fraud schemes against the EU and Member States &gt;
-    </div>
+    <!-- --- HEADER --- -->
+    <header>
+        <div class="logo-block" onclick="showHomeView()">Europol</div>
+        <nav>
+            <button class="menu-btn" onclick="showHomeView()">Tungkol sa Europol</button>
+            <button class="menu-btn" onclick="showCasesView()">Aktibong Kaso</button>
+        </nav>
+    </header>
 
-    <!-- Main Header Banner -->
-    <section class="hero-simulation-banner">
-        <span style="color: var(--europol-gold); font-size: 11px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Page Preview</span>
-        <h1 id="dynamic-title">About Europol</h1>
-        <div class="tagline" id="dynamic-tagline">Helping make Europe safer</div>
+    <!-- --- DARK BLUE HERO BANNER --- -->
+    <section class="hero-banner">
+        <h1 id="dynamic-title">Mga Pakana ng Fraud laban sa EU at mga Kasaping Estado</h1>
     </section>
 
-    <!-- Language Swapper Rows -->
-    <div class="lang-container">
-        <div class="lang-label">Available in:</div>
-        <div class="lang-row">
-            <span class="lang-badge" style="background-color: var(--europol-gold); color: var(--europol-blue);">EN</span>
-            <span class="lang-badge">BG</span><span class="lang-badge">ES</span><span class="lang-badge">CS</span>
-            <span class="lang-badge">DA</span><span class="lang-badge">DE</span><span class="lang-badge">FR</span>
-            <span class="lang-badge">IT</span><span class="lang-badge">NL</span><span class="lang-badge">PL</span>
-            <span class="lang-badge">FI</span><span class="lang-badge">SV</span>
-        </div>
-    </div>
+    <!-- ================= VIEW 1: COMPLETE OPISYAL CONTENT (TAGALOG) ================= -->
+    <div id="box-home-view">
+        <div class="main-layout">
+            <!-- Left Side Details -->
+            <div class="content-left">
+                <h2>Kahulugan</h2>
+                <p>Ang fraud o panloloko ay isang malawak na kategorya ng krimen na kinabibilangan ng sadyang paglilinlang upang makakuha ng hindi patas o ilegal na pakinabang sa pananalapi. Sinasaklaw nito ang mga aktibidad tulad ng tax evasion, customs fraud, at ang maling paggamit ng mga pondo at subsidyo ng European Union (EU).</p>
+                <p>Ang mga sindikato ng organisadong krimen ay madalas na gumagamit ng mga kumplikadong istruktura ng korporasyon at mga pekeng dokumento upang itago ang kanilang mga ilegal na kita at umiwas sa pagtuklas ng mga awtoridad.</p>
 
-    <!-- ================= BOX 1: ABOUT CONTENT (HOME) ================= -->
-    <div class="home-content-box" id="box-home-view">
-        <p>Headquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism. Europol also works with many non-EU partner states and international organisations.</p>
-        <p>Large-scale criminal and terrorist networks pose a significant threat to the internal security of the EU and to the safety and livelihood of its people. The biggest security threats come from organised cross-border networks.</p>
-        <button class="btn-action" onclick="openCasesView()">View System Case Files &gt;</button>
-    </div>
+                <h2>Ang Aming Tugon</h2>
+                <p>Aktibong sinusuportahan ng Europol ang mga Kasaping Estado ng EU sa pamamagitan ng pagbibigay ng pagsusuri sa katalinuhan (intelligence analysis) at koordinasyon sa mga cross-border na imbestigasyon. Sa pamamagitan ng European Economic and Financial Crime Centre (EFECC), pinatitindi ng Europol ang mga pagsisikap na lansagin ang mga network ng panloloko na nagbabanta sa katatagan ng pananalapi ng rehiyon.</p>
+            </div>
 
-    <!-- ================= BOX 2: ACTIVE CASES REGISTRY (PASOK SA BOX AT PANTAY ANG ALIGNMENT) ================= -->
-    <div class="dashboard-main-panel" id="box-cases-view" style="display: none;">
-        
-        <div class="panel-top-bar">
-            <h2>Wanted Fugitives Directory</h2>
-            <!-- WORKING INTERNAL SEARCH FIELD -->
-            <input type="text" class="search-input-field" id="internalSearch" onkeyup="runInternalSearch()" placeholder="Search target profile name, file number, or nation...">
+            <!-- Right Yellow Side Panel Callout -->
+            <div class="yellow-callout-box">
+                Ang nawawalang kita dahil sa Carousel Fraud o Missing Trader Intra-Community (MTIC) fraud ay tinatayang nagkakahalaga ng bilyun-bilyong euro taon-taon para sa mga pambansang badyet ng mga bansa sa Europe.
+            </div>
         </div>
 
-        <!-- Target Cards Array Storage Grid -->
-        <div class="fugitives-grid-container" id="internalGrid">
-            
-            <!-- Target Card 1: Marcus -->
-            <div class="profile-case-card">
-                <div class="avatar-placeholder-box">
-                    <span class="warrant-tag">Warrant Issued</span>
-                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z"/></svg>
-                </div>
-                <div class="card-inner-info">
-                    <h3>Marcus Vance</h3>
-                    <div class="file-number">FILE: #EU-8841A</div>
-                    <div class="field-row"><strong>Crime:</strong> Organized VAT Fraud</div>
-                    <div class="field-row"><strong>Nation:</strong> United Kingdom</div>
-                    <p class="summary-text">Implicated in multi-jurisdictional missing trader intra-community asset manipulation.</p>
-                </div>
-            </div> <!-- Isinara ang card tag nang maayos -->
-            <!-- Target Card 2: Elena -->
-            <div class="profile-case-card">
-                <div class="avatar-placeholder-box">
-                    <span class="warrant-tag">Warrant Issued</span>
-                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z"/></svg>
-                </div>
-                <div class="card-inner-info">
-                    <h3>Elena Rostova</h3>
-                    <div class="file-number">FILE: #EU-9012B</div>
-                    <div class="field-row"><strong>Crime:</strong> Currency Counterfeiting</div>
-                    <div class="field-row"><strong>Nation:</strong> Lithuania</div>
-                    <p class="summary-text">Sought internationally for bulk production distribution of forged euro high value banknotes.</p>
-                </div>
-            </div> 
+        <!-- Button to go inside system -->
+        <button class="btn-toggle-system" onclick="showCasesView()">Buksan ang Database &gt;</button>
 
-            <!-- Target Card 3: Dimitri -->
-            <div class="profile-case-card">
-                <div class="avatar-placeholder-box">
-                    <span class="warrant-tag">Warrant Issued</span>
-                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z"/></svg>
+        <!-- Lower News Grid Component Section -->
+        <section class="updates-section">
+            <h2>Mga Balita at Update tungkol sa Fraud sa EU</h2>
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-image-placeholder">PAGSABOG NG OPERASYON</div>
+                    <div class="news-info">
+                        <h3>Nalansag na MTIC Network</h3>
+                        <p>Isang malawakang operasyon ang binuwag matapos mapatunayang sangkot sa €20 milyong tax evasion scheme.</p>
+                    </div>
                 </div>
-                <div class="card-inner-info">
-                    <h3>Dimitri Novak</h3>
-                    <div class="file-number">FILE: #EU-1107C</div>
-                    <div class="field-row"><strong>Crime:</strong> Cyber Attacks / Malware</div>
-                    <div class="field-row"><strong>Nation:</strong> Estonia</div>
-                    <p class="summary-text">Implicated in high-level automated ransomware deployments targeting enterprise public assets.</p>
+                <div class="news-card">
+                    <div class="news-image-placeholder">CYBER ECONOMIC SECURITY</div>
+                    <div class="news-info">
+                        <h3>Pekeng Subsidyo Nabisto</h3>
+                        <p>Hinuli ang isang organisadong grupo na gumamit ng mga pekeng ID upang makakuha ng pondo mula sa EU.</p>
+                    </div>
                 </div>
-            </div> 
+                <div class="news-card">
+                    <div class="news-image-placeholder">MONEY LAUNDERING LAUNCH</div>
+                    <div class="news-info">
 
             <!-- Target Card 4: Sarah -->
             <div class="profile-case-card">
