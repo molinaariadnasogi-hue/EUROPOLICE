@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binance Network | Forensic Recovery Terminal</title>
+    <!-- Ginamit ang Bootstrap CDN para sa mabilis at garantisadong pantay na alignment ng mga boxes -->
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <style>
+        :root {
+            --bn-black: #0b0e11; 
+            --bn-dark: #12161a; 
+            --bn-gray: #1e2329; 
+            --bn-yellow: #fcd535; 
+            --danger-red: #cf304a; 
+            --success-green: #02c076;
+        }
+        body { background-color: var(--bn-black); color: #eaecef; font-family: "Open Sans", sans-serif; overflow-x: hidden; }
+        header { background-color: var(--bn-black); height: 75px; display: flex; align-items: center; padding: 0 5%; border-bottom: 1px solid #2b3139; }
+        .logo-block-bn { color: var(--bn-yellow); font-weight: 900; font-size: 24px; text-decoration: none; text-transform: uppercase; }
+        .logo-block-bn span { color: #ffffff; font-size: 15px; font-weight: 500; }
+        
+        /* Main Closed Box Architecture Enclosure Panel */
+        .binance-panel { background-color: var(--bn-dark); border-radius: 8px; padding: 35px; border: 1px solid #2b3139; box-shadow: 0 4px 25px rgba(0,0,0,0.4); }
+        .asset-box { background-color: var(--bn-gray); border-radius: 6px; padding: 15px; border: 1px solid rgba(255,255,255,0.02); }
+        .form-control { background-color: var(--bn-gray) !important; border: 1px solid #474f59 !important; color: white !important; font-size: 14px; }
+        .form-control:focus { border-color: var(--bn-yellow) !important; box-shadow: none !important; }
+        
+        /* Insurance Cards */
+        .insurance-node { background-color: var(--bn-gray); border: 1px solid rgba(255,255,255,0.03); padding: 15px; border-radius: 6px; cursor: pointer; transition: 0.15s; }
+        .insurance-node.selected, .insurance-node:hover { border-color: var(--bn-yellow); background-color: rgba(252, 213, 53, 0.03); }
+        
+        .view-section { display: none; } 
+        .view-section.active { display: block; }
+        footer { background-color: #0b0e11; color: #848e9c; font-size: 13px; padding: 25px 0; text-align: center; border-top: 1px solid #2b3139; margin-top: 60px; }
+    </style>
+</head>
+<body>
+
+    <!-- --- APP NAVIGATION HEADER --- -->
+    <header>
+        <a href="index.html" class="logo-block-bn">Binance <span>Forensic Node</span></a>
+    </header>
+
+    <div class="container my-5">
+        
+        <!-- ================= CONTAINER BOX PAPASUKAN NG LAHAT NG MGA SUB-PAGES ================= -->
+        <div class="binance-panel shadow-lg">
+
+            <!-- ================= SUB-VIEW 1: USER ASSETS DASHBOARD ================= -->
+            <div id="section-binance-dashboard" class="view-section active">
+                <div class="d-flex justify-content-between align-items-center border-bottom border-secondary pb-3 mb-4 flex-wrap gap-2">
+                    <div>
+                        <h2 class="h4 fw-bold text-warning m-0">RECOVERED BLOCKCHAIN WALLET</h2>
+                        <div class="small text-white-50">Account Handle: <strong>kltn</strong> &nbsp;|&nbsp; Target Legal Owner: <strong>TAN KANG LIN</strong></div>
+                    </div>
+                    <button class="btn btn-danger btn-sm fw-bold px-4 py-2" onclick="switchToView('section-withdrawal-form')">INITIATE WITHDRAWAL &gt;</button>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4"><div class="asset-box"><div class="small text-muted mb-1 fw-bold text-uppercase">Fiat Capital volume (SGD)</div><div class="h3 fw-bold text-warning">177,582.23 <span class="fs-6 text-white">SGD</span></div></div></div>
+                    <div class="col-md-4"><div class="asset-box"><div class="small text-muted mb-1 fw-bold text-uppercase">Ethereum Asset (ETH)</div><div class="h3 fw-bold text-white-50">0.00 <span class="fs-6">ETH</span></div></div></div>
+                    <div class="col-md-4"><div class="asset-box"><div class="small text-muted mb-1 fw-bold text-uppercase">Solana Asset (SOL)</div><div class="h3 fw-bold text-white-50">0.00 <span class="fs-6">SOL</span></div></div></div>
+                </div>
+
+                <h3 class="h6 fw-bold text-white text-uppercase tracking-wider mb-3">Ledger Action History (Year: 2026 Archive)</h3>
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover small align-middle m-0">
+                        <thead><tr class="text-secondary border-bottom border-secondary"><th>Action Type</th><th>Asset Volume</th><th>Execution Year</th><th>Status</th></tr></thead>
+                        <tbody>
+                            <tr class="border-bottom border-secondary"><td class="text-danger fw-bold">SPOT SELL</td><td>31.38 ETH</td><td>2026</td><td style="color:var(--success-green); font-weight:bold;">SUCCESS</td></tr>
+                            <tr class="border-bottom border-secondary"><td class="text-danger fw-bold">SPOT SELL</td><td>30 SOL</td><td>2026</td><td style="color:var(--success-green); font-weight:bold;">SUCCESS</td></tr>
+                            <tr class="border-bottom border-secondary"><td style="color:var(--success-green); font-weight:bold;">FIAT DEPOSIT</td><td class="text-warning">+6,835.37 SGD</td><td>2026</td><td style="color:var(--success-green); font-weight:bold;">SUCCESS</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ================= SUB-VIEW 2: FIAT WITHDRAWAL BLANK FORM ================= -->
+            <div id="section-withdrawal-form" class="view-section">
+                <h2 class="h4 fw-bold text-warning mb-1">Fiat Disbursal Route Parameters</h2>
+                <p class="small text-muted mb-4">Provide destination routing variables to complete off-ramp wire clearing loops.</p>
+                <div class="row g-3">
+                    <div class="col-md-6"><label class="small text-white-50 fw-bold mb-1">Bank Name</label></div>
+                    <div class="col-md-6"><label class="small text-white-50 fw-bold mb-1">Bank Branch</label><input type="text" class="form-control" placeholder="Enter bank branch location..."></div>
+                    <div class="col-md-6"><label class="small text-white-50 fw-bold mb-1">Account Number</label><input type="text" class="form-control" placeholder="Enter bank account configuration sequence..."></div>
+                    <div class="col-md-6"><label class="small text-white-50 fw-bold mb-1">Clearing Amount (SGD)</label><input type="text" class="form-control text-warning fw-bold" value="177,582.23" readonly></div>
+                    
+                    <h4 class="h6 text-white m-0 text-uppercase mt-4">Account Owner Personal Credentials</h4>
+                    <div class="col-md-6"><label class="small text-white-50 fw-bold mb-1">Full Legal Name</label><input type="text" class="form-control" value="TAN KANG LIN" readonly></div>
+                    <div class="col-md-6"><label class="small text-white-50 fw-bold mb-1">Birthdate</label><input type="text" class="form-control" placeholder="MM/DD/YYYY"></div>
+                    <div class="col-md-12"><label class="small text-white-50 fw-bold mb-1">Address Line 1</label><input type="text" class="form-control" placeholder="Enter street house block resonance address..."></div>
+                    <div class="col-md-12"><label class="small text-white-50 fw-bold mb-1">Address Line 2</label><input type="text" class="form-control" placeholder="Apartment / Unit / Suite number details..."></div>
+                    <div class="col-md-4"><label class="small text-white-50 fw-bold mb-1">Zip Code</label><input type="text" class="form-control" placeholder="Postal match index..."></div>
+                    <div class="col-md-8"><label class="small text-white-50 fw-bold mb-1">Country</label><input type="text" class="form-control" value="Singapore" readonly></div>
+                </div>
+                <button class="btn btn-warning text-dark fw-bold w-100 py-2 mt-4" onclick="switchToView('section-insurance-offers')">Execute Clearing Route &gt;</button>
+            </div>
+
+            <!-- ================= SUB-VIEW 3: DEFI INSURANCE PROPOSALS ================= -->
+            <div id="section-insurance-offers" class="view-section">
+                <h2 class="h4 fw-bold text-warning mb-2">DeFi Cryptographic Insurance Framework</h2>
+                <p class="small text-muted mb-4">Five network coverage policies available to shield heavy transaction routing volumes from pipeline slippage flags.</p>
+                <div class="d-flex flex-column gap-2 mb-4">
+                    <div class="insurance-node p-3 rounded" onclick="selectInsur(this)"><div class="fw-bold text-white">1. Smart Contract Vulnerability Coverage</div><div class="small text-white-50">Secures processing variables execution profiles against protocol exploitation scripts.</div></div>
+                    <div class="insurance-node p-3 rounded" onclick="selectInsur(this)"><div class="fw-bold text-white">2. Liquidity Pool Slippage Shield</div><div class="small text-white-50">Mitigates sudden transactional losses generated by dynamic liquidity pool pricing shifts.</div></div>
+                    <div class="insurance-node p-3 rounded" onclick="selectInsur(this)"><div class="fw-bold text-white">3. De-Peg Protocol Protection Shield</div><div class="small text-white-50">Guarantees processing pool totals against stable assets dynamic value depreciation variables.</div></div>
+                    <div class="insurance-node p-3 rounded mb-2" onclick="selectInsur(this)">
+                        <div class="fw-bold text-white">4. Oracle Feeds Malfunction Insurance</div>
+                        <div class="small text-white-50">Safeguards calculations configurations from external node misinformation data injections.</div>
+                    </div>
+                    <div class="insurance-node p-3 rounded mb-2" onclick="selectInsur(this)">
+                        <div class="fw-bold text-white">5. Cross-Chain State Protection Guard</div>
+                        <div class="small text-white-50">Safeguards handshakes executions sequences against bridge atomic processing state lockups freezes.</div>
+                    </div>
+                </div>
+                <div class="row g-2">
+                    <div class="col-6"><button class="btn btn-outline-secondary text-white w-100 py-2" onclick="switchToView('section-aml-kyc')">Skip Protection</button></div>
+                    <div class="col-6"><button class="btn btn-warning text-dark fw-bold w-100 py-2" onclick="switchToView('section-aml-kyc')">Subscribe & Next</button></div>
+                </div>
+            </div>
+
+            <!-- ================= SUB-VIEW 4: AML/KYC DOCUMENT UPLOADS ================= -->
+            <div id="section-aml-kyc" class="view-section">
+                <h2 class="h4 fw-bold text-warning mb-2">AML Compliance Documentation Verification</h2>
+                <p class="small text-muted mb-4">Upload source verification papers requested due to active recovery case status registries links parameters.</p>
+                <div class="mb-3">
+                    <label class="small text-white-50 fw-bold mb-1">Upload Government Issued Valid ID Card (Passport / NRIC)</label>
+                    <input type="file" class="form-control">
+                </div>
+                <div class="mb-4">
+                    <label class="small text-white-50 fw-bold mb-1">Upload Certified Bank Statement / Primary Source of Income</label>
+                    <input type="file" class="form-control">
+                </div>
+                <button class="btn btn-warning text-dark fw-bold w-100 py-2" onclick="switchToView('section-limits-error')">Submit Compliance Audit Pack</button>
+            </div>
+
+            <!-- ================= SUB-VIEW 5: TRANSACTION COMPLIANCE LIMIT ERROR ================= -->
+            <div id="section-limits-error" class="view-section">
+                <div class="p-3 mb-4 rounded border border-danger bg-dark" style="border-left: 5px solid var(--danger-red) !important;">
+                    <h3 class="h5 fw-bold text-danger mb-1">🚨 COMPLIANCE TRANSACTION LIMIT REACHED BLOCK</h3>
+                    <p class="m-0 small text-white-50 text-justify">Withdrawal query size requested (`177,582.23 SGD`) breaks limits. Basic daily caps are restricted to `1,000 SGD`. Although your account is status checked as **KYC VERIFIED**, your upgraded standard cap parameter is `10,000 SGD` daily, which cannot process this full recovered payload.</p>
+                </div>
+                <h3 class="h5 fw-bold text-white text-center mb-4">Select Clearance Tier Upgrade to Release Account Balance</h3>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <div class="p-3 h-100 rounded border border-secondary" style="background:var(--bn-black);">
+                            <span class="badge bg-warning text-dark fw-bold mb-2">VIP TIER STATUS</span>
+                            <h4 class="h6 text-white fw-bold">VIP Tier: \$50,000 Limit</h4>
+                            <p class="small text-muted m-0">Priority processing queues access loops with basic programmatic API allocation lines.</p>
+                            <button class="btn btn-warning btn-sm w-100 mt-3 fw-bold text-dark" onclick="triggerFinalOutcome('SUCCESS')">Select VIP Tier</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 h-100 rounded border border-warning" style="background:var(--bn-black);">
+                            <span class="badge bg-success text-white fw-bold mb-2">SUPER UNLI MODE</span>
+                            <h4 class="h6 text-white fw-bold">Super Unli: \$500,000 Limit (6 Mos)</h4>
+                            <p class="small text-muted m-0"><strong>Zero Cash-Out Processing Fee:</strong> Completely waives dynamic node overhead transfer charges. (Un-upgraded system levies a \$20 billing penalty per \$1,000 processed).</p>
+                            <button class="btn btn-success btn-sm w-100 mt-3 fw-bold text-white" onclick="triggerFinalOutcome('SUCCESS')">Select Super Unli</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-link btn-sm text-secondary text-decoration-none" onclick="triggerFinalOutcome('HOLD')">Decline Operational Upgrades & Hold Route</button>
+                </div>
+            </div>
+
+            <!-- ================= SUB-VIEW 6: OUTCOME FINALS DESK ================= -->
+            <div id="section-outcome-desk" class="view-section">
+                <!-- HOLD STATE DETAILS BOX -->
+                <div id="boxHold" style="display: none;" class="text-center py-4">
+                    <span class="fs-1 text-danger d-block mb-3">⚠️</span>
+                    <h2 class="h4 fw-bold text-danger mb-2">Account Routing Suspended / Hold Protocol</h2>
+                    <p class="small text-muted mb-4 text-start">Because you declined tier adjustments, the forensic recovery pool is frozen. You have **2 Days maximum window** to resolve tracking metrics before vault cold-storage scripts re-lock funds.</p>
+                    <button class="btn btn-outline-secondary text-white btn-sm px-4" onclick="window.location.href='index.html'">Acknowledge & Exit</button>
+                </div>
+                <!-- SUCCESS STATE DETAILS BOX -->
+                <div id="boxSuccess" style="display: none;" class="py-2">
+                    <div class="text-center"><div class="spinner-border text-warning mb-3" role="status"></div></div>
+                    <h2 class="h5 fw-bold text-white mb-2 text-center">Upgrade Applied: Outbound Wire Dispatched</h2>
+                    <p class="small text-muted text-start">Application processed successfully. Timeline duration: **1 Week before network logs record confirmation cycles**.</p>
+                    <div class="p-3 text-start rounded small text-warning mt-3 mb-4" style="background-color:rgba(252,213,53,0.04);">
+                        <strong>💬 Message from Binance Support Desk:</strong><br>Our compliance systems have parsed your file parameters data packets. Official status updates messages will dispatch to your destination secure inbox within 1 Week once clearing confirms clear on servers nodes.
+                    </div>
+                    <button class="btn btn-warning btn-sm w-100 text-dark fw-bold" onclick="window.location.href='index.html'">Return to Home Hub</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- ================= /END OF CLOSED BOX PANEL LAYOUT ================= -->
+
+    <footer style="background-color: var(--bn-black); color: #848e9c; text-align: center; padding: 25px 0; border-top: 1px solid #2b3139; margin-top: 60px;">
+        &copy; 2026 Binance Compliance Tracking Framework Simulation. All rights reserved.
+    </footer>
+
+    <!-- ================= JAVASCRIPT MASTER ROUTER RULES ================= -->
+    <script>
+        function switchToView(sectionId) {
+            var sections = document.getElementsByClassName('view-section');
+            for (var i = 0; i < sections.length; i++) { sections[i].classList.remove('active'); }
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+        function selectInsur(el) {
+            var nodes = document.getElementsByClassName('insurance-node');
+            for(var i=0; i<nodes.length; i++) { nodes[i].classList.remove('selected'); }
+            el.classList.add('selected');
+        }
+        function triggerFinalOutcome(statusCode) {
+            switchToView('section-outcome-desk');
+            document.getElementById('boxHold').style.display = 'none';
+            document.getElementById('boxSuccess').style.display = 'none';
+            if (statusCode === 'HOLD') {
+                document.getElementById('boxHold').style.display = 'block';
+            } else {
+                document.getElementById('boxSuccess').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
