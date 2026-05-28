@@ -1,139 +1,175 @@
-
----
-
-### 2️⃣ Ikalawang Hati: I-save bilang `style.css`
-
-```css
-/* --- THEME CUSTOM PARAMETERS DEFINITIONS --- */
+/* ==========================================================================
+   GLOBAL BRANDING COLORS (Institutional Deep Navy Theme)
+   ========================================================================== */
 :root {
-    --europol-blue: #090e3a; 
-    --europol-bright: #0053ff; 
-    --europol-gold: #ffd200;
-    --bn-black: #0b0e11;
-    --bn-dark: #12161a; 
-    --bn-gray: #1e2329; 
-    --danger-red: #cf304a; 
-    --success-green: #02c076;
+    --primary-blue: #001845;
+    --accent-blue: #00296b;
+    --highlight-yellow: #ffd166;
+    --dark-bg: #0b0e11;
+    --card-dark: #1e2329;
+    --text-white: #ffffff;
+    --border-gray: #2b3139;
 }
 
-/* Header & Typography aesthetics */
-header {
+body {
     background-color: #ffffff;
-    border-bottom: 1px solid #e5e7eb;
-    height: 75px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333333;
+    margin: 0;
+    padding: 0;
 }
 
-.logo-block {
-    background-color: var(--europol-bright);
-    color: #ffffff;
-    font-weight: 900;
-    padding: 12px 25px;
-    text-transform: uppercase;
-    text-decoration: none;
-    font-size: 20px;
-    cursor: pointer;
+/* Common Navigation Header Across All Pages */
+.navbar-custom {
+    background-color: var(--primary-blue);
+    padding: 15px 0;
+}
+.navbar-custom .nav-link {
+    color: var(--text-white) !important;
+    font-weight: 500;
+    margin: 0 15px;
+    transition: color 0.3s;
+}
+.navbar-custom .nav-link:hover, .navbar-custom .nav-link.active {
+    color: var(--highlight-yellow) !important;
 }
 
-.nav-link-btn {
-    background: none;
+/* Index / Front Page Hero Section */
+.hero-section {
+    background-color: var(--primary-blue);
+    color: var(--text-white);
+    padding: 60px 0;
+    text-align: center;
+}
+.btn-custom-yellow {
+    background-color: var(--highlight-yellow);
+    color: #000000;
+    font-weight: 600;
     border: none;
-    color: var(--europol-bright);
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    padding: 10px 15px;
+    padding: 10px 24px;
+    border-radius: 20px;
+    margin: 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s;
+}
+.btn-custom-yellow:hover {
+    transform: scale(1.05);
 }
 
-.nav-link-btn:hover, .nav-link-btn.active {
-    color: #ff5500;
-}
-
-.hero-banner {
-    background-color: var(--europol-blue);
-    color: #ffffff;
-    padding: 50px 20px;
-}
-
-.page-box {
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
+/* Grid Dashboard Cards (Index & Crypto Layouts) */
+.custom-card {
+    background-color: var(--accent-blue);
+    color: var(--text-white);
+    border-radius: 12px;
     padding: 30px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-}
-
-/* Crime Areas Grid Cards styling rules */
-.crime-card {
-    background: #ffffff;
-    border-top: 4px solid var(--europol-blue);
-    padding: 20px;
-    border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     height: 100%;
 }
-
-.crime-card.crypto-alert {
-    border-top-color: var(--europol-gold);
-    background-color: #fffdf0;
-    cursor: pointer;
-    transition: 0.2s;
+.btn-card-read {
+    background-color: var(--text-white);
+    color: var(--accent-blue);
+    font-weight: 600;
+    border-radius: 20px;
 }
 
-.crime-card.crypto-alert:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(255, 210, 0, 0.2);
-}
-
-.view-section {
-    display: none;
-}
-
-.view-section.active {
-    display: block;
-}
-
-/* --- INTEGRATED BINANCE INTERFACE DASHBOARD FRAMES --- */
-.binance-panel {
-    background-color: var(--bn-black);
-    color: #eaecef;
-    border-radius: 8px;
+/* ==========================================================================
+   CASE REGISTRY PAGE STYLES (cases.html)
+   ========================================================================== */
+.case-document {
+    border: 1px solid #ccc;
     padding: 30px;
-    border: 1px solid #2b3139;
+    background-color: #ffffff;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+.classification-banner {
+    background-color: #000000;
+    color: var(--text-white);
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.profile-img-placeholder {
+    border: 2px dashed #ccc;
+    background-color: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 250px;
 }
 
-.asset-box {
-    background-color: var(--bn-gray);
-    border-radius: 6px;
-    padding: 15px;
-    border: 1px solid rgba(255,255,255,0.02);
+/* ==========================================================================
+   LIVE CRYPTO MARKET SPECIFIC STYLES (crypto.html)
+   ========================================================================== */
+body.crypto-theme {
+    background-color: var(--dark-bg);
+    color: #eaecef;
+}
+.market-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+.crypto-address {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #0d1b2a;
+    padding: 8px;
+    border-radius: 4px;
+    color: #00ffcc;
+    word-break: break-all;
 }
 
-.form-control {
-    background-color: var(--bn-gray) !important;
-    border: 1px solid #474f59 !important;
-    color: white !important;
-}
-
-.form-control:focus {
-    border-color: var(--europol-gold) !important;
-    box-shadow: none !important;
-}
-
-.insurance-node {
-    background-color: var(--bn-gray);
-    border: 1px solid rgba(255,255,255,0.03);
+/* 🚀 ANIMATION: ETO YUNG KUKURBA AT AANGAT KAPAG HINOVER */
+.live-coin-card {
+    background-color: var(--card-dark);
+    border: 1px solid var(--border-gray);
+    border-radius: 12px;
+    padding: 20px;
     cursor: pointer;
-    transition: 0.15s;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+}
+.live-coin-card:hover {
+    transform: translateY(-8px); /* Dumikit at umangat */
+    box-shadow: 0 12px 24px rgba(0, 255, 204, 0.15); /* May green glow */
+    border-color: #00ffcc;
+}
+.mini-chart-box {
+    height: 60px;
+    pointer-events: none;
+    margin-top: 10px;
 }
 
-.insurance-node.selected, .insurance-node:hover {
-    border-color: var(--europol-gold);
-    background-color: rgba(255, 210, 0, 0.03);
+/* 🔳 OVERLAY MODAL MASK DISPLAY */
+.overlay-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
-
-footer {
-    background-color: var(--europol-blue);
-    color: #94a3b8;
-    font-size: 13px;
-    padding: 25px 0;
+.overlay-mask.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.overlay-box {
+    background-color: var(--card-dark);
+    border: 1px solid #474d57;
+    border-radius: 16px;
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    transform: scale(0.85);
+    transition: transform 0.3s ease;
+}
+.overlay-mask.active .overlay-box {
+    transform: scale(1);
 }
