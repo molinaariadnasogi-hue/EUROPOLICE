@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binance Wallet Ledger Analytics</title>
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body.binance-matrix {
+            background-color: #0b0e11;
+            color: #eaecef;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar-binance {
+            background-color: #181a20;
+            border-bottom: 1px solid #2b3139;
+            padding: 15px 0;
+        }
+        .auth-card-panel, .dashboard-report-layer, .flow-card {
+            background-color: #1e2329;
+            border: 1px solid #2b3139;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+            margin-top: 30px;
+        }
+        .binance-input-field {
+            background-color: #2b3139;
+            border: 1px solid #474d57;
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 10px;
+            width: 100%;
+        }
+        .binance-input-field:focus {
+            background-color: #2b3139;
+            border-color: #f0b90b;
+            color: #ffffff;
+            box-shadow: none;
+        }
+        .btn-binance-yellow {
+            background-color: #f0b90b;
+            color: #000000;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            padding: 12px;
+        }
+        .btn-binance-yellow:hover {
+            background-color: #d4a30a;
+        }
+        .insurance-card {
+            background-color: #181a20;
+            border: 1px solid #474d57;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .spinner-border-custom {
+            width: 3rem;
+            height: 3rem;
+            color: #f0b90b;
+        }
+        .binance-popup-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .binance-popup-mask.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .binance-popup-box {
+            background-color: #1e2329;
+            border: 1px solid #f0b90b;
+            border-radius: 16px;
+            padding: 35px;
+            width: 90%;
+            max-width: 550px;
+            box-shadow: 0 10px 40px rgba(240, 185, 11, 0.2);
+            transform: scale(0.85);
+            transition: transform 0.3s ease;
+        }
+        .binance-popup-mask.active .binance-popup-box {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="binance-matrix">
+
+    <nav class="navbar navbar-expand-lg navbar-binance">
+        <div class="container">
+            <a class="navbar-brand text-white fw-bold" href="index.html">BINANCE ADVANCED INTEL</a>
+            <div class="collapse navbar-collapse justify-content-end">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="index.html">ABOUT</a></li>
+                    <li class="nav-item"><a class="nav-link" href="case.html">CASES</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="crypto.html">CRYPTO RECON</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container pb-5">
+        <!-- HAKBANG 0: RECONNECTION GATEWAY -->
+        <div class="row justify-content-center" id="authGatewayBlock">
+            <div class="col-md-6 col-lg-5">
+                <div class="auth-card-panel text-center">
+                    <h3 class="fw-bold mb-2 text-white">Wallet Node Reconnection</h3>
+                    <p style="color: #848e9c;" class="small mb-4">Enter validation token code (e.g., 120352).</p>
+                    <input type="text" id="walletAuthCodeField" class="form-control binance-input-field mb-3 text-center" placeholder="120352">
+                    <button class="btn-binance-yellow w-100" id="btnTriggerWalletSync">Synchronize Wallet Registry</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- HAKBANG 1: KLTN WALLET REPORT -->
+        <div id="walletReportMatrixLayer" class="dashboard-report-layer d-none">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary">
+                <div>
+                    <h2 class="fw-bold m-0 text-white">KLTN Wallet Audit Registry</h2>
+                    <small class="text-success fw-bold">ACTIVE MONITOR</small>
+                </div>
+                <button class="btn btn-danger fw-bold px-4" id="btnOpenWithdrawalForm">Withdrawal Asset Link</button>
+            </div>
+            
+            <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                    <div class="p-3 bg-dark rounded border border-secondary">
+                        <small class="text-muted d-block">ETH HOLDING BALANCE</small>
+                        <h3 class="fw-bold my-1" style="color: #0ecb81;">177,451.46 ETH</h3>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 bg-dark rounded border border-secondary">
+                        <small class="text-muted d-block">LIQUID CASH-IN REGISTRY</small>
+                        <h3 class="fw-bold my-1 text-white">\$6,835.23</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HAKBANG 2: BANK CREDENTIALS FORM (3-COLUMN MATRIX LAYOUT) -->
+        <div id="withdrawalFormSection" class="flow-card d-none">
+            <h4 class="text-white fw-bold mb-4">Bank Settlement Routing Information</h4>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label small text-white-50">BANK NAME</label>
+                        <input type="text" class="form-control binance-input-field" placeholder="e.g., European Central Bank">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-white-50">BENEFICIARY ACCOUNT NAME</label>
+                        <input type="text" class="form-control binance-input-field" placeholder="Owner Full Legal Name">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label small text-white-50">BANK ACCOUNT NUMBER</label>
+                        <input type="text" class="form-control binance-input-field" placeholder="IBAN / Account Code">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-white-50">OWNER LEGAL ADDRESS</label>
+                        <input type="text" class="form-control binance-input-field" placeholder="Current Residential Street">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label small text-white-50">BANK REMITTANCE ADDRESS</label>
+                        <input type="text" class="form-control binance-input-field" placeholder="Full HQ Street Address">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-white-50">BENEFICIARY BIRTHDATE</label>
+                        <input type="date" class="form-control binance-input-field">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-1">
+                        <label class="form-label small text-white-50">CONTACT NUMBER</label>
+                        <input type="text" class="form-control binance-input-field" placeholder="+00 000 000 000">
+                    </div>
+                </div>
+            </div>
+            <button class="btn-binance-yellow w-100 mt-4" id="btnConfirmBankDetails">Confirm Account Credentials</button>
+        </div>
+
+        <!-- HAKBANG 3: DEFI INSURANCE GENERATOR (SELYADONG MOCK DATA SECTION) -->
+        <div id="insuranceSection" class="flow-card d-none">
+            <h4 class="text-white fw-bold mb-2">DeFi Smart Contract Insurance Protocols</h4>
+            <p class="text-muted small mb-4">Regulatory nodes require decentralized coverage selection prior to high-volume cross-border liquidity execution.</p>
+            
+            <div id="insuranceList">
+                <div class="insurance-card d-flex justify-content-between align-items-center mb-3">
+                    <div class="pe-3">
+                        <h5 class="text-white mb-1">1. Nexus Mutual Asset Coverage</h5>
+                        <p class="small text-muted mb-0">Protects against smart contract failures and liquidity freezes.</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-warning select-ins-btn" style="min-width: 110px;">Select Policy</button>
+                </div>
+
+                <div class="insurance-card d-flex justify-content-between align-items-center mb-3">
+                    <div class="pe-3">
+                        <h5 class="text-white mb-1">2. InsurAce Protocol Coverage</h5>
+                        <p class="small text-muted mb-0">Cross-chain insurance against multi-sig wallet exploits.</p>
+                    </div>
+        <!-- HAKBANG 3: DEFI INSURANCE GENERATOR (SELYADO AT HINDI MAPUPUTOL) -->
+        <div id="insuranceSection" class="flow-card d-none">
+            <h4 class="text-white fw-bold mb-2">DeFi Smart Contract Insurance Protocols</h4>
+            <p class="text-muted small mb-4">Regulatory nodes require decentralized coverage selection prior to high-volume cross-border liquidity execution.</p>
+            
+            <div id="insuranceList">
+                <!-- Card 1 -->
+                <div class="insurance-card d-flex justify-content-between align-items-center mb-3">
+                    <div class="pe-3">
+                        <h5 class="text-white mb-1">1. Nexus Mutual Asset Coverage</h5>
+                        <p class="small text-muted mb-0">Protects against smart contract failures and liquidity freezes.</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-warning select-ins-btn" style="min-width: 110px;">Select Policy</button>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="insurance-card d-flex justify-content-between align-items-center mb-3">
+                    <div class="pe-3">
+                        <h5 class="text-white mb-1">2. InsurAce Protocol Coverage</h5>
+                        <p class="small text-muted mb-0">Cross-chain insurance against multi-sig wallet exploits.</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-warning select-ins-btn" style="min-width: 110px;">Select Policy</button>
+                </div>
+
+                <!-- Card 3 (INAYOS NA SPACING AT ELEMENT TAGS) -->
+                <div class="insurance-card d-flex justify-content-between align-items-center mb-3">
+                    <div class="pe-3">
+                        <h5 class="text-white mb-1">3. Bridge Mutual De-Fi Shield</h5>
+                        <p class="small text-muted mb-0">Discretionary coverage pool for absolute layer-1 settlements.</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-warning select-ins-btn" style="min-width: 110px;">Select Policy</button>
+                </div>
+            </div>
+            
+            <!-- BUTTON INTERFACE CONTROLS -->
+            <div class="d-flex gap-3 mt-4">
+                <button class="btn btn-secondary w-50" id="btnSkipInsurance">Skip Protocol Insurance</button>
+                <button class="btn-binance-yellow w-50 btn" id="btnNextFromInsurance" disabled>Proceed to Asset Transfer</button>
+            </div>
+        </div> <!-- Selyadong pagsasara ng buong gray block structure -->
+        <!-- HAKBANG 4: KYC VERIFICATION SECTION -->
+        <div id="kycSection" class="flow-card d-none">
+            <h4 class="text-white fw-bold mb-2">Institutional Identity Verification (KYC)</h4>
+            <p class="text-muted small mb-4">Please upload certified legal compliance documents below to verify node liquidity source authenticity.</p>
+            
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <label class="form-label small text-white-50">GOVERNMENT VALID IDENTITY DOCUMENT</label>
+                    <input type="file" class="form-control binance-input-field">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small text-white-50">CERTIFIED BANK STATEMENT (LAST 3 MO.)</label>
+                    <input type="file" class="form-control binance-input-field">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small text-white-50">VERIFIABLE SOURCE OF INCOME RECORD</label>
+                    <input type="file" class="form-control binance-input-field">
+                </div>
+            </div>
+            
+            <button class="btn-binance-yellow w-100" id="btnExecuteFinalWithdrawal">Execute Liquidity Withdrawal</button>
+        </div>
+
+        <!-- HAKBANG 5: LOADING BACKDROP -->
+        <div id="loadingSection" class="flow-card d-none text-center py-5">
+            <div class="spinner-border spinner-border-custom mb-3" role="status"></div>
+            <h4 class="text-white">Connecting Blockchain Node Network...</h4>
+            <p class="text-muted small">Validating cryptographic parameters and transaction routing logs.</p>
+        </div>
+
+        <!-- HAKBANG 6: FINAL ERROR MESSAGE PANEL -->
+        <div id="limitErrorSection" class="flow-card d-none border border-danger">
+            <div class="d-flex align-items-center gap-3 text-danger mb-3">
+                <h3>⚠️</h3>
+                <h4 class="fw-bold m-0">TRANSACTION FAILURE: ROUTING NODE LIMIT EXCEEDED</h4>
+            </div>
+            <hr class="border-danger">
+            <p class="text-white-50">The cryptographic wallet network engine rejected the request because the current volume value exceeds your daily compliance status limit parameters.</p>
+            
+            <div class="row g-3 my-2">
+                <div class="col-md-6">
+                    <div class="p-3 rounded bg-dark border border-secondary">
+                        <small class="text-muted d-block fw-bold text-white-50">VERIFIED STANDARD ACCOUNT</small>
+                        <h4 class="text-warning fw-bold my-1">20,000 SGD DAILY MAXIMUM</h4>
+                        <span class="badge bg-danger">1.5% WITHDRAWAL FEE APPLIED</span>
+                        <p class="text-muted small mt-2 mb-0">A processing deduction fee of <strong>300 SGD</strong> is automatically charged per maximum withdrawal cycle unless the network node is upgraded.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 rounded bg-dark border border-warning" style="box-shadow: 0 0 10px rgba(240,185,11,0.15);">
+                        <small class="text-warning d-block fw-bold">✨ VIP NODE STATUS LIMIT</small>
+                        <h4 class="text-success fw-bold my-1">500,000 SGD DAILY MAXIMUM</h4>
+                        <span class="badge bg-success">0% TRANSACTION FEES</span>
+                        <p class="text-muted small mt-2 mb-0">Direct structural execution gateway with absolute clearing priority and zero overhead deductions.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button class="btn btn-warning fw-bold px-5 py-3 text-dark btn-binance-yellow" id="btnAvailVipNow" style="border-radius: 30px; font-size: 1.1rem;">
+                    🚀 Initialize Instant VIP Node Upgrade
+                </button>
+            </div>
+        </div>
+    </div> <!-- Isinasara ang pinaka-unang container div ng body -->
+
+  <!-- HAKBANG 7: BINANCE SUPPORT POPUP MESSAGE BOX -->
+    <div id="binanceSupportPopupMask" class="binance-popup-mask">
+        <div class="binance-popup-box text-center">
+            <div class="text-warning mb-3" style="font-size: 3rem;">✔</div>
+            <h4 class="text-white fw-bold mb-3" style="letter-spacing: 0.5px;">BINANCE SUPPORT NOTIFICATION</h4>
+            <hr style="border-color: #474d57;">
+            
+            <p class="text-white-50 text-start" style="line-height: 1.6; font-size: 0.95rem;">
+                VIP Node Upgrade initialization state: <span class="text-success fw-bold">SUCCESS</span>.
+            </p>
+            <p class="text-white-50 text-start" style="line-height: 1.6; font-size: 0.95rem;">
+                Binance Customer Support will send an official dispatch email confirmation once the processing network node completes the international bank transfer routing. 
+            </p>
+            <p class="text-warning text-start small fw-bold" style="line-height: 1.5;">
+                *Notice: This process requires pre-approval steps from local settlement clearing houses and comprehensive verification cycles for all submitted identification documents.
+            </p>
+            
+            <!-- INAYOS NA BUTTON CLICK (WALA NANG SOBRANG PARENTHESIS) -->
+            <button class="btn btn-outline-warning w-100 mt-4 fw-bold" onclick="document.getElementById('binanceSupportPopupMask').classList.remove('active')">
+                Acknowledge Support Message
+            </button>
+        </div>
+    </div>
+
+    <!-- SCRIPT CONNECTIONS AT PAGSARA NG HTML BODY -->
+    <script src="script.js"></script>
+</body>
+</html>
