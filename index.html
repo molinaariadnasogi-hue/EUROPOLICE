@@ -6,237 +6,75 @@
     <title>Europol | European Cybercrime Centre (EC3)</title>
     <!-- Ginamit ang Bootstrap CDN para sa mabilis at garantisadong pantay na alignment ng mga boxes -->
     <link href="https://jsdelivr.net" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --europol-blue: #090e3a; 
+            --europol-bright: #0053ff; 
+            --europol-gold: #ffd200;
+        }
+        body { background-color: #f8fafc; color: #111827; font-family: "Open Sans", sans-serif; overflow-x: hidden; }
+        header { background-color: #ffffff; border-bottom: 1px solid #e5e7eb; height: 75px; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; }
+        .logo-block { background-color: var(--europol-bright); color: #ffffff; font-weight: 900; padding: 12px 25px; text-transform: uppercase; text-decoration: none; font-size: 20px; cursor: pointer; }
+        .nav-link-btn { background: none; border: none; color: var(--europol-bright); font-size: 13px; font-weight: 700; text-transform: uppercase; padding: 10px 15px; text-decoration: none; }
+        .hero-banner { background-color: var(--europol-blue); color: #ffffff; padding: 40px 20px; text-align: center; border-bottom: 3px solid var(--europol-gold); }
+        .page-box { background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .crime-card { background: #ffffff; border-top: 4px solid var(--europol-blue); padding: 25px; border-radius: 6px; border: 1px solid #e5e7eb; height: 100%; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .crime-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+        .crime-card.crypto-alert { border-top-color: var(--europol-gold); background-color: #fffdf0; text-decoration: none; display: block; }
+        footer { background-color: var(--europol-blue); color: #94a3b8; font-size: 13px; padding: 20px 0; text-align: center; margin-top: 50px; }
+    </style>
 </head>
 <body>
 
     <!-- --- NAVIGATION HEADER --- -->
-    <header class="navbar px-5 sticky-top">
-        <div class="logo-block" onclick="switchToView('section-europol-home')">Europol</div>
-        <div class="ms-auto d-flex">
-            <button class="nav-link-btn active" id="nav-btn-about" onclick="switchToView('section-europol-home')">About Europol</button>
-            <button class="nav-link-btn" id="nav-btn-crime" onclick="switchToView('section-europol-home')">Crime Areas</button>
+    <header>
+        <div class="logo-block" onclick="window.location.reload()">Europol</div>
+        <div class="d-flex">
+            <a href="index.html" class="nav-link-btn">Intelligence Registry</a>
         </div>
     </header>
 
-    <!-- --- MAIN BANNER --- -->
-    <section class="hero-banner text-center">
-        <span class="text-uppercase small fw-bold d-block mb-2" style="color: var(--europol-gold); letter-spacing: 2px;">Official Document Portal</span>
-        <h1 class="fw-bold display-6" id="dynamic-title">European Cybercrime Centre</h1>
-        <div class="fs-5 text-white-50" id="dynamic-tagline">Helping make Europe safer by combating organized transnational crime networks</div>
+    <!-- --- HEADER HERO BANNER --- -->
+    <section class="hero-banner">
+        <h1 class="fw-bold h4 m-0">European Cybercrime Centre (EC3)</h1>
+        <p class="small text-white-50 m-0 mt-1">Forensic Case Records Management Panel | Authorized Compliance Portal</p>
     </section>
 
+    <!-- --- WORKSPACE CONTENT MAIN FRAME --- -->
     <div class="container my-5">
-        
-        <!-- ================= VIEW 1: EUROPOL HOME & CRIME LISTS ================= -->
-        <div id="section-europol-home" class="view-section active">
-            <div class="page-box mb-5">
-                <h2 class="h4 fw-bold mb-3" style="color: var(--europol-blue);">Our Mission</h2>
-                <p class="text-secondary text-justify">Headquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism. Europol also works with many non-EU partner states and international organisations.</p>
-            </div>
+        <div class="page-box mb-5">
+            <h2 class="h5 fw-bold mb-3" style="color: var(--europol-blue);">Our Mission Framework</h2>
+            <p class="small text-secondary text-justify m-0">Headquartered in The Hague, the Netherlands, Europol’s mission is to support its Member States in preventing and combating all forms of serious international and organised crime, cybercrime and terrorism. Europol also works with many non-EU partner states and international organisations.</p>
+        </div>
 
-            <h2 class="h4 fw-bold mb-4" style="color: var(--europol-blue);">Monitored Crime Areas & Case Registries</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="crime-card">
-                        <h3 class="h6 fw-bold text-dark">1. Currency Counterfeiting</h3>
-                        <p class="small text-muted m-0">The tracking and distribution networks of forged Euro banknotes across regional EU border states.</p>
+        <h2 class="h5 fw-bold mb-4" style="color: var(--europol-blue);">Monitored Crime Areas & Active Case Directories</h2>
+        <div class="row g-4">
+            <!-- TARGET 1: BRANKO MILOS PATHWAY -->
+            <div class="col-md-6">
+                <a href="index2.html" class="crime-card crypto-alert">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h3 class="h6 fw-bold text-dark m-0">Branko Milos</h3>
+                        <span class="badge bg-danger text-white small">WARRANT ACTIVE</span>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="crime-card">
-                        <h3 class="h6 fw-bold text-dark">2. Terrorism & Cyber-Attacks</h3>
-                        <p class="small text-muted m-0">Dismantling localized extremist cells deploying banking malware infrastructures.</p>
+                    <p class="small text-danger fw-semibold m-0 mt-1">FILE REFERENCE: #EC3-AML-2026-784291-EU</p>
+                    <p class="small text-muted m-0 mt-2">Nationality: Croatian. Under investigation for financial facilitation and asset concealment. Click to open official closed envelope box directory.</p>
+                </a>
+            </div>
+            
+            <!-- TARGET 2: TAN KANG LIN PATHWAY -->
+            <div class="col-md-6">
+                <a href="index3.html" class="crime-card crypto-alert">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h3 class="h6 fw-bold text-dark m-0">Tan Kang Lin (kltn)</h3>
+                        <span class="badge bg-warning text-dark small">ESCROW TARGET</span>
                     </div>
-                </div>
-                
-                <!-- CRYPTO FRAUD CASE CARD -->
-                <div class="col-md-4">
-                    <div class="crime-card crypto-alert" onclick="switchToView('section-biometric-auth')">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="h6 fw-bold text-dark">3. Cryptographic Asset Fraud</h3>
-                            <span class="badge bg-warning text-dark small fw-bold">CASE ACTIVE</span>
-                        </div>
-                        <p class="small text-dark fw-semibold m-0 mt-1">FILE REFERENCE: #EU-120352</p>
-                        <p class="small text-muted m-0 mt-1">Cross-border illicit wallet recovery and forensic distributed ledger parsing systems. Click to access secure database node.</p>
-                    </div>
-                </div>
+                    <p class="small text-danger fw-semibold m-0 mt-1">FILE REFERENCE: #EC3-FIN-2026-120352-EU</p>
+                    <p class="small text-muted m-0 mt-2">Nationality: Singaporean. Identified for high-volume ledger exploits. Click to access active forensic wallet recovery loop node dashboard.</p>
+                </a>
             </div>
         </div>
+    </div>
 
-        <!-- ================= VIEW 2: SECURE BIOMETRIC PIN OVERRIDE ================= -->
-        <div id="section-biometric-auth" class="view-section">
-            <div class="row justify-content-center">
-                <div class="col-md-5">
-                    <div class="page-box text-center shadow-sm">
-                        <div class="fs-1 text-warning mb-2">🔒</div>
-                        <h2 class="h5 fw-bold text-dark mb-1">Secure Ledger Access Override</h2>
-                        <p class="small text-muted mb-4">Input the 6-digit cryptographic decryption verification passkey code attached to this asset recovery case file.</p>
-                        <div class="mb-3">
-                            <input type="password" id="passkeyField" class="form-control text-center fs-3 tracking-widest fw-bold text-dark border-secondary bg-light" maxlength="6" placeholder="******">
-                        </div>
-                        <button class="btn btn-primary w-100 py-2 fw-bold" style="background-color: var(--europol-bright);" onclick="verifyCasePasskey()">Decrypt & Unlock Ledger</button>
-                        <div id="authErrorMsg" class="text-danger small fw-bold mt-3" style="display: none;">Invalid authentication token parameters. Connection refused.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= VIEW 3: UNLOCKED BINANCE DASHBOARD BOX ================= -->
-        <div id="section-binance-dashboard" class="view-section">
-            <div class="binance-panel shadow">
-                <div class="d-flex justify-content-between align-items-center border-bottom border-secondary pb-3 mb-4 flex-wrap gap-2">
-                    <div>
-                        <h2 class="h4 fw-bold text-warning m-0">RECOVERED BLOCKCHAIN WALLET</h2>
-                        <div class="small text-muted">Account Handle: <strong>kltn</strong> &nbsp;|&nbsp; Legal Owner: <strong>TAN KANG LIN</strong></div>
-                    </div>
-                    <button class="btn btn-danger btn-sm fw-bold px-4 py-2" onclick="switchToView('section-withdrawal-form')">INITIATE WITHDRAWAL &gt;</button>
-                </div>
-
-                <div class="row g-3 mb-4">
-                    <div class="col-md-4"><div class="asset-box"><div class="small text-muted mb-1 fw-bold text-uppercase">Fiat Capital volume (SGD)</div><div class="h3 fw-bold text-warning">177,582.23 <span class="fs-6 text-white">SGD</span></div></div></div>
-                    <div class="col-md-4"><div class="asset-box"><div class="small text-muted mb-1 fw-bold text-uppercase">Ethereum (ETH)</div><div class="h3 fw-bold text-white-50">0.00 <span class="fs-6">ETH</span></div></div></div>
-                    <div class="col-md-4"><div class="asset-box"><div class="small text-muted mb-1 fw-bold text-uppercase">Solana (SOL)</div><div class="h3 fw-bold text-white-50">0.00 <span class="fs-6">SOL</span></div></div></div>
-                </div>
-
-                <h3 class="h6 fw-bold text-white text-uppercase tracking-wider mb-3">Ledger Action History (Year: 2026 Archive)</h3>
-                <div class="table-responsive">
-                    <table class="table table-dark align-middle m-0 text-white" style="font-size:14px;">
-                        <thead><tr class="text-muted small border-bottom border-secondary"><th>Action Type</th><th>Asset Volume</th><th>Timeline</th><th>Status</th></tr></thead>
-                        <tbody>
-                            <tr class="border-bottom border-secondary"><td class="text-danger fw-bold">SPOT SELL</td><td>31.38 ETH</td><td>2026</td><td style="color:var(--success-green); font-weight:bold;">SUCCESS</td></tr>
-                            <tr class="border-bottom border-secondary"><td class="text-danger fw-bold">SPOT SELL</td><td>30 SOL</td><td>2026</td><td style="color:var(--success-green); font-weight:bold;">SUCCESS</td></tr>
-                            <tr class="border-bottom border-secondary"><td style="color:var(--success-green); font-weight:bold;">FIAT DEPOSIT</td><td class="text-warning">+6,835.37 SGD</td><td>2026</td><td style="color:var(--success-green); font-weight:bold;">SUCCESS</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= VIEW 4: WITHDRAWAL BLANK FORM ================= -->
-        <div id="section-withdrawal-form" class="view-section">
-            <div class="row justify-content-center"><div class="col-md-8"><div class="binance-panel shadow">
-                <h2 class="h5 fw-bold text-warning mb-1">Fiat Disbursal Route Parameters</h2>
-                <p class="small text-muted mb-4">Provide destination routing variables to complete off-ramp wire.</p>
-                <div class="row g-3">
-                    <div class="col-md-6"><label class="small text-muted fw-bold mb-1">Bank Name</label><input type="text" class="form-control"></div>
-                    <div class="col-md-6"><label class="small text-muted fw-bold mb-1">Bank Branch</label><input type="text" class="form-control"></div>
-                    <div class="col-md-6"><label class="small text-muted fw-bold mb-1">Account Number</label><input type="text" class="form-control"></div>
-                    <div class="col-md-6"><label class="small text-muted fw-bold mb-1">Amount (SGD)</label><input type="text" class="form-control text-warning fw-bold" value="177,582.23" readonly></div>
-                    <h4 class="h6 text-white m-0 text-uppercase mt-3">Account Owner Personal Credentials</h4>
-                    <div class="col-md-6"><label class="small text-muted fw-bold mb-1">Full Legal Name</label><input type="text" class="form-control" value="TAN KANG LIN" readonly></div>
-                    <div class="col-md-6"><label class="small text-muted fw-bold mb-1">Birthdate</label><input type="text" class="form-control" placeholder="MM/DD/YYYY"></div>
-            <div class="col-md-12"><label class="small text-muted fw-bold mb-1">Address Line 1</label><input type="text" class="form-control"></div>
-            <div class="col-md-12"><label class="small text-muted fw-bold mb-1">Address Line 2</label><input type="text" class="form-control"></div>
-            <div class="col-md-4"><label class="small text-muted fw-bold mb-1">Zip Code</label><input type="text" class="form-control"></div>
-            <div class="col-md-8"><label class="small text-muted fw-bold mb-1">Country</label><input type="text" class="form-control" value="Singapore"></div>
-        </div>
-        <button class="btn btn-warning w-100 py-2 mt-4 text-dark fw-bold" onclick="switchToView('section-insurance-offers')">Execute Clearing Route &gt;</button>
-    </div></div></div>
-</div>
-
-<!-- ================= VIEW 5: DEFI INSURANCE PROPOSALS ================= -->
-<div id="section-insurance-offers" class="view-section">
-    <div class="row justify-content-center"><div class="col-md-8"><div class="binance-panel shadow">
-        <h2 class="h5 fw-bold text-warning mb-2">DeFi Cryptographic Insurance Framework</h2>
-        <div class="d-flex flex-column gap-2 mb-4">
-            <div class="insurance-node p-3 rounded" onclick="selectInsur(this)"><div class="fw-bold text-white">1. Smart Contract Vulnerability Coverage</div><div class="small text-muted">Secures variables execution profiles.</div></div>
-            <div class="insurance-node p-3 rounded" onclick="selectInsur(this)"><div class="fw-bold text-white">2. Liquidity Pool Slippage Shield</div><div class="small text-muted">Mitigates dynamical drop pool shifts.</div></div>
-            <div class="insurance-node p-3 rounded" onclick="selectInsur(this)"><div class="fw-bold text-white">3. De-Peg Protocol Protection Shield</div><div class="small text-muted">Guarantees pipeline total capital values.</div></div>
-            <div class="insurance-node p-3 rounded" onclick="selectInsur(this)"><div class="fw-bold text-white">4. Oracle Feeds Malfunction Insurance</div><div class="small text-muted">Mitigates node processing calculation errors metrics.</div></div>
-            <div class="insurance-node p-3 rounded" onclick="selectInsur(this)"><div class="fw-bold text-white">5. Cross-Chain State Protection Guard</div><div class="small text-muted">Safeguards bridge handshake frozen state intervals layer.</div></div>
-        </div>
-        <div class="row g-2"><div class="col-6"><button class="btn btn-outline-secondary text-white w-100 py-2" onclick="switchToView('section-aml-kyc')">Skip Protection</button></div><div class="col-6"><button class="btn btn-warning text-dark fw-bold w-100 py-2" onclick="switchToView('section-aml-kyc')">Subscribe & Next</button></div></div>
-    </div></div></div>
-</div>
-
-<!-- ================= VIEW 6: AML/KYC COMPLIANCE UPLOADS ================= -->
-<div id="section-aml-kyc" class="view-section">
-    <div class="row justify-content-center"><div class="col-md-6"><div class="binance-panel shadow">
-        <h2 class="h5 fw-bold text-warning mb-2">AML Compliance Documentation</h2>
-        <p class="small text-muted mb-3">Upload legal validation metrics prior to executing asset recovery clearance loops.</p>
-        <div class="mb-3"><label class="small text-white-50 fw-bold mb-1">Upload Valid ID Card File</label><input type="file" class="form-control"></div>
-        <div class="mb-4"><label class="small text-white-50 fw-bold mb-1">Upload Institutional Bank Statement</label><input type="file" class="form-control"></div>
-        <button class="btn btn-warning text-dark fw-bold w-100 py-2" onclick="switchToView('section-limits-error')">Submit Compliance Audit Pack</button>
-    </div></div></div>
-</div>
-
-<!-- ================= VIEW 7: VOLUME RESTRICTIONS AND TIER UPGRADE ================= -->
-<div id="section-limits-error" class="view-section">
-    <div class="row justify-content-center"><div class="col-md-8">
-        <div class="p-3 mb-4 rounded border border-danger bg-dark" style="border-left: 5px solid var(--danger-red) !important;"><h3 class="h6 text-danger fw-bold m-0">🚨 COMPLIANCE TRANSACTION BLOCKED</h3><p class="m-0 small text-white-50 mt-1">Withdrawal requested (`177,582.23 SGD`) breaks account limits. Your approved KYC Tier ceiling limit is maxed at `10,000 SGD` daily, which cannot pass this asset recovery payload block.</p></div>
-        <div class="binance-panel shadow">
-            <h3 class="h6 text-white text-center mb-4 text-uppercase">Select Clearance Tier Upgrade to Release Account Balance</h3>
-            <div class="row g-3">
-                <div class="col-md-6"><div class="p-3 h-100 rounded border border-secondary" style="background:#0b0e11;"><span class="badge bg-warning text-dark fw-bold mb-2">VIP TIER STATUS</span><h4 class="h6 text-white fw-bold">VIP Tier: \$50,000 Limit</h4><p class="small text-muted m-0">Elevated priorities queues. Standard frictionless over-the-counter loops apply.</p><button class="btn btn-warning btn-sm w-100 mt-3 fw-bold text-dark" onclick="triggerFinalBoxState('SUCCESS')">Select VIP Tier</button></div></div>
-                <div class="col-md-6"><div class="p-3 h-100 rounded border border-warning" style="background:#0b0e11;"><span class="badge bg-success text-white fw-bold mb-2">SUPER UNLI MODE</span><h4 class="h6 text-white fw-bold">Super Unli: \$500,000 Limit (6 Mos)</h4><p class="small text-muted m-0"><strong>Zero Cash-Out Processing Fee:</strong> Completely waives dynamic node overhead transfer charges. (Un-upgraded system levies a \$20 billing penalty per \$1,000 processed).</p><button class="btn btn-success btn-sm w-100 mt-3 fw-bold text-white" onclick="triggerFinalBoxState('SUCCESS')">Select Super Unli</button></div></div>
-            </div>
-            <div class="text-center mt-3"><button class="btn btn-link btn-sm text-muted text-decoration-none" onclick="triggerFinalBoxState('HOLD')">Decline Operational Upgrades</button></div>
-        </div>
-    </div></div>
-</div>
-
-<!-- ================= VIEW 8: STATE OUTPUT PROCESSING DESK ================= -->
-<div id="section-outcome-desk" class="view-section">
-    <div class="row justify-content-center"><div class="col-md-6">
-        <div class="binance-panel border border-danger text-center shadow" id="boxHold" style="display: none;"><span class="fs-1 text-danger d-block mb-2">⚠️</span><h2 class="h5 fw-bold text-white mb-2">Account Routing Suspended / Hold Protocol</h2><p class="small text-muted mb-4">Because you declined tier adjustments, the forensic recovery pool is frozen. You have **2 Days maximum window** to resolve tracking metrics before vault cold-storage scripts re-lock funds.</p><button class="btn btn-outline-secondary btn-sm text-white" onclick="window.location.reload();">Close Portal</button></div>
-        <div class="binance-panel border border-success text-center shadow" id="boxSuccess" style="display: none;"><div class="spinner-border text-warning mb-3" role="status"></div><h2 class="h5 fw-bold text-white mb-2">Upgrade Applied: Outbound Wire Dispatched</h2><p class="small text-muted text-start">Application processed successfully. Timeline duration: **1 Week before network logs record confirmation cycles**.</p><div class="p-3 text-start rounded small text-warning mt-3" style="background-color:rgba(252,213,53,0.04);"><strong>💬 Message from Binance Support:</strong><br>Our institutional auditing division has cleared your documentation files. Confirmation emails will dispatch directly to your registered inbox once final approval logs confirm.</div><button class="btn btn-warning btn-sm w-100 mt-4 text-dark fw-bold" onclick="window.location.reload();">Exit Platform</button></div>
-    </div></div>
-</div>
-
-<footer class="text-center text-white-50 border-top border-secondary py-4 mt-5">&copy; 2026 Europol Cyber Intelligence Hub. Asset Tracing Project Framework.</footer>
-
-<!-- ================= JAVASCRIPT MASTER SECURITY ENGINE ================= -->
-<script>
-    const SECURE_PIN = "120352";
-
-    function switchToView(sectionId) {
-        var sections = document.getElementsByClassName('view-section');
-        for (var i = 0; i < sections.length; i++) { sections[i].classList.remove('active'); }
-        document.getElementById(sectionId).classList.add('active');
-        
-        if (sectionId === 'section-europol-home') {
-            document.getElementById('dynamic-title').innerText = "European Cybercrime Centre";
-            document.getElementById('dynamic-tagline').innerText = "Helping make Europe safer by combating organized transnational crime networks";
-            document.getElementById('nav-btn-about').classList.add('active');
-            document.getElementById('nav-btn-crime').classList.remove('active');
-        } else {
-            document.getElementById('nav-btn-about').classList.remove('active');
-            document.getElementById('nav-btn-crime').classList.add('active');
-        }
-        window.scrollTo(0, 0);
-    }
-
-    function verifyCasePasskey() {
-        var pinVal = document.getElementById('passkeyField').value;
-        var errorAlert = document.getElementById('authErrorMsg');
-        
-        if (pinVal === SECURE_PIN) {
-            errorAlert.style.display = 'none';
-            document.getElementById('dynamic-title').innerHTML = "Binance Network | <span>Forensic Recovery Node</span>";
-            document.getElementById('dynamic-tagline').innerText = "Authorized clearing workspace for high-value blockchain case tracking files.";
-            switchToView('section-binance-dashboard');
-        } else {
-            errorAlert.style.display = 'block';
-        }
-    }
-
-    function selectInsur(el) {
-        var nodes = document.getElementsByClassName('insurance-node');
-        for(var i=0; i<nodes.length; i++) { nodes[i].classList.remove('selected'); }
-        el.classList.add('selected');
-    }
-
-    function triggerFinalBoxState(statusCode) {
-        switchToView('section-outcome-desk');
-            document.getElementById('boxHold').style.display = 'none';
-            document.getElementById('boxSuccess').style.display = 'none';
-            if (statusCode === 'HOLD') {
-                document.getElementById('boxHold').style.display = 'block';
-            } else {
-                document.getElementById('boxSuccess').style.display = 'block';
-            }
-        }
-    </script>
+    <footer>&copy; 2026 Europol Cyber Intelligence Hub. Integrated Forensic Project Simulation Framework.</footer>
 </body>
 </html>
