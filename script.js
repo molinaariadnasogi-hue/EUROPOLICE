@@ -1,63 +1,175 @@
-javascript// --- PRIVATE CRYPTOGRAPHIC CASE KEY ---
-const MOUNT_CASE_PIN = "120352";
-
-// --- VIEWPORT PANEL TOGGLE ROUTER ---
-function switchToView(sectionId) {
-    var sectionPanels = document.getElementsByClassName('view-section');
-    for (var i = 0; i < sectionPanels.length; i++) {
-        sectionPanels[i].classList.remove('active');
-    }
-    document.getElementById(sectionId).classList.add('active');
-    
-    // Header navigation links synchronization labels updates
-    if (sectionId === 'section-europol-home') {
-        document.getElementById('dynamic-title').innerText = "European Cybercrime Centre";
-        document.getElementById('dynamic-tagline').innerText = "Helping make Europe safer by combating organized transnational crime networks";
-        document.getElementById('nav-btn-about').classList.add('active');
-        document.getElementById('nav-btn-crime').classList.remove('active');
-    } else {
-        document.getElementById('nav-btn-about').classList.remove('active');
-        document.getElementById('nav-btn-crime').classList.add('active');
-    }
-    window.scrollTo(0, 0);
+/* ==========================================================================
+   GLOBAL BRANDING COLORS (Institutional Deep Navy Theme)
+   ========================================================================== */
+:root {
+    --primary-blue: #001845;
+    --accent-blue: #00296b;
+    --highlight-yellow: #ffd166;
+    --dark-bg: #0b0e11;
+    --card-dark: #1e2329;
+    --text-white: #ffffff;
+    --border-gray: #2b3139;
 }
 
-// --- BIOMETRIC ACCESS RUNTIME CHECKER ---
-function verifyCasePasskey() {
-    var userInputFieldVal = document.getElementById('passkeyField').value;
-    var loginErrorBox = document.getElementById('authErrorMsg');
-    
-    // LILITAW LANG ANG BALANCE NI TAN KANG LIN PAG TAMA ANG PIN
-    if (userInputFieldVal === MOUNT_CASE_PIN) {
-        loginErrorBox.style.display = 'none';
-        
-        // Dynamically updates global layout header strings text
-        document.getElementById('dynamic-title').innerHTML = "Binance Network | <span>Forensic Recovery Node</span>";
-        document.getElementById('dynamic-tagline').innerText = "Authorized clearing workspace for high-value blockchain case tracking files.";
-        
-        switchToView('section-binance-dashboard');
-    } else {
-        loginErrorBox.style.display = 'block';
-    }
+body {
+    background-color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333333;
+    margin: 0;
+    padding: 0;
 }
 
-// --- DASHBOARD FORMS SELECTION HANDSHAKES ---
-function selectInsur(cardElement) {
-    var nodes = document.getElementsByClassName('insurance-node');
-    for(var i=0; i<nodes.length; i++) {
-        nodes[i].classList.remove('selected');
-    }
-    cardElement.classList.add('selected');
+/* Common Navigation Header Across All Pages */
+.navbar-custom {
+    background-color: var(--primary-blue);
+    padding: 15px 0;
+}
+.navbar-custom .nav-link {
+    color: var(--text-white) !important;
+    font-weight: 500;
+    margin: 0 15px;
+    transition: color 0.3s;
+}
+.navbar-custom .nav-link:hover, .navbar-custom .nav-link.active {
+    color: var(--highlight-yellow) !important;
 }
 
-function triggerFinalBoxState(operationStatusCode) {
-    switchToView('section-outcome-desk');
-    document.getElementById('boxHold').style.display = 'none';
-    document.getElementById('boxSuccess').style.display = 'none';
-    
-    if (operationStatusCode === 'HOLD') {
-        document.getElementById('boxHold').style.display = 'block';
-    } else {
-        document.getElementById('boxSuccess').style.display = 'block';
-    }
+/* Index / Front Page Hero Section */
+.hero-section {
+    background-color: var(--primary-blue);
+    color: var(--text-white);
+    padding: 60px 0;
+    text-align: center;
+}
+.btn-custom-yellow {
+    background-color: var(--highlight-yellow);
+    color: #000000;
+    font-weight: 600;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 20px;
+    margin: 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s;
+}
+.btn-custom-yellow:hover {
+    transform: scale(1.05);
+}
+
+/* Grid Dashboard Cards (Index & Crypto Layouts) */
+.custom-card {
+    background-color: var(--accent-blue);
+    color: var(--text-white);
+    border-radius: 12px;
+    padding: 30px;
+    height: 100%;
+}
+.btn-card-read {
+    background-color: var(--text-white);
+    color: var(--accent-blue);
+    font-weight: 600;
+    border-radius: 20px;
+}
+
+/* ==========================================================================
+   CASE REGISTRY PAGE STYLES (case.html)
+   ========================================================================== */
+.case-document {
+    border: 1px solid #ccc;
+    padding: 30px;
+    background-color: #ffffff;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+.classification-banner {
+    background-color: #000000;
+    color: var(--text-white);
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.profile-img-placeholder {
+    border: 2px dashed #ccc;
+    background-color: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 250px;
+}
+
+/* ==========================================================================
+   LIVE CRYPTO MARKET SPECIFIC STYLES (crypto.html)
+   ========================================================================== */
+body.crypto-theme {
+    background-color: var(--dark-bg);
+    color: #eaecef;
+}
+.market-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+.crypto-address {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #0d1b2a;
+    padding: 8px;
+    border-radius: 4px;
+    color: #00ffcc;
+    word-break: break-all;
+}
+
+/* 🚀 ANIMATION: ETO YUNG KUKURBA AT AANGAT KAPAG HINOVER */
+.live-coin-card {
+    background-color: var(--card-dark);
+    border: 1px solid var(--border-gray);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+}
+.live-coin-card:hover {
+    transform: translateY(-8px); /* Dumikit at umangat */
+    box-shadow: 0 12px 24px rgba(0, 255, 204, 0.15); /* May green glow */
+    border-color: #00ffcc;
+}
+.mini-chart-box {
+    height: 60px;
+    pointer-events: none;
+    margin-top: 10px;
+}
+
+/* 🔳 OVERLAY MODAL MASK DISPLAY */
+.overlay-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.overlay-mask.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.overlay-box {
+    background-color: var(--card-dark);
+    border: 1px solid #474d57;
+    border-radius: 16px;
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    transform: scale(0.85);
+    transition: transform 0.3s ease;
+}
+.overlay-mask.active .overlay-box {
+    transform: scale(1);
 }
